@@ -7,7 +7,7 @@ import logo from './Assets/logo.png'
 function Header() {
   return (
     <>
-<Navbar bg="primary" data-bs-theme="dark">
+<Navbar bg="light" className='text-dark' data-bs-theme="dark">
 <Container>
           <Navbar.Brand href="#home">
           <img src={logo} 
@@ -22,7 +22,7 @@ function Header() {
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
        
 
-          <Nav className="me-auto">
+          <Nav className="me-auto text-dark">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#features">Features</Nav.Link>
             <Nav.Link href="#pricing">Pricing</Nav.Link>
