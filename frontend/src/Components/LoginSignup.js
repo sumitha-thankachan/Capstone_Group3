@@ -57,14 +57,14 @@ function LoginSignup() {
           <img src={password_icon} alt="" />
           <input type="password" name="password" placeholder="Password" onChange={handleChange} />
         </div>
-        {action === "Sign Up" && (
+        {/* {action === "Sign Up" && (
           <div className="input">
             <select name="userType" onChange={handleChange}>
               <option value="Caregiver">Caregiver</option>
               <option value="Admin">Admin</option>
             </select>
           </div>
-        )}
+        )} */}
       </div>
       <div className="submit-container">
         <div className="submit" onClick={handleSubmit}>{action}</div>

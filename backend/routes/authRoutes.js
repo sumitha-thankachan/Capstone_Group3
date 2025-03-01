@@ -7,7 +7,8 @@ const router = express.Router();
 
 // SIGNUP
 router.post("/signup", async (req, res) => {
-  const { name, email, password, userType } = req.body;
+ //-------------------------- const { name, email, password, userType } = req.body;
+ const { name, email, password } = req.body;
 
   try {
     // Check if the user already exists
@@ -18,14 +19,17 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Ensure userType is either 'Admin' or 'Caregiver', default to 'Caregiver'
-    const role = userType || "Caregiver"; // Default to "Caregiver" if no role is provided
+    // --------------const role = userType || "Caregiver"; // Default to "Caregiver" if no role is provided
 
     // Create a new user with the provided userType (Admin or Caregiver)
-    const newUser = new User({ name, email, password: hashedPassword, userType: role });
+    // ----------------const newUser = new User({ name, email, password: hashedPassword, userType: role });
+    const newUser = new User({ name, email, password: hashedPassword});
+
     await newUser.save();
 
     // Respond with success message
-    res.status(201).json({ message: "User registered successfully", userType: role });
+    //---------------------- res.status(201).json({ message: "User registered successfully", userType: role });
+    res.status(201).json({ message: "User registered successfully"});
   } catch (error) {
     console.error(error); // Log error to server console for debugging
     res.status(500).json({ message: "Server Error" });
