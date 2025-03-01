@@ -12,8 +12,8 @@ function Home() {
           <h1> Welcome to Home</h1>
           <p>A platform to simplify elderly home managament, resident activities.</p>
           <div className="buttons">
-            <button className="button">Login</button>
-            <button>Sign Up</button>
+            <button className="button primary-btn">Login</button>
+            <button className="button secondary-btn">Sign Up</button>
           </div>
         </section>
         <section className= "features-session">
@@ -27,7 +27,7 @@ function Home() {
             </Col>
             <Col md={4}>
             <div className="feature">
-              <h3>Activity Trackimg</h3>
+              <h3>Activity Tracking</h3>
               <p>Monitor and track resident activities.</p>
             </div>
             </Col>
