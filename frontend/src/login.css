@@ -163,7 +163,7 @@ color:#676767;
 .feature {
   text-align: center;
   padding: 20px;
-  border: 1px solid var(--color-teal); 
+  border: 2px solid var(--color-teal); 
   border-radius: 5px;
   margin-bottom: 20px;
   
@@ -189,3 +189,68 @@ color:#676767;
   color:var(--color-teal);
 }
 
+/* Quote Section */
+.quote-section {
+  text-align: center;
+  margin: 40px 0;
+  border: 2px solid var(--color-teal); 
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.quote-section blockquote {
+  font-size: 1.5em;
+  color: black;
+  font-style: italic;
+}
+
+.quote-section cite {
+  display: block;
+  font-size: 1.2em;
+  color: black;
+  font-style: normal;
+  margin-top: 10px;
+}
+
+
+/* Client Feedback Section */
+.client-feedback-section {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.client-feedback-section h2 {
+  font-size: 2em;
+  color: var(--color-teal);
+  margin-bottom: 20px;
+}
+
+.client-feedback-section .feedback-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.client-feedback-section .feedback-item {
+  flex: 1 1 calc(33.333% - 20px); /* Adjusts for 3 items per row with gap */
+  max-width: calc(33.333% - 20px);
+  padding: 20px;
+  background: var(--color-white);
+  border: 1px solid var(--color-teal);
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.client-feedback-section .feedback-item p {
+  font-size: 1.2em;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.client-feedback-section .feedback-item cite {
+  font-size: 1.1em;
+  color: black;
+  font-style: normal;
+}
