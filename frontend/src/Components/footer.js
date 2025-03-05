@@ -18,7 +18,7 @@ import "../App";
         </div>
         <div className="lastsection_footer">
             <nav>
-                <a href="/Home">Home</a>
+                <a href="/home">Home</a>
                 <a href="/Registration">Registration</a>
                 <a href="/admin-dashboard">Dashboard</a>
                 <a href="/Tasks">Tasks</a>

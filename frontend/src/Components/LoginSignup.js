@@ -21,6 +21,7 @@ function LoginSignup() {
       const { data } = await axios.post(url, formData);
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("userType", data.user.userType); 
 
       alert(`${action} successful!`);
 
