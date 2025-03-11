@@ -49,24 +49,6 @@ function Home() {
             </Col>
           </Row>
           </section>
-          {/* Client Feedback Section */}
-        <section className="client-feedback-section">
-          <h2>What Our Clients Say</h2>
-          <div className="feedback-container">
-            <div className="feedback-item">
-              <p>"This platform has been a game-changer for managing our elderly home. Highly recommended!"</p>
-              <cite>- Harsh</cite>
-            </div>
-            <div className="feedback-item">
-              <p>"The activity tracking feature is incredibly useful. It helps us keep our residents engaged and happy."</p>
-              <cite>- Purvi</cite>
-            </div>
-            <div className="feedback-item">
-              <p>"The secure records feature gives us peace of mind. We can trust this platform with our residents' information."</p>
-              <cite>- Parth</cite>
-            </div>
-          </div>
-        </section>
       </Container>
       <Footer />
       </div>
