@@ -4,6 +4,8 @@ import Footer from "./footer";
 import { Container, Row, Col } from 'react-bootstrap';
 import "../login.css";
 import "../App";
+import welcomeBackground from '../Components/Assets/homebg1_edit.png';
+// URL : https://www.istockphoto.com/photo/caregiver-nurse-take-care-a-senior-patient-nurse-helping-senior-man-hand-holding-gm2158582612-579218519?searchscope=image%2Cfilm
 
 
 function Home() {
@@ -11,13 +13,20 @@ function Home() {
     <div>
       <Header />
       <Container className = "home-container">
-        <section className= "welcome-session">
+        <section className= "welcome-session" style={{ backgroundImage: `url(${welcomeBackground})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <h1> Welcome to Home</h1>
           <p>A platform to simplify elderly home managament, resident activities.</p>
           <div className="buttons">
             <button className="button primary-btn">Login</button>
             <button className="button secondary-btn">Sign Up</button>
           </div>
+        </section>
+        {/* Quote Section */}
+        <section className="quote-section">
+          <blockquote>
+            <p>"Caring for those who once cared for us."</p>
+            <cite>- Group 3</cite>
+          </blockquote>
         </section>
         <section className= "features-session">
           <h2>Why Choose Home?</h2>
@@ -42,7 +51,6 @@ function Home() {
             </Col>
           </Row>
           </section>
-
       </Container>
       <Footer />
       </div>
