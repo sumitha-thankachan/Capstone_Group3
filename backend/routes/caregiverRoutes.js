@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Caregiver = require('../models/Caregiver');
-const User = require('../models/User'); // Ensure the User model is correctly imported
+const User = require('../models/User');
 
-// Route to register a caregiver
-router.post('/register', async (req, res) => {
+// Route to get count of approved caregivers
+router.get('/count/approved', async (req, res) => {
   try {
-    const newCaregiver = new Caregiver(req.body);
-    await newCaregiver.save();
-    res.status(201).json({ message: 'Caregiver registered successfully' });
+    const count = await Caregiver.countDocuments({ isApproved: true });
+    console.log('Approved caregivers count:', count); // Debug log
+    res.json({ count });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error('Error getting approved caregivers count:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -24,6 +25,17 @@ router.get('/list', async (req, res) => {
   }
 });
 
+// Route to register a caregiver
+router.post('/register', async (req, res) => {
+  try {
+    const newCaregiver = new Caregiver(req.body);
+    await newCaregiver.save();
+    res.status(201).json({ message: 'Caregiver registered successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 // Route to approve a caregiver
 router.put('/approve/:id', async (req, res) => {
   try {
@@ -34,7 +46,6 @@ router.put('/approve/:id', async (req, res) => {
   }
 });
 
-// Route to reject a caregiver
 // Route to reject a caregiver and remove from both collections
 router.put('/reject/:id', async (req, res) => {
   try {
@@ -63,8 +74,6 @@ router.put('/reject/:id', async (req, res) => {
   }
 });
 
-
-// Route to delete a caregiver by ID
 // Route to delete a caregiver and remove from both collections
 router.delete('/delete/:id', async (req, res) => {
   try {
@@ -93,7 +102,6 @@ router.delete('/delete/:id', async (req, res) => {
   }
 });
 
-
 // Route to get caregiver details by email
 router.get('/:email', async (req, res) => {
   try {
@@ -109,6 +117,7 @@ router.get('/:email', async (req, res) => {
     res.status(500).json({ message: 'Server error.' });
   }
 });
+
 // Update caregiver details
 router.put("/update/:email", async (req, res) => {
   try {
@@ -118,7 +127,7 @@ router.put("/update/:email", async (req, res) => {
     const updatedCaregiver = await Caregiver.findOneAndUpdate(
       { email },
       updatedData,
-      { new: true } // Return the updated document
+      { new: true }
     );
 
     if (!updatedCaregiver) {
