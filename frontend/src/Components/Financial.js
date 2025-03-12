@@ -13,7 +13,7 @@ function Financial() {
         <div className="financialContainer_firstSection">
           <button className="button primary-btn" onClick={() => navigate("/AddExpenses")} >+ Add Expenses</button>
           <button className="button primary-btn" onClick={() => navigate("/AddDonations")}>+ Add Donations</button>
-          <button className="button primary-btn">+ Add Payment</button>
+          <button className="button primary-btn" onClick={() => navigate("/AddPayment")}>+ Add Payment</button>
         </div>
         <h2 className="financial-subhead">Financial Records</h2>
         <div className="financialContainer_secondSection">
