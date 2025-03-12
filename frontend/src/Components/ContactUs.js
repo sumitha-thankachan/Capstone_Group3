@@ -57,16 +57,6 @@ function ContactUs() {
           <p><strong>Email:</strong> support@elderlyhome.com</p>
           <p><strong>Working Hours:</strong> Monday to Friday, 9 AM - 5 PM</p>
         </section>
-
-        {/* Social Media Links */}
-        <section className="social-media">
-          <h3>Follow Us</h3>
-          <ul className="social-links">
-            <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-            <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-            <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-          </ul>
-        </section>
       </Container>
       <Footer/>
     </div>
