@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import LoginSignup from "./Components/LoginSignup";
-import Header from "./Components/Header";
+
 import Home from "./Components/Home";
 import AdminDashboard from "./Components/AdminDashboard";
 import CaregiverDashboard from "./Components/CaregiverDashboard";
@@ -13,6 +13,7 @@ import AboutUs from "./Components/AboutUs";
 import Financial from "./Components/Financial";
 import AddExpenses from "./Components/AddExpenses";
 import AddDonations from "./Components/AddDonations";
+import AddPayment from "./Components/AddPayment";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/financial" element={< Financial />} />
         <Route path="/AddExpenses" element={< AddExpenses />} />
         <Route path="/AddDonations" element={< AddDonations />} />
+        <Route path="/AddPayment" element={< AddPayment />} />
       </Routes> 
     </div>
   );
