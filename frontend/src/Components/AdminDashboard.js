@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "./Header";
 import Footer from "./footer";
 import "../App";
 import bannerImage from "./Assets/admin-dashboard.jpg"; 
 function AdminDashboard() {
+  /* const [approvedCaregiversCount, setApprovedCaregiversCount] = useState(0);
+
+  useEffect(() => {
+    const fetchApprovedCaregiversCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/caregivers/count/approved');
+        setApprovedCaregiversCount(response.data.count);
+      } catch (error) {
+        console.error('Error fetching approved caregivers count:', error);
+      }
+    };
+
+    fetchApprovedCaregiversCount();
+  }, []); */
+  const [approvedCaregiversCount, setApprovedCaregiversCount] = useState(0);
+
+  useEffect(() => {
+    const fetchApprovedCaregiversCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/caregivers/count/approved');
+        setApprovedCaregiversCount(response.data.count);
+      } catch (error) {
+        console.error('Error fetching approved caregivers count:', error);
+      }
+    };
+
+    fetchApprovedCaregiversCount();
+  }, []);
   return (
     <div>
       <Header />
@@ -11,7 +40,7 @@ function AdminDashboard() {
       <div
         className="mt-4"
         style={{
-          background: `url(${bannerImage})`,
+          background: url(${bannerImage}),
           minHeight: '400px',
           position: 'relative',
           backgroundRepeat: 'no-repeat',
@@ -59,7 +88,7 @@ function AdminDashboard() {
               <h4>Number of Caregivers</h4>
               <i className="bi bi-person-circle icon"></i>
             </div>
-            <h5>156</h5>
+            <h5>{approvedCaregiversCount}</h5>
           </div>
         </div>
         <div className="admin-subcontainers">
