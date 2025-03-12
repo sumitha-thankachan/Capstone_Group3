@@ -75,8 +75,8 @@ const Footer = () => {
           {!userType && (
             <>
               <a href="/home">Home</a>
-              <a href="/About">About Us</a>
-              <a href="/Contact">Contact Us</a>
+              <a href="/about-us">About Us</a>
+              <a href="/contact-us">Contact Us</a>
             </>
           )}
         </nav>

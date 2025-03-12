@@ -52,7 +52,7 @@ function ContactUs() {
         {/* Direct Contact Information */}
         <section className="direct-contact">
           <h3>Direct Contact</h3>
-          <p><strong>Address:</strong> 123 Elderly Home Road, City, State, ZIP</p>
+          <p><strong>Address:</strong> 123 Elderly Home Road, Kitchener, Canada, N2C 1G9</p>
           <p><strong>Phone:</strong> +1 (123) 456-7890</p>
           <p><strong>Email:</strong> support@elderlyhome.com</p>
           <p><strong>Working Hours:</strong> Monday to Friday, 9 AM - 5 PM</p>

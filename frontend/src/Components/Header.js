@@ -68,9 +68,9 @@ function Header() {
           {/* Visitor (No userType) Links */}
           {!userType && (
             <>
-              <NavLink className='text-secondary fw-bold' to="/home">Home</NavLink>
-              <NavLink className='text-secondary fw-bold' to="/about-us">About Us</NavLink>
-              <NavLink className='text-secondary fw-bold' to="/contact-us">Contact Us</NavLink>
+              <NavLink className='text-light fw-bold' to="/home">Home</NavLink>
+              <NavLink className='text-light fw-bold' to="/about-us">About Us</NavLink>
+              <NavLink className='text-light fw-bold' to="/contact-us">Contact Us</NavLink>
             </>
           )}
         </Nav>
