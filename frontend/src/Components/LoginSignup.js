@@ -22,14 +22,17 @@ function LoginSignup() {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("userType", data.user.userType); 
+      localStorage.setItem("email", data.user.email); 
 
       alert(`${action} successful!`);
 
       // Redirect based on userType
       if (data.user.userType === "Admin") {
         navigate("/admin-dashboard");
-      } else {
+      } else if (data.user.userType === "Caregiver") {
         navigate("/caregiver-dashboard");
+      } else if (data.user.userType === "Patient") {
+        navigate("/patient-dashboard");
       }
     } catch (error) {
       console.error(error); // Log the error for debugging
@@ -58,14 +61,14 @@ function LoginSignup() {
           <img src={password_icon} alt="" />
           <input type="password" name="password" placeholder="Password" onChange={handleChange} />
         </div>
-        {/* {action === "Sign Up" && (
+        {action === "Sign Up" && (
           <div className="input">
-            <select name="userType" onChange={handleChange}>
+            <select name="userType" value={formData.userType} onChange={handleChange}>
               <option value="Caregiver">Caregiver</option>
-              <option value="Admin">Admin</option>
+              <option value="Patient">Patient</option>
             </select>
           </div>
-        )} */}
+        )}
       </div>
       <div className="submit-container">
         <div className="submit" onClick={handleSubmit}>{action}</div>

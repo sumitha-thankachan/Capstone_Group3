@@ -8,6 +8,7 @@ import CaregiverDashboard from "./Components/CaregiverDashboard";
 import TaskManagement from "./Components/TaskManagement";
 import CaregiverRegistration from "./Components/caregiverRegistration";
 import CaregiverList from "./Components/CaregiverList";
+import PatientDashboard from "./Components/PatientDashboard";
 
 
 function App() {
@@ -18,10 +19,13 @@ function App() {
         <Route path="/login-signup" element={<LoginSignup />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/caregiver-dashboard" element={<CaregiverDashboard />} />
+        <Route path="/patient-dashboard" element={<PatientDashboard />} />
+
         <Route path="/Tasks" element={<TaskManagement />} />
         <Route path="/Registration" element={< CaregiverRegistration />} />
         <Route path="/Caregiver-list" element={< CaregiverList />} />
 
+        
       </Routes> 
     </div>
   );

@@ -12,5 +12,7 @@ const caregiverSchema = new mongoose.Schema({
   isApproved: { type: Boolean, default: false }, // Admin approval flag
 });
 
+
+
 const Caregiver = mongoose.model('Caregiver', caregiverSchema);
 module.exports = Caregiver;

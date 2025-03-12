@@ -22,11 +22,13 @@ function Header() {
     localStorage.removeItem("token");  // Remove token
     localStorage.removeItem("userType"); // Remove userType
     setUserType(null);  // Reset navbar state
-    window.location.reload(); // Refresh page to update navbar
+   // window.location.reload(); // Refresh page to update navbar
+   // Reset navbar state
+    window.location.href = "/"; // Redirect to home page
   };
 
   return (
-    <Navbar bg="light" className='text-dark' data-bs-theme="dark">
+    <Navbar bg="light" className='text-dark' >
       <Container>
         <Navbar.Brand href="#home">
           <img src={logo} 
@@ -55,6 +57,11 @@ function Header() {
           {userType === "Caregiver" && (
             <>
               <NavLink className='text-secondary fw-bold' to="/Registration">Registration</NavLink>
+            </>
+          )}
+            {userType === "Patient" && (
+            <>
+              <NavLink className='text-secondary fw-bold' to="">Patient Registration</NavLink>
             </>
           )}
 
