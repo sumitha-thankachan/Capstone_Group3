@@ -64,7 +64,7 @@ function AboutUs() {
             </Col>
             <Col md={3}>
               <div className="team-member">
-                <img src="/path-to-team-member-image.jpg" alt="Karthik Janardhanan" className="team-image" />
+              <img className="team-image" src={require("../Components/Assets/karthik.png")} alt="Karthik Janardhanan" />
                 <h4>Karthik Janardhanan</h4>
               </div>
             </Col>
