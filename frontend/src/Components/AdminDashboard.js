@@ -40,7 +40,7 @@ function AdminDashboard() {
       <div
         className="mt-4"
         style={{
-          background: url(${bannerImage}),
+          background: `url(${bannerImage})`,
           minHeight: '400px',
           position: 'relative',
           backgroundRepeat: 'no-repeat',
