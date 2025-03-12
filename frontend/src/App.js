@@ -10,6 +10,9 @@ import CaregiverRegistration from "./Components/caregiverRegistration";
 import CaregiverList from "./Components/CaregiverList";
 import ContactUs from "./Components/ContactUs";
 import AboutUs from "./Components/AboutUs";
+import Financial from "./Components/Financial";
+import AddExpenses from "./Components/AddExpenses";
+import AddDonations from "./Components/AddDonations";
 
 
 function App() {
@@ -26,6 +29,9 @@ function App() {
         <Route path="/Caregiver-list" element={< CaregiverList />} />
         <Route path="/contact-us" element={< ContactUs />} />
         <Route path="/about-us" element={< AboutUs />} />
+        <Route path="/financial" element={< Financial />} />
+        <Route path="/AddExpenses" element={< AddExpenses />} />
+        <Route path="/AddDonations" element={< AddDonations />} />
 
       </Routes> 
     </div>

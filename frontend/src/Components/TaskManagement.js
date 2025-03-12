@@ -104,8 +104,8 @@ const TaskManagement = () => {
                       <td>{resident.age}</td>
                       <td>{resident.medicalStatus}</td>
                       <td>
-                        <Button variant="primary" size="sm" className="me-2">Edit</Button>
-                        <Button variant="info" size="sm">View</Button>
+                        <Button variant="primary" size="sm" className="me-2 edit primary-btn">Edit</Button>
+                        <Button variant="info" className='primary-btn' size="sm">View</Button>
                       </td>
                     </tr>
                   ))}
@@ -151,8 +151,8 @@ const TaskManagement = () => {
                       <td>{task.task}</td>
                       <td>{task.resident}</td>
                       <td>
-                        <Button variant="primary" size="sm" className="me-2">Edit</Button>
-                        <Button variant="success" size="sm">Completed</Button>
+                        <Button variant="primary" size="sm" className="me-2 edit primary-btn">Edit</Button>
+                        <Button variant="success" size="sm" className='primary-btn'>Completed</Button>
                       </td>
                     </tr>
                   ))}
