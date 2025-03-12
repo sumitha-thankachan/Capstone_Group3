@@ -53,15 +53,19 @@ function Header() {
             </>
           )}
 
+          
           {/* Caregiver Links */}
           {userType === "Caregiver" && (
             <>
+              <NavLink className='text-secondary fw-bold' to="/caregiver-dashboard">Dashbord</NavLink>
               <NavLink className='text-secondary fw-bold' to="/Registration">Registration</NavLink>
             </>
           )}
             {userType === "Patient" && (
             <>
-              <NavLink className='text-secondary fw-bold' to="">Patient Registration</NavLink>
+                          <NavLink className='text-secondary fw-bold' to="/patient-dashboard">Dashbord</NavLink>
+
+              <NavLink className='text-secondary fw-bold' to="/patient-registration">Patient Registration</NavLink>
             </>
           )}
 

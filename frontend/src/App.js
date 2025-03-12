@@ -14,8 +14,12 @@ import Financial from "./Components/Financial";
 import AddExpenses from "./Components/AddExpenses";
 import AddDonations from "./Components/AddDonations";
 import AddPayment from "./Components/AddPayment";
+import PatientDashboard from "./Components/PatientDashboard";
+import PatientRegistrationForm from "./Components/PatientRegistrationForm";
 
 function App() {
+  const email = localStorage.getItem("email");  // Assuming email is stored as 'email' in localStorage
+
   return (
     <div className="App">
       <Routes>
@@ -23,8 +27,12 @@ function App() {
         <Route path="/login-signup" element={<LoginSignup />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/caregiver-dashboard" element={<CaregiverDashboard />} />
-        {/* <Route path="/patient-dashboard" element={<PatientDashboard />} /> */}
+        <Route path="/patient-dashboard" element={<PatientDashboard />} />
 
+        <Route
+          path="/patient-registration"
+          element={<PatientRegistrationForm email={email} />}
+        />
         <Route path="/Tasks" element={<TaskManagement />} />
         <Route path="/home" element={< Home />} />
         <Route path="/Registration" element={< CaregiverRegistration />} />
