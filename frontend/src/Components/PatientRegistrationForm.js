@@ -4,7 +4,7 @@ import Header from "./Header";
 import Footer from "./footer";
 import { useNavigate } from "react-router-dom";
 
-const CaregiverRegistration = () => {
+const PatientRegistration = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -13,8 +13,8 @@ const CaregiverRegistration = () => {
     contact: "",
     email: "",
     address: "",
-    experience: "",
-    specialization: "",
+    medicalHistory: "",
+    allergies: "",
   });
   const [errors, setErrors] = useState({});
   const [isRegistered, setIsRegistered] = useState(false);
@@ -26,31 +26,31 @@ const CaregiverRegistration = () => {
     if (email) {
       setFormData((prevFormData) => ({ ...prevFormData, email }));
 
-      const fetchCaregiverDetails = async () => {
+      const fetchPatientDetails = async () => {
         try {
-          const response = await fetch(`http://localhost:5000/api/caregivers/${email}`);
+          const response = await fetch(`http://localhost:4000/api/patients/${email}`);
           if (response.ok) {
-            const caregiver = await response.json();
+            const patient = await response.json();
             setFormData({
-              name: caregiver.name || "",
-              age: caregiver.age || "",
-              gender: caregiver.gender || "",
-              contact: caregiver.contact || "",
-              email: caregiver.email || email,
-              address: caregiver.address || "",
-              experience: caregiver.experience || "",
-              specialization: caregiver.specialization || "",
+              name: patient.name || "",
+              age: patient.age || "",
+              gender: patient.gender || "",
+              contact: patient.contact || "",
+              email: patient.email || email,
+              address: patient.address || "",
+              medicalHistory: patient.medicalHistory || "",
+              allergies: patient.allergies || "",
             });
             setIsRegistered(true); // Set as registered
           } else {
-            console.log("Caregiver not registered yet.");
+            console.log("Patient not registered yet.");
           }
         } catch (error) {
-          console.error("Error fetching caregiver details:", error);
+          console.error("Error fetching patient details:", error);
         }
       };
 
-      fetchCaregiverDetails();
+      fetchPatientDetails();
     }
   }, []);
 
@@ -65,9 +65,8 @@ const CaregiverRegistration = () => {
     if (!formData.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email))
       newErrors.email = "Valid email is required.";
     if (!formData.address.trim()) newErrors.address = "Address is required.";
-    if (!formData.experience || formData.experience <= 0)
-      newErrors.experience = "Experience must be a positive number.";
-    if (!formData.specialization.trim()) newErrors.specialization = "Specialization is required.";
+    if (!formData.medicalHistory.trim()) newErrors.medicalHistory = "Medical history is required.";
+    if (!formData.allergies.trim()) newErrors.allergies = "Allergies info is required.";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -84,8 +83,8 @@ const CaregiverRegistration = () => {
 
     try {
       const url = isRegistered
-        ? `http://localhost:5000/api/caregivers/update`
-        : `http://localhost:5000/api/caregivers/register`;
+        ? `http://localhost:4000/api/patients/update`
+        : `http://localhost:4000/api/patients/register`;
 
       const method = isRegistered ? "PUT" : "POST";
 
@@ -97,43 +96,41 @@ const CaregiverRegistration = () => {
 
       if (response.ok) {
         setSuccessMessage(
-          isRegistered ? "Caregiver details updated successfully!" : "Caregiver registered successfully!"
+          isRegistered ? "Patient details updated successfully!" : "Patient registered successfully!"
         );
-        setTimeout(() => navigate("/caregiver-dashboard"), 2000);
+        setTimeout(() => navigate("/patient-dashboard"), 2000);
       } else {
-        alert("Failed to submit caregiver details.");
+        alert("Failed to submit patient details.");
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   const handleUpdate = async () => {
-    if (!validateForm()) {
-      return;
-    }
-  
+    if (!validateForm()) return;
+
     try {
       const response = await fetch(
-        `http://localhost:5000/api/caregivers/update/${formData.email}`,
+        `http://localhost:4000/api/patients/update/${formData.email}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         }
       );
-  
+
       if (response.ok) {
-        const updatedCaregiver = await response.json();
-        alert("Caregiver details updated successfully!");
-        setFormData(updatedCaregiver);
+        const updatedPatient = await response.json();
+        alert("Patient details updated successfully!");
+        setFormData(updatedPatient);
       } else {
-        alert("Failed to update caregiver details.");
+        alert("Failed to update patient details.");
       }
     } catch (error) {
-      console.error("Error updating caregiver:", error);
+      console.error("Error updating patient:", error);
     }
   };
-  
 
   return (
     <>
@@ -142,10 +139,9 @@ const CaregiverRegistration = () => {
         <Row className="justify-content-center">
           <Col md={6} className="border p-4 rounded shadow">
             <h3 className="text-center mb-4">
-              {isRegistered ? "Update Caregiver Details" : "Caregiver Registration"}
+              {isRegistered ? "Update Patient Details" : "Patient Registration"}
             </h3>
             {successMessage && <Alert variant="success">{successMessage}</Alert>}
-            {/* <Form onSubmit={handleSubmit}> */}
             <Form onSubmit={isRegistered ? handleUpdate : handleSubmit}>
               <Form.Group className="mb-3">
                 <Form.Label>Name</Form.Label>
@@ -155,15 +151,12 @@ const CaregiverRegistration = () => {
                   value={formData.name}
                   onChange={handleChange}
                   disabled={isRegistered}
-
                   isInvalid={!!errors.name}
                   required
                 />
                 <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
               </Form.Group>
 
-              {/* Other form fields are similar, omitted for brevity */}
-              
               <Form.Group className="mb-3">
                 <Form.Label>Age</Form.Label>
                 <Form.Control
@@ -171,7 +164,6 @@ const CaregiverRegistration = () => {
                   name="age"
                   value={formData.age}
                   onChange={handleChange}
-                
                   isInvalid={!!errors.age}
                   required
                 />
@@ -211,13 +203,12 @@ const CaregiverRegistration = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
-             
-                 <Form.Control
+                <Form.Control
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  disabled // Optional: Disable email field to make it non-editable
+                  disabled
                   required
                 />
                 <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
@@ -238,46 +229,34 @@ const CaregiverRegistration = () => {
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Years of Experience</Form.Label>
+                <Form.Label>Medical History</Form.Label>
                 <Form.Control
-                  type="number"
-                  name="experience"
-                  value={formData.experience}
+                  type="text"
+                  name="medicalHistory"
+                  value={formData.medicalHistory}
                   onChange={handleChange}
-                  readOnly={isRegistered}
-                  isInvalid={!!errors.experience}
+                  isInvalid={!!errors.medicalHistory}
                   required
                 />
-                <Form.Control.Feedback type="invalid">{errors.experience}</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">{errors.medicalHistory}</Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Specialization</Form.Label>
+                <Form.Label>Allergies</Form.Label>
                 <Form.Control
                   type="text"
-                  name="specialization"
-                  value={formData.specialization}
+                  name="allergies"
+                  value={formData.allergies}
                   onChange={handleChange}
-                  readOnly={isRegistered}
-                  isInvalid={!!errors.specialization}
+                  isInvalid={!!errors.allergies}
                   required
                 />
-                <Form.Control.Feedback type="invalid">{errors.specialization}</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">{errors.allergies}</Form.Control.Feedback>
               </Form.Group>
 
-{/* 
-              <Button variant="primary" type="submit" className="w-100">
+              <Button variant="primary" type="submit" className="w-100 ">
                 {isRegistered ? "Update Details" : "Register"}
-              </Button> */}
-              <Button 
-  variant="primary" 
-  type="submit" 
-  className="w-100"
-  onClick={isRegistered ? handleUpdate : handleSubmit}  // Check isRegistered and trigger the correct function
->
-  {isRegistered ? "Update Details" : "Register"}
-</Button>
-
+              </Button>
             </Form>
           </Col>
         </Row>
@@ -287,4 +266,4 @@ const CaregiverRegistration = () => {
   );
 };
 
-export default CaregiverRegistration;
+export default PatientRegistration;

@@ -29,46 +29,9 @@ const TaskManagement = () => {
     <>
       <Header />
       <Container fluid className="mt-4">
-      <div
-  className="mt-4"
-  style={{
-    background: 'url("https://media.istockphoto.com/id/1326417844/photo/woman-with-grandmother-walking-in-park-in-autumn.jpg?s=612x612&w=0&k=20&c=OtI0mSVv7txY4emwqP7W--jpCe_JpnD_2ztJlKj_ODM=")',
-    minHeight: '400px',
-    position: 'relative',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-  }}
->
- 
-  <div
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.5)", 
-    }}
-  ></div>
-
-  
-  <div
-    style={{
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      textAlign: "center",
-      color: "#fff", // Ensure text is visible
-    }}
-  >
-    <h3>Caring for Those Who Once Cared for Us.</h3>
-  </div>
-</div>
-
-        <Row className="mt-5 mx-4 mb-5">
+        <Row className="mt-5 mx-4 mb-5" style={{ minHeight: '600px' }}>
           <Col md={6}>
-            <div className="border p-4 h-100">
+            <div className="border p-4" style={{ height: '600px', overflowY: 'auto' }}>
               <h4>Resident Management</h4>
               <Row className="mb-3">
                 <Col>
@@ -104,8 +67,8 @@ const TaskManagement = () => {
                       <td>{resident.age}</td>
                       <td>{resident.medicalStatus}</td>
                       <td>
-                        <Button variant="primary" size="sm" className="me-2">Edit</Button>
-                        <Button variant="info" size="sm">View</Button>
+                        <Button variant="primary" size="sm" className="me-2 edit primary-btn">Edit</Button>
+                        <Button variant="info" className='primary-btn' size="sm">View</Button>
                       </td>
                     </tr>
                   ))}
@@ -115,7 +78,7 @@ const TaskManagement = () => {
           </Col>
 
           <Col md={6}>
-            <div className="border p-4 h-100">
+            <div className="border p-4" style={{ height: '600px', overflowY: 'auto' }}>
               <h4>Task Management</h4>
               <Row className="mb-3">
                 <Col>
@@ -151,8 +114,8 @@ const TaskManagement = () => {
                       <td>{task.task}</td>
                       <td>{task.resident}</td>
                       <td>
-                        <Button variant="primary" size="sm" className="me-2">Edit</Button>
-                        <Button variant="success" size="sm">Completed</Button>
+                        <Button variant="primary" size="sm" className="me-2 edit primary-btn">Edit</Button>
+                        <Button variant="success" size="sm" className='primary-btn'>Completed</Button>
                       </td>
                     </tr>
                   ))}

@@ -1,0 +1,120 @@
+.payment-form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.payment-form-title {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.payment-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.payment-form-label {
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.payment-form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.payment-form-control:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.payment-input-group {
+  display: flex;
+  align-items: center;
+}
+
+.payment-input-group-text {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-right: none;
+  padding: 0.75rem;
+  border-radius: 4px 0 0 4px;
+  color: #495057;
+}
+
+.payment-input-group .payment-form-control {
+  border-radius: 0 4px 4px 0;
+}
+
+.payment-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+.payment-button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.payment-button {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payment-button-primary {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.payment-button-primary:hover {
+  background-color: #45a049;
+  transform: translateY(-1px);
+}
+
+.payment-button-secondary {
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #ddd;
+}
+
+.payment-button-secondary:hover {
+  background-color: #e9ecef;
+}
+
+.payment-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Status colors */
+.status-pending {
+  color: #f39c12;
+}
+
+.status-completed {
+  color: #2ecc71;
+}
+
+.status-failed {
+  color: #e74c3c;
+}
