@@ -1,3 +1,4 @@
+
 /* .App {
   text-align: center;
 }
@@ -36,3 +37,148 @@
     transform: rotate(360deg);
   }
 } */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.navbar-header {
+  display: flex;
+  gap: 20px;
+  /* background-color: red; */
+}
+
+Nav a {
+  text-decoration: none;
+}
+
+h2 {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.admin-mainContainers {
+  width: 80%;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-subcontainers {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+}
+
+.admin-containers {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border: 1px solid #000;
+  padding: 18px;
+}
+
+.combo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  font-size: 3rem;
+}
+
+.admin-containers h5 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+/* footer */
+
+.footer {
+  margin-top: 50px;
+  padding: 30px;
+  background: linear-gradient(90deg, #66b2a5, #d8a5d9);
+  display: flex;
+  gap: 50px;
+  color: #fff;
+  padding-top: 40px;
+  width: 100%;
+}
+
+.firstsection_footer {
+  flex: 1;
+  text-align: center;
+}
+
+.firstsection_footer h5 {
+  padding-left: 17px;
+}
+
+.footer_logo {
+  width: 40px;
+}
+
+.middlesection_footer {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex: 3;
+}
+
+.middlesection_footer p {
+  width: 30%;
+}
+
+.middlesection_footer button {
+  margin-top: 20px;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 13px;
+  padding: 12px;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: none;
+  font-weight: bold;
+}
+
+.middlesection_footer button:hover {
+  background-color: rgb(167, 211, 211);
+  color: #000000;
+  border: none;
+  transition: 0.7s;
+}
+
+.lastsection_footer {
+  flex: 1;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.lastsection_footer img {
+  width: 30px;
+  flex: 1;
+}
+
+.lastsection_footer nav {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.lastsection_footer nav a {
+  text-decoration: none;
+  color: #ffffff;
+  justify-content: space-evenly;
+  font-weight: bold;
+}
+
+.lastsection_footer nav a:hover {
+  text-shadow: 0px 0px 8px #a7d3d3;
+}
+
