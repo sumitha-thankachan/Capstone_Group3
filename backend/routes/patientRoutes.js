@@ -3,6 +3,7 @@ const router = express.Router();
 const Patient = require('../models/Patient');
 const User = require('../models/User'); // Ensure the User model is correctly imported
 
+
 // Route to register a patient
 router.post('/register', async (req, res) => {
   try {
@@ -13,6 +14,17 @@ router.post('/register', async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+// Route to get the total number of patients
+router.get("/count", async (req, res) => {
+  try {
+    const count = await Patient.countDocuments();
+    res.json({ count });
+  } catch (error) {
+    console.error("Error fetching patient count:", error);
+    res.status(500).json({ error: "Error fetching patient count" });
+  }
+});
+
 
 // Route to get all patients (for Admin approval list)
 router.get('/list', async (req, res) => {

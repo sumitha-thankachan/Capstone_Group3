@@ -5,7 +5,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import "../login.css";
 
 import Footer from "./footer";
-import { Container, Row, Col } from 'react-bootstrap';
 import "../login.css";
 import "../App";
 import welcomeBackground from '../Components/Assets/homebg1_edit.png';
