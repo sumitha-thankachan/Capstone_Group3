@@ -123,24 +123,25 @@ router.get('/:email', async (req, res) => {
 // Route to update patient details
 router.put("/update/:email", async (req, res) => {
   try {
-    const email = req.params.email;
+    const { email } = req.params;
     const updatedData = req.body;
 
     const updatedPatient = await Patient.findOneAndUpdate(
       { email },
       updatedData,
-      { new: true } // Return the updated document
+      { new: true } // ✅ Ensures updated data is returned
     );
 
     if (!updatedPatient) {
       return res.status(404).json({ message: "Patient not found." });
     }
 
-    res.status(200).json(updatedPatient);
+    res.status(200).json(updatedPatient); // ✅ Returns updated patient details
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to update patient." });
   }
 });
+
 
 module.exports = router;

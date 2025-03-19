@@ -48,6 +48,7 @@ function Header() {
               <NavLink className='text-light fw-bold' to="/home">Home</NavLink>
               <NavLink className='text-light fw-bold' to="/Caregiver-list">Caregiver List</NavLink>
               <NavLink className='text-light fw-bold' to="/admin-dashboard">Dashboard</NavLink>
+              <NavLink className='text-light fw-bold' to="/patients">Patient</NavLink>
               <NavLink className='text-light fw-bold' to="/Tasks">Tasks</NavLink>
               <NavLink className='text-light fw-bold' to="/Financial">Financial</NavLink>
             </>
@@ -59,6 +60,8 @@ function Header() {
             <>
               <NavLink className='text-secondary fw-bold' to="/caregiver-dashboard">Dashbord</NavLink>
               <NavLink className='text-secondary fw-bold' to="/Registration">Registration</NavLink>
+              <NavLink className='text-secondary fw-bold' to="/change-password">Change Password</NavLink>
+             
             </>
           )}
             {userType === "Patient" && (
@@ -66,6 +69,7 @@ function Header() {
                           <NavLink className='text-secondary fw-bold' to="/patient-dashboard">Dashbord</NavLink>
 
               <NavLink className='text-secondary fw-bold' to="/patient-registration">Patient Registration</NavLink>
+              <NavLink className='text-secondary fw-bold' to="/change-password">Change Password</NavLink>
             </>
           )}
 
