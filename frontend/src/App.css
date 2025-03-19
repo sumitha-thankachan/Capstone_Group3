@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+html {
+  scroll-behavior: smooth;
+}
+
+=======
 
 /* .App {
   text-align: center;
@@ -38,6 +44,7 @@
   }
 } */
 
+>>>>>>> ea26148cb68046af7e0d321fc7c634dd6ab13b30
 .header {
   display: flex;
   flex-direction: column;
