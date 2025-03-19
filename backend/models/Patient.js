@@ -9,6 +9,7 @@ const patientSchema = new mongoose.Schema({
   address: { type: String, required: true },
   medicalHistory: { type: String, required: true },
   allergies: { type: String, required: true },
+  isApproved: { type: Boolean, default: false }, // If approval is required
   dateAdded: { type: Date, default: Date.now },
 });
 

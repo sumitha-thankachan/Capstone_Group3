@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+
 import LoginSignup from "./Components/LoginSignup";
+
 
 import Home from "./Components/Home";
 import AdminDashboard from "./Components/AdminDashboard";
@@ -16,6 +18,12 @@ import AddDonations from "./Components/AddDonations";
 import AddPayment from "./Components/AddPayment";
 import PatientDashboard from "./Components/PatientDashboard";
 import PatientRegistrationForm from "./Components/PatientRegistrationForm";
+import ForgotPassword from "./Components/ForgotPassword";
+import ResetPassword from "./Components/ResetPassword";
+import ChangePassword from "./Components/ChangePassword";
+import Patients from "./Components/Patients";
+import RoomManagement from "./Components/RoomManagement";
+
 
 function App() {
   const email = localStorage.getItem("email");  // Assuming email is stored as 'email' in localStorage
@@ -43,6 +51,11 @@ function App() {
         <Route path="/AddExpenses" element={< AddExpenses />} />
         <Route path="/AddDonations" element={< AddDonations />} />
         <Route path="/AddPayment" element={< AddPayment />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/patients" element={<Patients />} />
+        <Route path="/room-management" element={<RoomManagement />} />
       </Routes> 
     </div>
   );
