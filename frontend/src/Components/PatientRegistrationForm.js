@@ -28,7 +28,7 @@ const PatientRegistration = () => {
 
       const fetchPatientDetails = async () => {
         try {
-          const response = await fetch(`http://localhost:4000/api/patients/${email}`);
+          const response = await fetch(`http://localhost:5000/api/patients/${email}`);
           if (response.ok) {
             const patient = await response.json();
             setFormData({
@@ -83,8 +83,8 @@ const PatientRegistration = () => {
 
     try {
       const url = isRegistered
-        ? `http://localhost:4000/api/patients/update`
-        : `http://localhost:4000/api/patients/register`;
+        ? `http://localhost:5000/api/patients/update`
+        : `http://localhost:5000/api/patients/register`;
 
       const method = isRegistered ? "PUT" : "POST";
 
@@ -112,7 +112,7 @@ const PatientRegistration = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/api/patients/update/${formData.email}`,
+        `http://localhost:5000/api/patients/update/${formData.email}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
