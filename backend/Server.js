@@ -30,6 +30,9 @@ app.use((req, res, next) => {
   });
 app.use('/api/caregivers', caregiverRoutes);
 app.use("/api/patients", patientRoutes); 
+app.use("/api/tasks", taskRoutes);
+app.use("/api/admin", adminRoutes); 
+app.use("/api/rooms", roomRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
