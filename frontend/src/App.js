@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+
 import LoginSignup from "./Components/LoginSignup";
 
 
@@ -21,6 +22,7 @@ import ForgotPassword from "./Components/ForgotPassword";
 import ResetPassword from "./Components/ResetPassword";
 import ChangePassword from "./Components/ChangePassword";
 import Patients from "./Components/Patients";
+import RoomManagement from "./Components/RoomManagement";
 
 
 function App() {
@@ -53,6 +55,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/patients" element={<Patients />} />
+        <Route path="/room-management" element={<RoomManagement />} />
       </Routes> 
     </div>
   );

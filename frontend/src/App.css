@@ -49,7 +49,8 @@
 }
 
 .header-background {
-  background: linear-gradient(90deg, #66b2a5, #d8a5d9);
+  /* background: linear-gradient(90deg, #66b2a5, #d8a5d9); */
+  background-color: #375c55;
   border-bottom: none !important; /* Remove border */
   box-shadow: none !important; /* Remove shadow */
   margin-bottom: 0 !important; /* Remove extra margin */

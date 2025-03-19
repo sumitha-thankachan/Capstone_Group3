@@ -68,13 +68,13 @@ const ChangePassword = () => {
         {message && <Alert variant={message.includes("success") ? "success" : "danger"}>{message}</Alert>}
 
         <Form onSubmit={handleChangePassword} className="p-4 border rounded shadow-sm bg-light">
-          {/* ✅ Display Email in Read-Only Format */}
+          {/*  Display Email in Read-Only Format */}
           <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>
             <Form.Control type="email" value={email} readOnly />
           </Form.Group>
 
-          {/* ✅ Old Password Input */}
+          {/*  Old Password Input */}
           <Form.Group className="mb-3">
             <Form.Label>Current Password</Form.Label>
             <Form.Control

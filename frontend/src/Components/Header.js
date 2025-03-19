@@ -51,6 +51,9 @@ function Header() {
               <NavLink className='text-light fw-bold' to="/patients">Patient</NavLink>
               <NavLink className='text-light fw-bold' to="/Tasks">Tasks</NavLink>
               <NavLink className='text-light fw-bold' to="/Financial">Financial</NavLink>
+              <NavLink className='text-light fw-bold' to="/room-management">RoomManagement</NavLink>
+
+              
             </>
           )}
 
