@@ -140,9 +140,39 @@ router.post("/reset-password", async (req, res) => {
 
 
 // SIGNUP
+// router.post("/signup", async (req, res) => {
+//  //-------------------------- const { name, email, password, userType } = req.body;
+//  const { name, email, password, userType  } = req.body;
+
+//   try {
+//     // Check if the user already exists
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) return res.status(400).json({ message: "User already exists" });
+
+//     // Hash the password before saving
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // Ensure userType is either 'Admin' or 'Caregiver', default to 'Caregiver'
+//     const role = userType || "Caregiver"; // Default to "Caregiver" if no role is provided
+
+//     // Create a new user with the provided userType (Admin or Caregiver)
+//     // ----------------const newUser = new User({ name, email, password: hashedPassword, userType: role });
+//     const newUser = new User({ name, email, password: hashedPassword,userType: role});
+
+//     await newUser.save();
+
+//     // Respond with success message
+//     //---------------------- res.status(201).json({ message: "User registered successfully", userType: role });
+//     res.status(201).json({ message: "User registered successfully"});
+    
+//   } catch (error) {
+//     console.error(error); // Log error to server console for debugging
+//     res.status(500).json({ message: "Server Error" });
+//   }
+// });
+
 router.post("/signup", async (req, res) => {
- //-------------------------- const { name, email, password, userType } = req.body;
- const { name, email, password, userType  } = req.body;
+  const { name, email, password, userType } = req.body;
 
   try {
     // Check if the user already exists
@@ -155,15 +185,29 @@ router.post("/signup", async (req, res) => {
     // Ensure userType is either 'Admin' or 'Caregiver', default to 'Caregiver'
     const role = userType || "Caregiver"; // Default to "Caregiver" if no role is provided
 
-    // Create a new user with the provided userType (Admin or Caregiver)
-    // ----------------const newUser = new User({ name, email, password: hashedPassword, userType: role });
-    const newUser = new User({ name, email, password: hashedPassword,userType: role});
+    // Create a new user
+    const newUser = new User({ name, email, password: hashedPassword, userType: role });
 
     await newUser.save();
 
-    // Respond with success message
-    //---------------------- res.status(201).json({ message: "User registered successfully", userType: role });
-    res.status(201).json({ message: "User registered successfully"});
+    // Create JWT token
+    const token = jwt.sign(
+      { id: newUser._id, email: newUser.email, userType: newUser.userType },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    // ✅ Fix: Include `user` in response
+    res.status(201).json({
+      message: "User registered successfully",
+      token,
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        userType: newUser.userType
+      }
+    });
   } catch (error) {
     console.error(error); // Log error to server console for debugging
     res.status(500).json({ message: "Server Error" });
