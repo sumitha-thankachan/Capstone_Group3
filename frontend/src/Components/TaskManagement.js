@@ -1,29 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Table, Button } from 'react-bootstrap';
 import Header from './Header';
 import Footer from './footer';
+import axios from 'axios';
 
 const TaskManagement = () => {
   const [searchResident, setSearchResident] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState({
+    name: '',
+    task: '',
+    resident: '',
+    status: 'Pending',
+  });
 
-  // Sample data
-  const residents = [
-    {
-      name: 'John Doe',
-      age: '72',
-      medicalStatus: 'Stable',
-    }
-  ];
+  // Fetch tasks when the component is mounted
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/tasks');
+        console.log("Fetched tasks:", response.data);  // Log response data
+        setTasks(response.data);
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    };
+    fetchTasks();
+  }, []);
 
-  const tasks = [
-    {
-      name: 'Asif',
-      task: 'Morning section',
-      resident: 'John Doe',
-      status: 'Completed'
+  // Function to handle adding a new task
+  const handleAddTask = async (e) => {
+    e.preventDefault(); // Prevent form submission from refreshing the page
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/tasks', newTask);
+      console.log('Task added:', response.data);
+      setTasks([...tasks, response.data]); // Add the new task to the list of tasks
+      setNewTask({
+        name: '',
+        task: '',
+        resident: '',
+        status: 'Pending',
+      }); // Reset the form after adding the task
+    } catch (error) {
+      console.error('Error adding task:', error);
     }
-  ];
+  };
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewTask({
+      ...newTask,
+      [name]: value,
+    });
+  };
 
   return (
     <>
@@ -61,17 +93,16 @@ const TaskManagement = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {residents.map((resident, index) => (
-                    <tr key={index}>
-                      <td>{resident.name}</td>
-                      <td>{resident.age}</td>
-                      <td>{resident.medicalStatus}</td>
-                      <td>
-                        <Button variant="primary" size="sm" className="me-2 edit primary-btn">Edit</Button>
-                        <Button variant="info" className='primary-btn' size="sm">View</Button>
-                      </td>
-                    </tr>
-                  ))}
+                  {/* Replace this with your resident data */}
+                  <tr>
+                    <td>John Doe</td>
+                    <td>72</td>
+                    <td>Stable</td>
+                    <td>
+                      <Button variant="primary" size="sm" className="me-2 edit primary-btn">Edit</Button>
+                      <Button variant="info" className="primary-btn" size="sm">View</Button>
+                    </td>
+                  </tr>
                 </tbody>
               </Table>
             </div>
@@ -84,7 +115,7 @@ const TaskManagement = () => {
                 <Col>
                   <Form.Control
                     type="text"
-                    placeholder="Search caregiver..."
+                    placeholder="Search task..."
                     value={searchStatus}
                     onChange={(e) => setSearchStatus(e.target.value)}
                   />
@@ -115,12 +146,65 @@ const TaskManagement = () => {
                       <td>{task.resident}</td>
                       <td>
                         <Button variant="primary" size="sm" className="me-2 edit primary-btn">Edit</Button>
-                        <Button variant="success" size="sm" className='primary-btn'>Completed</Button>
+                        <Button variant="success" size="sm" className="primary-btn">Completed</Button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </Table>
+
+              <h4>Add New Task</h4>
+              <Form onSubmit={handleAddTask}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Task Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter task name"
+                    name="name"
+                    value={newTask.name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Task Description</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter task description"
+                    name="task"
+                    value={newTask.task}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Resident</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter resident name"
+                    name="resident"
+                    value={newTask.resident}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Status</Form.Label>
+                  <Form.Select
+                    name="status"
+                    value={newTask.status}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option>Pending</option>
+                    <option>In Progress</option>
+                    <option>Completed</option>
+                  </Form.Select>
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                  Add Task
+                </Button>
+              </Form>
             </div>
           </Col>
         </Row>

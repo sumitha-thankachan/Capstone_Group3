@@ -3,6 +3,7 @@ const router = express.Router();
 const Patient = require('../models/Patient');
 const User = require('../models/User'); // Ensure the User model is correctly imported
 
+
 // Route to register a patient
 router.post('/register', async (req, res) => {
   try {
@@ -13,6 +14,17 @@ router.post('/register', async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+// Route to get the total number of patients
+router.get("/count", async (req, res) => {
+  try {
+    const count = await Patient.countDocuments();
+    res.json({ count });
+  } catch (error) {
+    console.error("Error fetching patient count:", error);
+    res.status(500).json({ error: "Error fetching patient count" });
+  }
+});
+
 
 // Route to get all patients (for Admin approval list)
 router.get('/list', async (req, res) => {
@@ -111,24 +123,25 @@ router.get('/:email', async (req, res) => {
 // Route to update patient details
 router.put("/update/:email", async (req, res) => {
   try {
-    const email = req.params.email;
+    const { email } = req.params;
     const updatedData = req.body;
 
     const updatedPatient = await Patient.findOneAndUpdate(
       { email },
       updatedData,
-      { new: true } // Return the updated document
+      { new: true } // ✅ Ensures updated data is returned
     );
 
     if (!updatedPatient) {
       return res.status(404).json({ message: "Patient not found." });
     }
 
-    res.status(200).json(updatedPatient);
+    res.status(200).json(updatedPatient); // ✅ Returns updated patient details
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to update patient." });
   }
 });
+
 
 module.exports = router;

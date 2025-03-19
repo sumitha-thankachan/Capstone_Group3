@@ -1,11 +1,15 @@
 import React from 'react';
 import Header from './Header';
-import Footer from "./footer";
+
 import { Container, Row, Col } from 'react-bootstrap';
+import "../login.css";
+
+import Footer from "./footer";
 import "../login.css";
 import "../App";
 import welcomeBackground from '../Components/Assets/homebg1_edit.png';
 // URL : https://www.istockphoto.com/photo/caregiver-nurse-take-care-a-senior-patient-nurse-helping-senior-man-hand-holding-gm2158582612-579218519?searchscope=image%2Cfilm
+
 
 
 function Home() {
@@ -53,6 +57,7 @@ function Home() {
           </section>
       </Container>
       <Footer />
+
       </div>
   )
 }

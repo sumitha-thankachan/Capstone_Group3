@@ -15,31 +15,66 @@ function LoginSignup() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // const handleSubmit = async () => {
+  //   try {
+  //     const url = action === "Sign Up" ? "http://localhost:5000/api/auth/signup" : "http://localhost:5000/api/auth/login";
+  //     const { data } = await axios.post(url, formData);
+
+  //     localStorage.setItem("token", data.token);
+  //     localStorage.setItem("userType", data.user.userType); 
+  //     localStorage.setItem("email", data.user.email); 
+
+  //     alert(`${action} successful!`);
+
+  //     // Redirect based on userType
+  //     if (data.user.userType === "Admin") {
+  //       navigate("/admin-dashboard");
+  //     } else if (data.user.userType === "Caregiver") {
+  //       navigate("/caregiver-dashboard");
+  //     } else if (data.user.userType === "Patient") {
+  //       navigate("/patient-dashboard");
+  //     }
+  //   } catch (error) {
+  //     console.error(error); // Log the error for debugging
+  //     alert(error.response?.data?.message || "Something went wrong");
+  //   }
+  // };
   const handleSubmit = async () => {
     try {
       const url = action === "Sign Up" ? "http://localhost:5000/api/auth/signup" : "http://localhost:5000/api/auth/login";
       const { data } = await axios.post(url, formData);
-
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("userType", data.user.userType); 
-      localStorage.setItem("email", data.user.email); 
-
+  
+      if (!data || !data.user) {
+        throw new Error("User data is missing in the response");
+      }
+  
       alert(`${action} successful!`);
-
-      // Redirect based on userType
-      if (data.user.userType === "Admin") {
-        navigate("/admin-dashboard");
-      } else if (data.user.userType === "Caregiver") {
-        navigate("/caregiver-dashboard");
-      } else if (data.user.userType === "Patient") {
-        navigate("/patient-dashboard");
+  
+      if (action === "Sign Up") {
+        // ✅ Redirect to login page after signup
+        setAction("Login");
+      } else {
+        // ✅ Store user data in localStorage only for login
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userType", data.user.userType);
+        localStorage.setItem("email", data.user.email);
+  
+        // ✅ Redirect to dashboard based on userType
+        if (data.user.userType === "Admin") {
+          navigate("/admin-dashboard");
+        } else if (data.user.userType === "Caregiver") {
+          navigate("/caregiver-dashboard");
+        } else if (data.user.userType === "Patient") {
+          navigate("/patient-dashboard");
+        }
       }
     } catch (error) {
-      console.error(error); // Log the error for debugging
+      console.error("Error in login/signup:", error);
       alert(error.response?.data?.message || "Something went wrong");
     }
   };
-
+  
+  
   return (
     <div className="container-login">
       <div className="header">
@@ -63,7 +98,8 @@ function LoginSignup() {
         </div>
         {action === "Sign Up" && (
           <div className="input">
-            <select name="userType" value={formData.userType} onChange={handleChange}>
+              <img src={password_icon} alt="" />
+            <select className="input" name="userType" value={formData.userType} onChange={handleChange}>
               <option value="Caregiver">Caregiver</option>
               <option value="Patient">Patient</option>
             </select>

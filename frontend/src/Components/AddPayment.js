@@ -13,6 +13,7 @@ function AddPayment() {
         paymentMethod: 'Credit Card',
         status: 'Pending'
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -23,17 +24,29 @@ function AddPayment() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:5000/api/payments', formData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-auth-token': token
+            
+            // Create Stripe checkout session
+            const response = await axios.post('http://localhost:5000/api/stripe/create-checkout-session', 
+                {
+                    amount: formData.amount,
+                    description: formData.description
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-auth-token': token
+                    }
                 }
-            });
-            navigate('/financial');
+            );
+
+            // Redirect to Stripe Checkout
+            window.location.href = response.data.url;
         } catch (error) {
-            console.error('Error adding payment:', error);
+            console.error('Error processing payment:', error);
+            setLoading(false);
         }
     };
 
@@ -72,49 +85,21 @@ function AddPayment() {
                                 placeholder="Enter payment description"
                             ></textarea>
                         </div>
-                        <div className="payment-form-group">
-                            <label className="payment-form-label">Payment Method</label>
-                            <select
-                                className="payment-form-control payment-select"
-                                name="paymentMethod"
-                                value={formData.paymentMethod}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="Credit Card">Credit Card</option>
-                                <option value="Debit Card">Debit Card</option>
-                                <option value="Bank Transfer">Bank Transfer</option>
-                                <option value="Cash">Cash</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div className="payment-form-group">
-                            <label className="payment-form-label">Status</label>
-                            <select
-                                className="payment-form-control payment-select"
-                                name="status"
-                                value={formData.status}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="Pending">Pending</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Failed">Failed</option>
-                            </select>
-                        </div>
                         <div className="payment-button-group">
                             <button
                                 type="button"
                                 className="payment-button payment-button-secondary"
                                 onClick={() => navigate('/financial')}
+                                disabled={loading}
                             >
                                 Cancel
                             </button>
                             <button 
                                 type="submit" 
                                 className="payment-button payment-button-primary"
+                                disabled={loading}
                             >
-                                Add Payment
+                                {loading ? 'Processing...' : 'Proceed to Payment'}
                             </button>
                         </div>
                     </form>
