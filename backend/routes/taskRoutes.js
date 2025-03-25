@@ -19,6 +19,39 @@ router.post('/', async (req, res) => { // ✅ Path should be '/'
     res.status(400).json({ message: err.message });
   }
 });
+
+// Update task details
+router.put('/:id', async (req, res) => {
+  try {
+    const { name, task, resident, status } = req.body;
+    const updatedTask = await Task.findByIdAndUpdate(
+      req.params.id,
+      { name, task, resident, status },
+      { new: true } // Return the updated document
+    );
+    
+    if (!updatedTask) return res.status(404).json({ message: 'Task not found' });
+
+    res.json(updatedTask);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const task = await Task.findByIdAndDelete(req.params.id);
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    res.json({ message: 'Task deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error deleting task', error: err.message });
+  }
+});
+
+
 // Route to get the total number of tasks
 router.get("/count", async (req, res) => {
     try {

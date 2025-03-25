@@ -94,7 +94,23 @@ const PatientRegistration = () => {
       console.error("Error:", error);
     }
   };
+// ✅ ADD validateForm FUNCTION HERE
+const validateForm = () => {
+  let newErrors = {};
 
+  if (!formData.name.trim()) newErrors.name = "Name is required.";
+  if (!formData.age || formData.age <= 0) newErrors.age = "Valid age is required.";
+  if (!formData.gender) newErrors.gender = "Gender is required.";
+  if (!formData.contact.trim()) newErrors.contact = "Contact number is required.";
+  if (!formData.email.trim()) newErrors.email = "Email is required.";
+  if (!formData.address.trim()) newErrors.address = "Address is required.";
+  if (!formData.medicalHistory.trim()) newErrors.medicalHistory = "Medical history is required.";
+  if (!formData.allergies.trim()) newErrors.allergies = "Allergy information is required.";
+
+  setErrors(newErrors);
+
+  return Object.keys(newErrors).length === 0; // Returns true if no errors
+};
   const handleUpdate = async () => {
     if (!validateForm()) return;
 
