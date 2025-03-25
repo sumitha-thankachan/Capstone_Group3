@@ -19,7 +19,7 @@ router.post("/change-password", authenticateUser, async (req, res) => {
 
     let user;
     
-    // ✅ Fetch user from the `Users` table for authentication
+    //  Fetch user from the `Users` table for authentication
     const userAuth = await User.findOne({ email });
 
     if (!userAuth) {
@@ -34,14 +34,14 @@ router.post("/change-password", authenticateUser, async (req, res) => {
       return res.status(400).json({ message: "User password not found in database." });
     }
 
-    // ✅ Check if old password is correct
+    // Check if old password is correct
     const isMatch = await bcrypt.compare(oldPassword, userAuth.password);
     if (!isMatch) {
       console.log("Incorrect current password.");
       return res.status(400).json({ message: "Incorrect current password." });
     }
 
-    // ✅ Fetch user profile based on `userType`
+    //  Fetch user profile based on `userType`
     if (userType === "Patient") {
       user = await Patient.findOne({ email });
     } else if (userType === "Caregiver") {
@@ -56,9 +56,9 @@ router.post("/change-password", authenticateUser, async (req, res) => {
       return res.status(404).json({ message: "User profile not found." });
     }
 
-    // ✅ Hash new password
+    // Hash new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    userAuth.password = hashedPassword; // ✅ Update password in `Users` table
+    userAuth.password = hashedPassword; // Update password in `Users` table
     await userAuth.save();
 
     console.log("Password changed successfully for:", email);
@@ -73,7 +73,7 @@ router.post("/change-password", authenticateUser, async (req, res) => {
 
 
 
-// ✅ Route: Send password reset link (Only for Patients & Caregivers)
+//  Route: Send password reset link (Only for Patients & Caregivers)
 router.post("/forgot-password", async (req, res) => {
   try {
     const { email, role } = req.body;
@@ -103,7 +103,7 @@ router.post("/forgot-password", async (req, res) => {
   }
 });
 
-// ✅ Route: Reset password (Only for Patients & Caregivers)
+// Route: Reset password (Only for Patients & Caregivers)
 router.post("/reset-password", async (req, res) => {
   try {
     const { token, newPassword } = req.body;
@@ -197,7 +197,7 @@ router.post("/signup", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    // ✅ Fix: Include `user` in response
+    // Fix: Include `user` in response
     res.status(201).json({
       message: "User registered successfully",
       token,

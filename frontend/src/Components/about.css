@@ -1,0 +1,78 @@
+/* Banner Section */
+.about-banner {
+  background-image: url('./Assets/homebg1_edit.png');
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.banner-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-heading {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+/* General Section Styles */
+.section-box {
+  background-color: #ffffff;
+  border-radius: 15px;
+  border-top: 4px solid #20a8ad;
+}
+
+.section-header {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Feature Cards */
+.feature-card {
+  border: none;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Team Images */
+.team-img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #20a8ad;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .about-banner {
+    height: 200px;
+  }
+
+  .banner-heading {
+    font-size: 2rem;
+  }
+
+  .team-img {
+    width: 120px;
+    height: 120px;
+  }
+}

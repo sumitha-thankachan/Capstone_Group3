@@ -23,7 +23,7 @@ import ResetPassword from "./Components/ResetPassword";
 import ChangePassword from "./Components/ChangePassword";
 import Patients from "./Components/Patients";
 import RoomManagement from "./Components/RoomManagement";
-
+import PatientProfile from "./Components/PatientProfile";
 
 function App() {
   const email = localStorage.getItem("email");  // Assuming email is stored as 'email' in localStorage
@@ -56,6 +56,8 @@ function App() {
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/patients" element={<Patients />} />
         <Route path="/room-management" element={<RoomManagement />} />
+        <Route path="/profile" element={<PatientProfile />} />
+
       </Routes> 
     </div>
   );

@@ -9,7 +9,9 @@ const caregiverSchema = new mongoose.Schema({
   address: String,
   experience: Number,
   specialization: String,
-  isApproved: { type: Boolean, default: false }, // Admin approval flag
+  isApproved: { type: Boolean, default: false }, 
+  image: String, // or Buffer if storing binary
+resume: String,
 });
 
 

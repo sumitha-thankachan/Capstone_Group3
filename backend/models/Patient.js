@@ -11,6 +11,8 @@ const patientSchema = new mongoose.Schema({
   allergies: { type: String, required: true },
   isApproved: { type: Boolean, default: false }, // If approval is required
   dateAdded: { type: Date, default: Date.now },
+  medicalPhoto: { type: String },  // store filename or path
+  medicalReport: { type: String }
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

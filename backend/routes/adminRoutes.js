@@ -15,12 +15,12 @@ const { authenticateAdmin } = require("../middleware/auth");
 
 const router = express.Router();
 
-// ✅ Fetch pending & approved patients
-// ✅ Fetch pending & approved patients (Admins only)
+//  Fetch pending & approved patients
+//  Fetch pending & approved patients (Admins only)
 router.get("/patients", authenticateAdmin, async (req, res) => {
   try {
-    console.log("Admin Request Received"); // ✅ Debugging
-    console.log("Authorization Header:", req.header("Authorization")); // ✅ Log Token
+    console.log("Admin Request Received");
+    console.log("Authorization Header:", req.header("Authorization")); 
 
     const pending = await Patient.find({ isApproved: false });
     const approved = await Patient.find({ isApproved: true });
@@ -33,7 +33,7 @@ router.get("/patients", authenticateAdmin, async (req, res) => {
 });
 router.put("/approve-patient/:id", authenticateAdmin, async (req, res) => {
   try {
-    console.log("Approve Request Received for ID:", req.params.id); // ✅ Debugging
+    console.log("Approve Request Received for ID:", req.params.id); //  Debugging
 
     const patient = await Patient.findByIdAndUpdate(
       req.params.id,
@@ -42,33 +42,33 @@ router.put("/approve-patient/:id", authenticateAdmin, async (req, res) => {
     );
 
     if (!patient) {
-      console.log("❌ Patient not found");
+      console.log(" Patient not found");
       return res.status(404).json({ message: "Patient not found" });
     }
 
-    console.log("✅ Approved Patient:", patient); // ✅ Debugging output
+    console.log("Approved Patient:", patient); //  Debugging output
 
     res.json({ message: "Patient approved successfully!", patient });
   } catch (error) {
-    console.error("❌ Error approving patient:", error);
+    console.error(" Error approving patient:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 router.delete("/delete-patient/:id", authenticateAdmin, async (req, res) => {
   try {
-    console.log("🗑️ Deleting Patient ID:", req.params.id); // ✅ Debugging output
+    console.log(" Deleting Patient ID:", req.params.id); //  Debugging output
 
     const patient = await Patient.findByIdAndDelete(req.params.id);
 
     if (!patient) {
-      console.log("❌ Patient not found");
+      console.log(" Patient not found");
       return res.status(404).json({ message: "Patient not found" });
     }
 
-    console.log("✅ Patient Deleted:", patient);
+    console.log(" Patient Deleted:", patient);
     res.json({ message: "Patient deleted successfully!" });
   } catch (error) {
-    console.error("❌ Error deleting patient:", error);
+    console.error("Error deleting patient:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });

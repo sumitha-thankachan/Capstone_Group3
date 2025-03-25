@@ -1,50 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import Axios from 'axios'; // Import Axios for making API requests
+import Axios from 'axios';
 import Header from "./Header";
 import Footer from './footer';
+import Sidebar from './Sidebar';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import './PatientDashboard.css';
 
 function CaregiverDashboard() {
-  const [residentsCount, setResidentsCount] = useState(0); // State for number of residents
+  const [residentsCount, setResidentsCount] = useState(0);
 
-  // Fetch the number of residents when the component mounts
   useEffect(() => {
     const fetchResidentsCount = async () => {
       try {
-        const response = await Axios.get('http://localhost:5000/api/patients/count'); // API for residents count
-        setResidentsCount(response.data.count); // Set the state with the count
+        const response = await Axios.get('http://localhost:5000/api/patients/count');
+        setResidentsCount(response.data.count);
       } catch (error) {
         console.error('Error fetching residents count:', error);
       }
     };
 
-    fetchResidentsCount(); // Call the function to fetch the count
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
+    fetchResidentsCount();
+  }, []);
 
   return (
-    <div>
+    <>
       <Header />
-      <h2 className="fw-bold">Care Giver Dashboard</h2>
+      <div className="dashboard-container">
+        <Sidebar />
 
-      <div className="admin-mainContainers">
-        <div className="admin-subcontainers">
-          <div className="admin-containers">
-            <div className="combo">
-              <h4>Number of Residence</h4>
-              <i className="bi bi-person-circle icon"></i>
-            </div>
-            <h5>{residentsCount}</h5> {/* Dynamically displaying the number of residents */}
-          </div>
-          <div className="admin-containers">
-            <div className="combo">
-              <h4>Total Tasks</h4>
-              <i className="bi bi-person-circle icon"></i>
-            </div>
-            <h5>158</h5> {/* Placeholder value for tasks (you can change this later) */}
-          </div>
-        </div>
+        <main className="dashboard-main">
+          <h2 className="fw-bold">Caregiver Dashboard</h2>
+          <Container fluid>
+            <Row className="g-4">
+              <Col md={6}>
+                <Card className="dashboard-card">
+                  <div className="combo">
+                    <h4>Number of Residents</h4>
+                    <i className="bi bi-people-fill icon"></i>
+                  </div>
+                  <h3>{residentsCount}</h3>
+                </Card>
+              </Col>
+
+              <Col md={6}>
+                <Card className="dashboard-card">
+                  <div className="combo">
+                    <h4>Total Tasks</h4>
+                    <i className="bi bi-list-check icon"></i>
+                  </div>
+                  <h3>158</h3> {/* Replace with API data later if needed */}
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+        </main>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

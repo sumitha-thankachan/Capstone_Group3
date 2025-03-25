@@ -1,7 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Caregiver = require('../models/Caregiver');
-const User = require('../models/User');
+const Caregiver = require("../models/Caregiver");
+const User = require("../models/User");
+const multer = require("multer");
+const path = require("path");
+
+// === Multer setup ===
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // make sure this folder exists
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const filename = `${Date.now()}-${file.fieldname}${ext}`;
+    cb(null, filename);
+  },
+});
+
+const upload = multer({ storage });
 
 // Route to get count of approved caregivers
 router.get('/count/approved', async (req, res) => {
@@ -26,15 +42,40 @@ router.get('/list', async (req, res) => {
 });
 
 // Route to register a caregiver
-router.post('/register', async (req, res) => {
-  try {
-    const newCaregiver = new Caregiver(req.body);
-    await newCaregiver.save();
-    res.status(201).json({ message: 'Caregiver registered successfully' });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+// router.post('/register', async (req, res) => {
+//   try {
+//     const newCaregiver = new Caregiver(req.body);
+//     await newCaregiver.save();
+//     res.status(201).json({ message: 'Caregiver registered successfully' });
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// });
+// Register caregiver with image & resume upload
+router.post(
+  "/register",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "resume", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    try {
+      const newCaregiver = new Caregiver({
+        ...req.body,
+        image: req.files?.image?.[0]?.filename,
+        resume: req.files?.resume?.[0]?.filename,
+      });
+
+      await newCaregiver.save();
+      res.status(201).json({ message: "Caregiver registered successfully" });
+    } catch (error) {
+      console.error("Error registering caregiver:", error);
+      res.status(400).json({ error: error.message });
+    }
   }
-});
+);
+
+
 
 // Route to approve a caregiver
 router.put('/approve/:id', async (req, res) => {
@@ -119,26 +160,66 @@ router.get('/:email', async (req, res) => {
 });
 
 // Update caregiver details
-router.put("/update/:email", async (req, res) => {
-  try {
-    const email = req.params.email;
-    const updatedData = req.body;
+// router.put("/update/:email", async (req, res) => {
+//   try {
+//     const email = req.params.email;
+//     const updatedData = req.body;
 
-    const updatedCaregiver = await Caregiver.findOneAndUpdate(
-      { email },
-      updatedData,
-      { new: true }
-    );
+//     const updatedCaregiver = await Caregiver.findOneAndUpdate(
+//       { email },
+//       updatedData,
+//       { new: true }
+//     );
 
-    if (!updatedCaregiver) {
-      return res.status(404).json({ message: "Caregiver not found." });
+//     if (!updatedCaregiver) {
+//       return res.status(404).json({ message: "Caregiver not found." });
+//     }
+
+//     res.status(200).json(updatedCaregiver);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Failed to update caregiver." });
+//   }
+// });
+router.put(
+  "/update/:email",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "resume", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    try {
+      const { email } = req.params;
+
+      const updateData = {
+        ...req.body,
+      };
+
+      if (req.files?.image?.[0]) {
+        updateData.image = req.files.image[0].filename;
+      }
+
+      if (req.files?.resume?.[0]) {
+        updateData.resume = req.files.resume[0].filename;
+      }
+
+      const updatedCaregiver = await Caregiver.findOneAndUpdate(
+        { email },
+        updateData,
+        { new: true }
+      );
+
+      if (!updatedCaregiver) {
+        return res.status(404).json({ message: "Caregiver not found." });
+      }
+
+      res.status(200).json(updatedCaregiver);
+    } catch (error) {
+      console.error("Error updating caregiver:", error);
+      res.status(500).json({ message: "Failed to update caregiver." });
     }
-
-    res.status(200).json(updatedCaregiver);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to update caregiver." });
   }
-});
+);
+
 
 module.exports = router;

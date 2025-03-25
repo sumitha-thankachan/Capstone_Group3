@@ -3,7 +3,7 @@ const Room = require("../models/Room");
 const Patient = require("../models/Patient");
 const router = express.Router();
 
-// ✅ Fetch All Rooms
+//  Fetch All Rooms
 router.get("/", async (req, res) => {
   try {
     const rooms = await Room.find().populate("residents", "name age medicalStatus");
@@ -13,11 +13,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ Add a New Room
+//  Add a New Room
 router.post("/", async (req, res) => {
   try {
     const { roomNumber, type, capacity } = req.body;
-    const newRoom = new Room({ roomNumber, type, capacity, status: "Available" }); // ✅ Default status: Available
+    const newRoom = new Room({ roomNumber, type, capacity, status: "Available" }); //  Default status: Available
     await newRoom.save();
     res.status(201).json({ message: "Room added successfully", room: newRoom });
   } catch (error) {
@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ✅ Assign a Patient to a Room & Update Status
+//  Assign a Patient to a Room & Update Status
 router.put("/:id/assign", async (req, res) => {
     try {
       const room = await Room.findById(req.params.id);
@@ -35,7 +35,7 @@ router.put("/:id/assign", async (req, res) => {
         return res.status(404).json({ message: "Room or Patient not found" });
       }
   
-      // ✅ Prevent assignment if the patient is already in another room
+      //  Prevent assignment if the patient is already in another room
       const existingRoom = await Room.findOne({ residents: patient._id });
       if (existingRoom) {
         return res.status(400).json({
@@ -43,24 +43,24 @@ router.put("/:id/assign", async (req, res) => {
         });
       }
   
-      // ✅ Prevent assignment if the room is under maintenance
+      // Prevent assignment if the room is under maintenance
       if (room.status === "Under Maintenance") {
         return res.status(400).json({ message: "Cannot assign patients to a room under maintenance." });
       }
   
-      // ✅ Prevent assignment if the room is full
+      //  Prevent assignment if the room is full
       if (room.residents.length >= room.capacity) {
         return res.status(400).json({ message: "Room is full" });
       }
   
-      // ✅ Assign patient to the room
+      //  Assign patient to the room
       room.residents.push(patient._id);
       await room.save();
   
       patient.room = room._id;
       await patient.save();
   
-      // ✅ Update status to "Occupied" if room is full
+      //  Update status to "Occupied" if room is full
       if (room.residents.length >= room.capacity) {
         room.status = "Occupied";
         await room.save();
@@ -73,7 +73,7 @@ router.put("/:id/assign", async (req, res) => {
   });
   
   
-// ✅ Remove a Patient from a Room & Update Status
+//  Remove a Patient from a Room & Update Status
 router.put("/:id/remove", async (req, res) => {
   try {
     const room = await Room.findById(req.params.id);

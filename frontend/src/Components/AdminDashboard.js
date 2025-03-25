@@ -2,24 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "./Header";
 import Footer from "./footer";
+import Sidebar from './Sidebar';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import "../App";
-import bannerImage from "./Assets/admin-dashboard.jpg"; 
+import bannerImage from "./Assets/admin-dashboard.jpg";
+import './PatientDashboard.css';
+
 function AdminDashboard() {
-  /* const [approvedCaregiversCount, setApprovedCaregiversCount] = useState(0);
-
-  useEffect(() => {
-    const fetchApprovedCaregiversCount = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/caregivers/count/approved');
-        setApprovedCaregiversCount(response.data.count);
-      } catch (error) {
-        console.error('Error fetching approved caregivers count:', error);
-      }
-    };
-
-    fetchApprovedCaregiversCount();
-  }, []); */
   const [approvedCaregiversCount, setApprovedCaregiversCount] = useState(0);
+  const [residentsCount, setResidentsCount] = useState(0);
 
   useEffect(() => {
     const fetchApprovedCaregiversCount = async () => {
@@ -31,105 +22,93 @@ function AdminDashboard() {
       }
     };
 
-    fetchApprovedCaregiversCount();
-  }, []);
-
-  const [residentsCount, setResidentsCount] = useState(0); // State for number of residents
-
-  // Fetch the number of residents when the component mounts
-  useEffect(() => {
     const fetchResidentsCount = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/patients/count'); // API for residents count
-        setResidentsCount(response.data.count); // Set the state with the count
+        const response = await axios.get('http://localhost:5000/api/patients/count');
+        setResidentsCount(response.data.count);
       } catch (error) {
         console.error('Error fetching residents count:', error);
       }
     };
 
-    fetchResidentsCount(); // Call the function to fetch the count
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
+    fetchApprovedCaregiversCount();
+    fetchResidentsCount();
+  }, []);
 
   return (
-    <div>
+    <>
       <Header />
 
-      <div
-        className="mt-4"
-        style={{
-          background: `url(${bannerImage})`,
-          minHeight: '400px',
-          position: 'relative',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)", 
-          }}
-        ></div>
-        
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            textAlign: "center",
-            color: "#fff",
-          }}
-        >
-          <h2 className="fw-bold">Welcome to Admin Dashboard</h2>
-        </div>
-        </div>
+      <div className="dashboard-container">
+        <Sidebar />
 
-      
+        <main className="dashboard-main">
+          {/* <div
+            className="mt-4 position-relative"
+            style={{
+              background: `url(${bannerImage})`,
+              minHeight: '300px',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              borderRadius: '12px',
+              overflow: 'hidden'
+            }}
+          >
+            <div className="banner-overlay"></div>
+            <div className="banner-content">
+              <h2 className="fw-bold text-white">Welcome to Admin Dashboard</h2>
+            </div>
+          </div> */}
 
-      <div className="admin-mainContainers">
-        <div className="admin-subcontainers">
-          <div className="admin-containers">
-            <div className="combo">
-              <h4>Number of Residence</h4>
-              <i className="bi bi-person-circle icon"></i>
-            </div>
-              <h5>{residentsCount}</h5>
-          </div>
-          <div className="admin-containers">
-            <div className="combo">
-              <h4>Number of Caregivers</h4>
-              <i className="bi bi-person-circle icon"></i>
-            </div>
-            <h5>{approvedCaregiversCount}</h5>
-          </div>
-        </div>
-        <div className="admin-subcontainers">
-          <div className="admin-containers">
-            <div className="combo">
-              <h4>Total Tasks</h4>
-              <i className="bi bi-person-circle icon"></i>
-            </div>
-            <h5>158</h5>
-          </div>
-          <div className="admin-containers">
-            <div className="combo">
-              <h4>Financial Summary</h4>
-              <i className="bi bi-person-circle icon"></i>
-            </div>
-            <h5>158</h5>
-          </div>
-        </div>
+          <Container fluid className="mt-4">
+            <Row className="g-4">
+              <Col md={6}>
+                <Card className="dashboard-card shadow">
+                  <div className="combo">
+                    <h4>Number of Residents</h4>
+                    <i className="bi bi-people-fill icon"></i>
+                  </div>
+                  <h3>{residentsCount}</h3>
+                </Card>
+              </Col>
+
+              <Col md={6}>
+                <Card className="dashboard-card shadow">
+                  <div className="combo">
+                    <h4>Number of Caregivers</h4>
+                    <i className="bi bi-person-check-fill icon"></i>
+                  </div>
+                  <h3>{approvedCaregiversCount}</h3>
+                </Card>
+              </Col>
+
+              <Col md={6}>
+                <Card className="dashboard-card shadow">
+                  <div className="combo">
+                    <h4>Total Tasks</h4>
+                    <i className="bi bi-list-check icon"></i>
+                  </div>
+                  <h3>158</h3> {/* Placeholder value */}
+                </Card>
+              </Col>
+
+              <Col md={6}>
+                <Card className="dashboard-card shadow">
+                  <div className="combo">
+                    <h4>Financial Summary</h4>
+                    <i className="bi bi-currency-dollar icon"></i>
+                  </div>
+                  <h3>158</h3> {/* Placeholder value */}
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+        </main>
       </div>
+
       <Footer />
-    </div>
-    
+    </>
   );
 }
 
 export default AdminDashboard;
-

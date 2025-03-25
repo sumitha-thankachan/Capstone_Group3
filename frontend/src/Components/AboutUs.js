@@ -1,109 +1,123 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import "../login.css";
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import Header from './Header';
 import Footer from './footer';
+import './about.css';
+
+// Replace with actual paths to your images
+import bannerImg from './Assets/homebg1_edit.png';
+import visionImg from './Assets/homebg1_edit.png';
+import missionImg from './Assets/homebg1_edit.png';
+import asif from "./Assets/asif1.jpg";
+import karthik from "./Assets/karthik.png";
+import sumitha from "./Assets/tithi_patel.jpg";
+import tithi from "./Assets/tithi_patel.jpg";
 
 function AboutUs() {
   return (
-    <div>
+    <>
       <Header />
-      <Container className="about-container">
-        <h2>About Us</h2>
 
-        {/* Who We Are */}
-        <section className="who-we-are">
-          <h3>Who We Are</h3>
-          <p>
-            Our platform is designed to simplify and enhance the management of elderly care. We aim to provide a comprehensive solution that streamlines daily operations, ensures efficient communication, and promotes the well-being of residents.
-          </p>
-        </section>
+      {/* Banner Section */}
+      <section className="about-banner text-center text-white">
+        <div className="banner-overlay">
+          <h1 className="banner-heading">About Us</h1>
+        </div>
+      </section>
 
-        {/* Our Mission */}
-        <section className="our-mission">
-          <h3>Our Mission</h3>
-          <p>
-            We built this system to enhance elderly care management by providing a reliable, user-friendly, and efficient platform. Our goal is to improve the quality of life for residents and support caregivers in their important work.
-          </p>
-        </section>
+      <Container className="my-5 py-4">
 
-        {/* How We Help */}
-        <section className="how-we-help">
-          <h3>How We Help</h3>
-          <Row>
-            <Col md={4}>
-              <div className="feature">
-                <h4>Managing Residents and Caregivers</h4>
-                <p>Efficiently manage resident and caregiver profiles, ensuring all information is up-to-date and accessible.</p>
-              </div>
+        {/* Vision Section */}
+        <section className="section-box shadow-sm p-4 mb-5">
+          <Row className="align-items-center">
+            <Col md={6}>
+              <img src={visionImg} alt="Our Vision" className="img-fluid rounded shadow-sm" />
             </Col>
-            <Col md={4}>
-              <div className="feature">
-                <h4>Scheduling Daily/Weekly Tasks</h4>
-                <p>Create and manage schedules for daily and weekly tasks, ensuring smooth operations and accountability.</p>
-              </div>
-            </Col>
-            <Col md={4}>
-              <div className="feature">
-                <h4>Tracking Medical and Financial Records</h4>
-                <p>Keep detailed records of medical and financial information, ensuring transparency and ease of access.</p>
-              </div>
+            <Col md={6}>
+              <h3 className="section-header">Our Vision</h3>
+              <p>
+                Our vision is to revolutionize elderly care management, establishing new standards for caregiving efficiency and resident satisfaction.
+              </p>
             </Col>
           </Row>
         </section>
 
-        {/* Our Team */}
-        <section className="our-team">
-          <h3>Our Team</h3>
-          <Row>
-            <Col md={3}>
-              <div className="team-member">
-              <img className="team-image" src={require("../Components/Assets/asif1.jpg")} alt="Asif Mattanayil Mujeeb" />
-                <h4>Asif Mattanayil Mujeeb</h4>
-              </div>
+        {/* Our Mission Section */}
+        <section className="section-box shadow-sm p-4 mb-5">
+          <Row className="align-items-center">
+            <Col md={6}>
+              <h3 className="section-header">Our Mission</h3>
+              <p>
+                Dedicated to empowering caregivers with intuitive tools, enhancing communication, and improving overall quality of life.
+              </p>
             </Col>
-            <Col md={3}>
-              <div className="team-member">
-              <img className="team-image" src={require("../Components/Assets/karthik.png")} alt="Karthik Janardhanan" />
-                <h4>Karthik Janardhanan</h4>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="team-member">
-                <img src="/path-to-team-member-image.jpg" alt="Sumitha Thankachan" className="team-image" />
-                <h4>Sumitha Thankachan</h4>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="team-member">
-                <img className="team-image" src={require("../Components/Assets/tithi_patel.jpg")} alt="Tithi Patel" />
-                <h4>Tithi Patel</h4>
-              </div>
+            <Col md={6}>
+              <img src={missionImg} alt="Our Mission" className="img-fluid rounded shadow-sm" />
             </Col>
           </Row>
         </section>
 
-        {/* Client Feedback Section */}
-        <section className="client-feedback-section">
-          <h2>What Our Clients Say</h2>
-          <div className="feedback-container">
-            <div className="feedback-item">
-              <p>"This platform has been a game-changer for managing our elderly home. Highly recommended!"</p>
-              <cite>- Harsh</cite>
-            </div>
-            <div className="feedback-item">
-              <p>"The activity tracking feature is incredibly useful. It helps us keep our residents engaged and happy."</p>
-              <cite>- Purvi</cite>
-            </div>
-            <div className="feedback-item">
-              <p>"The secure records feature gives us peace of mind. We can trust this platform with our residents' information."</p>
-              <cite>- Parth</cite>
-            </div>
-          </div>
+        {/* How We Help Section */}
+        <section className="section-box shadow-sm p-4 mb-5">
+          <h3 className="section-header text-center mb-4">How We Help</h3>
+          <Row>
+            <Col md={4}>
+              <Card className="feature-card">
+                <Card.Body>
+                  <Card.Title>Resident & Caregiver Management</Card.Title>
+                  <Card.Text>
+                    Easily manage detailed profiles.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col md={4}>
+              <Card className="feature-card">
+                <Card.Body>
+                  <Card.Title>Task Scheduling</Card.Title>
+                  <Card.Text>
+                    Simplify daily and weekly task management.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col md={4}>
+              <Card className="feature-card">
+                <Card.Body>
+                  <Card.Title>Secure Records</Card.Title>
+                  <Card.Text>
+                    Maintain secure, transparent medical & financial records.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
         </section>
+
+        {/* Our Team Section */}
+        <section className="section-box shadow-sm p-4 mb-5">
+          <h3 className="section-header text-center mb-4">Meet Our Team</h3>
+          <Row className="text-center">
+            {[
+              { img: asif, name: "Asif Mujeeb" },
+              { img: karthik, name: "Karthik Janardhanan" },
+              { img: sumitha, name: "Sumitha Thankachan" },
+              { img: tithi, name: "Tithi Patel" }
+            ].map(member => (
+              <Col md={3} key={member.name}>
+                <img src={member.img} alt={member.name} className="team-img" />
+                <h5 className="mt-3">{member.name}</h5>
+              </Col>
+            ))}
+          </Row>
+        </section>
+
       </Container>
+
       <Footer />
-    </div>
+    </>
   );
 }
 

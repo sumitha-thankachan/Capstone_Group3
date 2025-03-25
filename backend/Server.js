@@ -32,7 +32,7 @@ app.use('/api/caregivers', caregiverRoutes);
 app.use("/api/patients", patientRoutes); 
 app.use("/api/admin", adminRoutes); 
 app.use("/api/rooms", roomRoutes);
-
+app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
