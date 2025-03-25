@@ -1,9 +1,6 @@
 import React from 'react';
 import Header from './Header';
-
 import { Container, Row, Col } from 'react-bootstrap';
-import "../login.css";
-
 import Footer from "./footer";
 import "../login.css";
 import "../App";

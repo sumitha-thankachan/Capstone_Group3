@@ -9,7 +9,7 @@ function Financial() {
   const navigate = useNavigate();
   const location = useLocation();
   const [expenses, setExpenses] = useState([]);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); 
   const [editingExpenseId, setEditingExpenseId] = useState(null);
   const [editedExpense, setEditedExpense] = useState({});
 
@@ -59,7 +59,7 @@ function Financial() {
       return; // Exit if user clicks on cancel deletion
     }
 
-    console.log("Attempting to delete expense with ID:", id);
+    console.log("Attempting to delete expense with ID:", id); 
 
     try {
       const response = await axios.delete(
@@ -71,7 +71,7 @@ function Financial() {
         }
       );
 
-      console.log("Delete response:", response.data);
+      console.log("Delete response:", response.data); 
 
       if (response.status === 200) {
         setExpenses((prevExpenses) =>
@@ -101,10 +101,7 @@ function Financial() {
   // Function to update an expense in MongoDB
   const handleUpdate = async (id) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5000/api/expenses/${id}`,
-        editedExpense
-      );
+      const response = await axios.put(`http://localhost:5000/api/expenses/${id}`, editedExpense);
       if (response.status === 200) {
         setExpenses((prevExpenses) =>
           prevExpenses.map((expense) =>
@@ -200,24 +197,15 @@ function Financial() {
                     <td>
                       {editingExpenseId === expense._id ? (
                         <>
-                          <button
-                            className="update primary-btn"
-                            onClick={() => handleUpdate(expense._id)}
-                          >
+                          <button className="update primary-btn" onClick={() => handleUpdate(expense._id)}>
                             Update
                           </button>
-                          <button
-                            className="cancel primary-btn"
-                            onClick={() => setEditingExpenseId(null)}
-                          >
+                          <button className="cancel primary-btn" onClick={() => setEditingExpenseId(null)}>
                             Cancel
                           </button>
                         </>
                       ) : (
-                        <button
-                          className="edit primary-btn"
-                          onClick={() => handleEdit(expense)}
-                        >
+                        <button className="edit primary-btn" onClick={() => handleEdit(expense)}>
                           Edit
                         </button>
                       )}
