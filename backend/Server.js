@@ -3,20 +3,20 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
-<<<<<<< HEAD
-const caregiverRoutes = require("./routes/caregiverRoutes");
-const patientRoutes = require("./routes/patientRoutes");
-const expensesRoutes = require("./routes/expenses");
 const Expense = require("./models/Expense"); 
 
-=======
+// <<<<<<< HEAD
+// const caregiverRoutes = require("./routes/caregiverRoutes");
+// const patientRoutes = require("./routes/patientRoutes");
+const expensesRoutes = require("./routes/expenses");
+// =======
 const stripeRoutes = require('./routes/stripeRoutes');
 const caregiverRoutes = require('./routes/caregiverRoutes');
 const patientRoutes = require('./routes/patientRoutes');
 const adminRoutes = require("./routes/adminRoutes");
 const roomRoutes = require("./routes/roomRoutes");
 const taskRoutes = require('./routes/taskRoutes');
->>>>>>> ea26148cb68046af7e0d321fc7c634dd6ab13b30
+// >>>>>>> ea26148cb68046af7e0d321fc7c634dd6ab13b30
 dotenv.config();
 
 const app = express();
