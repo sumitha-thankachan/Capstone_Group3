@@ -91,4 +91,26 @@
     color: #000;
     margin-right: 5px;
   }
-  
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 1rem;
+    margin: 1rem auto;
+    border-radius: 4px;
+    text-align: center;
+    max-width: 600px;
+    animation: fadeIn 0.5s ease-in-out;
+    border: 1px solid #c3e6cb;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

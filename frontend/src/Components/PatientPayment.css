@@ -1,0 +1,133 @@
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.payment-form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-form-title {
+    color: #333;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.payment-form-group {
+    margin-bottom: 20px;
+}
+
+.payment-form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+.payment-input-group {
+    display: flex;
+    align-items: center;
+}
+
+.payment-input-group-text {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    color: #555;
+}
+
+.payment-form-control {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 0 4px 4px 0;
+    font-size: 16px;
+}
+
+.payment-form-control:focus {
+    outline: none;
+    border-color: #2196F3;
+}
+
+.payment-textarea {
+    width: 100%;
+    min-height: 100px;
+    border-radius: 4px !important;
+    resize: vertical;
+}
+
+.payment-button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.payment-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.payment-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.payment-button-primary {
+    background-color: #2196F3;
+    color: white;
+}
+
+.payment-button-primary:hover:not(:disabled) {
+    background-color: #1976D2;
+}
+
+.payment-button-secondary {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.payment-button-secondary:hover:not(:disabled) {
+    background-color: #e9ecef;
+}
+
+.donation-amounts {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.donation-amount-btn {
+    padding: 10px 20px;
+    border: 2px solid #007bff;
+    background: white;
+    color: #007bff;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    min-width: 80px;
+}
+
+.donation-amount-btn:hover {
+    background: #007bff;
+    color: white;
+}
+
+.donation-amount-btn.selected {
+    background: #007bff;
+    color: white;
+}

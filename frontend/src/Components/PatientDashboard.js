@@ -1,26 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import Header from './Header';
 import Footer from './footer';
+import axios from 'axios';
 import './PatientDashboard.css';
 
 function PatientDashboard() {
   const [patient, setPatient] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
-    const email = localStorage.getItem('email');
-    if (email) {
-      fetch(`http://localhost:5000/api/patients/profile/${email}`)
-        .then(res => res.json())
-        .then(data => setPatient(data))
-        .catch(err => console.error("Error fetching patient:", err));
+    // Check for payment success message
+    const paymentSuccess = sessionStorage.getItem('paymentSuccess');
+    if (paymentSuccess === 'true') {
+      setShowSuccessMessage(true);
+      sessionStorage.removeItem('paymentSuccess'); // Clear the success flag
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 5000);
     }
+
+    // Fetch patient data
+    const fetchPatientData = async () => {
+      try {
+        const email = localStorage.getItem('email');
+        if (email) {
+          const response = await axios.get(`http://localhost:5000/api/patients/profile/${email}`);
+          setPatient(response.data);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching patient data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchPatientData();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
       <Header />
+      {showSuccessMessage && (
+        <div className="success-message">
+          Payment was successful!
+        </div>
+      )}
       <div className="dashboard-container">
         {/* Sidebar */}
         <aside className="dashboard-sidebar">
@@ -40,6 +72,9 @@ function PatientDashboard() {
             </NavLink>
             <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
               👤 Profile
+            </NavLink>
+            <NavLink to="/patient-financial" className={({ isActive }) => isActive ? "active" : ""}>
+              👤 Financial
             </NavLink>
           </div>
         </aside>

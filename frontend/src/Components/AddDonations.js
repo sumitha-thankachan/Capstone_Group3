@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./footer";
@@ -75,3 +75,4 @@ function AddDonations() {
 }
 
 export default AddDonations;
+ */

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
+    date: {
+        type: Date,
+        default: Date.now
+    },
     amount: {
         type: Number,
         required: true
@@ -9,29 +13,21 @@ const paymentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    paymentDate: {
-        type: Date,
-        required: true,
-        default: Date.now
-    },
-    paymentMethod: {
+    type: {
         type: String,
-        required: true,
-        enum: ['Credit Card', 'Debit Card', 'Bank Transfer', 'Cash', 'Other']
+        enum: ['payment', 'donation'],
+        required: true
     },
     status: {
         type: String,
-        required: true,
-        enum: ['Pending', 'Completed', 'Failed'],
-        default: 'Pending'
+        enum: ['completed', 'pending', 'failed'],
+        default: 'completed'
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: false // Made userId optional
     }
-}, {
-    timestamps: true
 });
 
 module.exports = mongoose.model('Payment', paymentSchema);

@@ -13,6 +13,7 @@ const patientRoutes = require('./routes/patientRoutes');
 const adminRoutes = require("./routes/adminRoutes");
 const roomRoutes = require("./routes/roomRoutes");
 const taskRoutes = require('./routes/taskRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.use("/api/patients", patientRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/room", roomRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // get requests
 app.get("/api/expenses/all", (req, res) => {

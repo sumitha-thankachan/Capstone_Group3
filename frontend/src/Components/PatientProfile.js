@@ -28,6 +28,10 @@ const PatientProfile = () => {
     );
   }
 
+  const handleEditClick = () => {
+    navigate('/edit-profile');
+  };
+
   return (
     <>
       <Header />
@@ -52,27 +56,28 @@ const PatientProfile = () => {
                     </Col>
   
                     <Col md={8}>
-                      <h4 className="text-primary mb-4 text-center">Patient Profile</h4>
-                      <ListGroup variant="flush">
-                        <ListGroup.Item><strong>Age:</strong> {patient.age}</ListGroup.Item>
-                        <ListGroup.Item><strong>Gender:</strong> {patient.gender}</ListGroup.Item>
-                        <ListGroup.Item><strong>Contact:</strong> {patient.contact}</ListGroup.Item>
-                        <ListGroup.Item><strong>Email:</strong> {patient.email}</ListGroup.Item>
-                        <ListGroup.Item><strong>Address:</strong> {patient.address}</ListGroup.Item>
-                        <ListGroup.Item><strong>Medical History:</strong> {patient.medicalHistory}</ListGroup.Item>
-                        <ListGroup.Item><strong>Allergies:</strong> {patient.allergies}</ListGroup.Item>
-                        {patient.medicalReport && (
-                          <ListGroup.Item>
-                            <strong>Medical Report:</strong>{' '}
-                            <a href={`http://localhost:5000/uploads/${patient.medicalReport}`} target="_blank" rel="noreferrer">View Report</a>
-                          </ListGroup.Item>
-                        )}
-                      </ListGroup>
-  
-                      <div className="text-center mt-4">
-                        <Button variant="primary" onClick={() => navigate('/edit-profile')}>
-                          Edit Profile
-                        </Button>
+                      <div className="patient-profile-container">
+                        <h2>Patient Profile</h2>
+                        <ListGroup variant="flush">
+                          <ListGroup.Item><strong>Age:</strong> {patient.age}</ListGroup.Item>
+                          <ListGroup.Item><strong>Gender:</strong> {patient.gender}</ListGroup.Item>
+                          <ListGroup.Item><strong>Contact:</strong> {patient.contact}</ListGroup.Item>
+                          <ListGroup.Item><strong>Email:</strong> {patient.email}</ListGroup.Item>
+                          <ListGroup.Item><strong>Address:</strong> {patient.address}</ListGroup.Item>
+                          <ListGroup.Item><strong>Medical History:</strong> {patient.medicalHistory}</ListGroup.Item>
+                          <ListGroup.Item><strong>Allergies:</strong> {patient.allergies}</ListGroup.Item>
+                          {patient.medicalReport && (
+                            <ListGroup.Item>
+                              <strong>Medical Report:</strong>{' '}
+                              <a href={`http://localhost:5000/uploads/${patient.medicalReport}`} target="_blank" rel="noreferrer">View Report</a>
+                            </ListGroup.Item>
+                          )}
+                        </ListGroup>
+                        <div className="profile-actions">
+                          <Button variant="primary" onClick={handleEditClick} className="edit-btn">
+                            Edit Profile
+                          </Button>
+                        </div>
                       </div>
                     </Col>
                   </Row>
