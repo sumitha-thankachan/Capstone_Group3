@@ -71,3 +71,12 @@ th {
         transform: translateY(0);
     }
 }
+.dashboard-layout {
+    display: flex;
+  }
+  
+  .dashboard-content {
+    flex: 1;
+    padding: 20px;
+  }
+  

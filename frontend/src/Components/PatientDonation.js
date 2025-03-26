@@ -3,7 +3,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './footer';
 import axios from 'axios';
-import './PatientPayment.css'; // Using the same CSS as PatientPayment
+import './PatientPayment.css'; 
+import Sidebar from './Sidebar';
+
 
 function PatientDonation() {
     const navigate = useNavigate();
@@ -89,7 +91,12 @@ function PatientDonation() {
 
     return (
         <div>
-            <Header />
+
+           <Header />
+      <div className="dashboard-layout">
+        <Sidebar />
+
+        <div className="dashboard-content">
             <div className="container">
                 <div className="payment-form-container">
                     <h2 className="payment-form-title">Make a Donation</h2>
@@ -154,6 +161,8 @@ function PatientDonation() {
                 </div>
             </div>
             <Footer />
+        </div>
+        </div>
         </div>
     );
 }

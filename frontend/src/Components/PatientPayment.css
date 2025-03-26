@@ -131,3 +131,12 @@
     background: #007bff;
     color: white;
 }
+.dashboard-layout {
+    display: flex;
+  }
+  
+  .dashboard-content {
+    flex: 1;
+    padding: 20px;
+  }
+  

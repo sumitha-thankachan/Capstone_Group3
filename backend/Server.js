@@ -19,6 +19,9 @@ dotenv.config();
 
 const app = express();
 
+
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Middleware
 app.use(express.json());
 app.use(cors());
@@ -40,7 +43,7 @@ app.use("/api/caregivers", caregiverRoutes);
 app.use("/api/patients", patientRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/tasks", taskRoutes);
-app.use("/api/room", roomRoutes);
+app.use("/api/rooms", roomRoutes);
 app.use('/api/payments', paymentRoutes);
 
 // get requests

@@ -122,6 +122,9 @@ const Sidebar = () => {
             <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
               👤 Profile
             </NavLink>
+            <NavLink to="/patient-financial" className={({ isActive }) => isActive ? "active" : ""}>
+                          👤 Financial
+                        </NavLink>
           </>
         )}
 

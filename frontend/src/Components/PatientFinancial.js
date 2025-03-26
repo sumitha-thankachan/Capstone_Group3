@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './footer';
 import './PatientFinancial.css';
+import Sidebar from './Sidebar';
+
 
 function PatientFinancial() {
     const navigate = useNavigate();
@@ -37,6 +39,10 @@ function PatientFinancial() {
     return (
         <div>
             <Header />
+      <div className="dashboard-layout">
+        <Sidebar />
+
+        <div className="dashboard-content">
             {showSuccessMessage && (
                 <div className="success-message" style={{
                     backgroundColor: '#4CAF50',
@@ -71,6 +77,8 @@ function PatientFinancial() {
                         </tbody>
                     </table>
                 </div>
+            </div>
+            </div>
             </div>
             <Footer />
         </div>
