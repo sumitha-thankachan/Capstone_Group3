@@ -75,8 +75,6 @@ router.post(
   }
 );
 
-
-
 // Route to approve a caregiver
 router.put('/approve/:id', async (req, res) => {
   try {

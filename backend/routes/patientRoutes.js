@@ -45,6 +45,17 @@ router.get("/count", async (req, res) => {
   }
 });
 
+// Route to get the count of approved patients
+router.get("/count/approved", async (req, res) => {
+  try {
+    const count = await Patient.countDocuments({ isApproved: true }); // Only count approved patients
+    res.json({ count });
+  } catch (error) {
+    console.error("Error fetching approved patients count:", error);
+    res.status(500).json({ error: "Error fetching approved patients count" });
+  }
+});
+
 
 // Route to get all patients (for Admin approval list)
 router.get('/list', async (req, res) => {
@@ -59,7 +70,7 @@ router.get('/list', async (req, res) => {
 // Route to approve a patient
 router.put('/approve/:id', async (req, res) => {
   try {
-    await Patient.findByIdAndUpdate(req.params.id, { isApproved: true });
+    await Patient.findByIdAndUpdate(req.params.id, { isApproved: true }, { new: true });
     res.json({ message: 'Patient approved successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });

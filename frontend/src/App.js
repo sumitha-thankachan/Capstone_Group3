@@ -8,7 +8,7 @@ import CaregiverDashboard from "./Components/CaregiverDashboard";
 import PatientDashboard from "./Components/PatientDashboard";
 import PatientRegistrationForm from "./Components/PatientRegistrationForm";
 import TaskManagement from "./Components/TaskManagement";
-import CaregiverRegistration from "./Components/CaregiverRegistration";
+import CaregiverRegistration from "./Components/caregiverRegistration";
 import CaregiverList from "./Components/CaregiverList";
 import ContactUs from "./Components/ContactUs";
 import AboutUs from "./Components/AboutUs";
