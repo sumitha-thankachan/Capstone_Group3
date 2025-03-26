@@ -65,6 +65,30 @@ useEffect(() => {
 
   fetchTotalTasks(); // Call function on mount
 }, []);
+
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    const fetchFinancialSummary = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/expenses/summary");
+        console.log("API Response:", response.data);  // Debugging
+
+        setTotalRecords(response.data.totalRecords);
+        setTotalAmount(response.data.totalAmount);
+      } catch (error) {
+        console.error("Error fetching financial summary:", error);
+      }
+    };
+
+    fetchFinancialSummary();
+    const interval = setInterval(fetchFinancialSummary, 5000); // Refresh every 5 sec
+
+    return () => clearInterval(interval);
+  }, []);
+
+
   return (
     <div>
       <Header />
@@ -133,10 +157,11 @@ useEffect(() => {
           </div>
           <div className="admin-containers">
             <div className="combo">
-              <h4>Financial Summary</h4>
+              <h4>Financial Record</h4>
               <i className="bi bi-person-circle icon"></i>
             </div>
-            <h5>158</h5>
+            <h5>Total: ${totalAmount}</h5>
+            <p>{totalRecords} Records</p>
           </div>
         </div>
       </div>

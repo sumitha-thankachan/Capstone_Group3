@@ -25,7 +25,7 @@ function Header() {
       <Container>
         <Navbar.Brand as={NavLink} to="/home" className="brand d-flex align-items-center">
           <img src={logo} width="45" height="45" alt="Logo" className="rounded-circle"/>
-          <span className="brand-text ms-2">ElderCare</span>
+          <span className="brand-text ms-2">Home</span>
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="navbar-nav" />

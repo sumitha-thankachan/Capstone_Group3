@@ -20,6 +20,7 @@ const TaskManagement = () => {
     resident: '',
     status: 'Pending',
   });
+  const [approvedPatients, setApprovedPatients] = useState([]); // New state
 
   const filter = new Filter();
   // Fetch tasks when the component is mounted
@@ -33,8 +34,43 @@ const TaskManagement = () => {
       }
     };
     fetchTasks();
-  }, []);
+  // Fetch approved patients
+  const fetchApprovedPatients = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      
+      if (!token) {
+        console.error("No authentication token found");
+        return;
+      }
 
+      const response = await axios.get('http://localhost:5000/api/admin/patients', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      if (!response.data || !response.data.approved) {
+        console.error("Unexpected response format from patients API");
+        return;
+      }
+      
+      setApprovedPatients(response.data.approved);
+    } catch (error) {
+      console.error('Error fetching approved patients:', error);
+      // Check if error is from axios
+      if (error.response) {
+        console.error('Server responded with status:', error.response.status);
+        console.error('Response data:', error.response.data);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error setting up request:', error.message);
+      }
+    }
+  };
+  fetchApprovedPatients();
+}, []);
   // Filter tasks based on multiple criteria
   const filteredTasks = tasks.filter((task) => {
     const matchesTask = searchTask ? task.task.toLowerCase().includes(searchTask.toLowerCase()) : true;
@@ -233,6 +269,23 @@ const TaskManagement = () => {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
+                  <Form.Label>Resident</Form.Label>
+                    <Form.Select
+                      name="resident"
+                      value={newTask.resident}
+                      onChange={handleInputChange}
+                      required
+                      className="form-control"
+                    >
+                    <option value="">Select a patient</option>
+                      {approvedPatients.map(patient => (
+                        <option key={patient._id} value={patient.name}>
+                          {patient.name}
+                              </option>
+                      ))}
+                      </Form.Select>
+                  </Form.Group>
+                  <Form.Group className="mb-3">
                   <Form.Label>Task Description</Form.Label>
                   <Form.Control
                     as="textarea"
@@ -240,18 +293,6 @@ const TaskManagement = () => {
                     placeholder="Enter task description"
                     name="task"
                     value={newTask.task}
-                    onChange={handleInputChange}
-                    required
-                    className="form-control"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Resident</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter resident name"
-                    name="resident"
-                    value={newTask.resident}
                     onChange={handleInputChange}
                     required
                     className="form-control"

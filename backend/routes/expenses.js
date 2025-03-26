@@ -3,8 +3,9 @@ const router = express.Router();
 const Expense = require("../models/Expense");
 const mongoose = require("mongoose");
 
+
 // to fetch all expenses
-router.get("/expenses/all", async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const expenses = await Expense.find();
     res.status(200).json(expenses);
@@ -13,6 +14,24 @@ router.get("/expenses/all", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+// Get total expenses count and sum
+router.get("/summary", async (req, res) => {
+  try {
+    const totalExpenses = await Expense.countDocuments(); // Total records count
+    const totalAmountResult = await Expense.aggregate([
+      { $group: { _id: null, totalAmount: { $sum: "$amount" } } }
+    ]);
+
+    const totalAmount = totalAmountResult.length > 0 ? totalAmountResult[0].totalAmount : 0;
+
+    res.status(200).json({ totalRecords: totalExpenses, totalAmount: totalAmount });
+  } catch (error) {
+    console.error("Error fetching expense summary:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 
 // for saving
 router.post("/save", async (req, res) => {
