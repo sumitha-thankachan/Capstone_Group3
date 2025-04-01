@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import {
-//   Container,
-//   Table,
-//   Button,
-//   Form,
-//   Alert,
-//   Row,
-//   Col,
-// } from "react-bootstrap";
+
 import {
     Container,
     Table,
@@ -39,7 +31,7 @@ const RoomManagement = () => {
     fetchPatients();
   }, []);
 
-  // ✅ Fetch Rooms
+  // Fetch Rooms
   const fetchRooms = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/rooms");
@@ -51,7 +43,7 @@ const RoomManagement = () => {
     }
   };
 
-  // ✅ Fetch Available Patients
+  //  Fetch Available Patients
   const fetchPatients = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/patients/list");
@@ -66,7 +58,7 @@ const RoomManagement = () => {
     }
   };
 
-  // ✅ Assign Patient to Room
+  //  Assign Patient to Room
   const assignPatientToRoom = async (roomId) => {
     if (!selectedPatient[roomId]) {
       setMessage("Please select a patient before assigning.");
@@ -93,7 +85,7 @@ const RoomManagement = () => {
     }
   };
 
-  // ✅ Remove Patient from Room
+  //  Remove Patient from Room
   const removePatientFromRoom = async (roomId, patientId) => {
     try {
       const response = await fetch(
@@ -115,7 +107,7 @@ const RoomManagement = () => {
     }
   };
 
-  // ✅ Update Room Status
+  // Update Room Status
   const updateRoomStatus = async (roomId, newStatus) => {
     try {
       const response = await fetch(
@@ -136,7 +128,7 @@ const RoomManagement = () => {
     }
   };
 
-  // ✅ Delete Room (Only if Empty)
+  //  Delete Room (Only if Empty)
   const deleteRoom = async (roomId) => {
     try {
       const response = await fetch(
@@ -155,7 +147,7 @@ const RoomManagement = () => {
     }
   };
 
-  // ✅ Add New Room
+  //  Add New Room
   const addRoom = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/rooms", {
@@ -179,7 +171,7 @@ const RoomManagement = () => {
         <h2 className="text-center">Room Management</h2>
         {message && <Alert variant="success">{message}</Alert>}
 
-        {/* ✅ Display Buttons to Switch Between Views */}
+        {/*  Display Buttons to Switch Between Views */}
         {view === "home" && (
           <>
             <Row className="mb-4 text-center">
@@ -195,7 +187,7 @@ const RoomManagement = () => {
               </Col>
             </Row>
 
-            {/* ✅ Room Status Display in Grid Format */}
+            {/*  Room Status Display in Grid Format */}
             <h4 className="text-center mt-4">Room Status</h4>
             <Row className="d-flex justify-content-center">
               {rooms.map((room) => (
@@ -220,7 +212,7 @@ const RoomManagement = () => {
           </>
         )}
 
-        {/* ✅ Add Room Section */}
+        {/*  Add Room Section */}
         {view === "addRoom" && (
           <>
             <Button variant="outline-dark" onClick={() => setView("home")}>Back</Button>
@@ -258,7 +250,7 @@ const RoomManagement = () => {
           </>
         )}
 
-        {/* ✅ Assign Room Section */}
+        {/*  Assign Room Section */}
         {view === "assignRoom" && (
           <>
             <Button variant="outline-dark" onClick={() => setView("home")}>Back</Button>
@@ -325,7 +317,7 @@ const RoomManagement = () => {
                       disabled={
                         room.status === "Under Maintenance" ||
                         room.status === "Occupied"
-                      } // ✅ Disable if room is locked or full
+                      } //  Disable if room is locked or full
                     >
                       <option value="">Select Patient</option>
                       {patients.map((p) => (
@@ -342,7 +334,7 @@ const RoomManagement = () => {
                       disabled={
                         room.status === "Under Maintenance" ||
                         room.status === "Occupied"
-                      } // ✅ Disable if room is locked or full
+                      } //  Disable if room is locked or full
                     >
                       Assign
                     </Button>
@@ -363,7 +355,7 @@ const RoomManagement = () => {
                       variant="success"
                       size="sm"
                       onClick={() => updateRoomStatus(room._id, "Available")}
-                      disabled={room.residents.length >= room.capacity} // ✅ Disable if full
+                      disabled={room.residents.length >= room.capacity} //  Disable if full
                     >
                       Available
                     </Button>
@@ -394,179 +386,3 @@ const RoomManagement = () => {
 };
 
 export default RoomManagement;
-
-//   return (
-//     <>
-//       <Header />
-//       <Container className="mt-4">
-//         <h2>Room Management</h2>
-//         {message && <Alert variant="success">{message}</Alert>}
-
-//         {/* ✅ Add Room Form */}
-//         <Row className="mb-3">
-//           <Col md={3}>
-//             <Form.Control
-//               type="text"
-//               placeholder="Room Number"
-//               value={newRoom.roomNumber}
-//               onChange={(e) =>
-//                 setNewRoom({ ...newRoom, roomNumber: e.target.value })
-//               }
-//             />
-//           </Col>
-//           <Col md={3}>
-//             <Form.Select
-//               onChange={(e) => setNewRoom({ ...newRoom, type: e.target.value })}
-//             >
-//               <option value="ICU">ICU</option>
-//               <option value="General">General</option>
-//               <option value="Private">Private</option>
-//             </Form.Select>
-//           </Col>
-//           <Col md={3}>
-//             <Form.Control
-//               type="number"
-//               placeholder="Capacity"
-//               value={newRoom.capacity}
-//               onChange={(e) =>
-//                 setNewRoom({ ...newRoom, capacity: e.target.value })
-//               }
-//             />
-//           </Col>
-//           <Col md={3}>
-//             <Button variant="success" onClick={addRoom}>
-//               Add Room
-//             </Button>
-//           </Col>
-//         </Row>
-
-//         {/* ✅ Room Table */}
-//         <Table striped bordered hover className="mt-3 text-center">
-//           <thead>
-//             <tr>
-//               <th>Room Number</th>
-//               <th>Type</th>
-//               <th>Capacity</th>
-//               <th>Status</th>
-//               <th>Residents</th>
-//               <th>Assign</th>
-//               <th>Actions</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {rooms.length > 0 ? (
-//               rooms.map((room) => (
-//                 <tr key={room._id}>
-//                   <td>{room.roomNumber}</td>
-//                   <td>{room.type}</td>
-//                   <td>{room.capacity}</td>
-//                   <td>{room.status}</td>
-//                   <td>
-//                     {room.residents.length > 0
-//                       ? room.residents.map((resident) => (
-//                           <div key={resident._id}>
-//                             {resident.name}{" "}
-//                             <Button
-//                               variant="danger"
-//                               size="sm"
-//                               onClick={() =>
-//                                 removePatientFromRoom(room._id, resident._id)
-//                               }
-//                             >
-//                               Remove
-//                             </Button>
-//                           </div>
-//                         ))
-//                       : "Empty"}
-//                   </td>
-//                   {/* <td>
-//                     <Form.Select onChange={(e) => setSelectedPatient({ ...selectedPatient, [room._id]: e.target.value })}>
-//                       <option value="">Select Patient</option>
-//                       {patients.map((p) => (
-//                         <option key={p._id} value={p._id}>
-//                           {p.name}
-//                         </option>
-//                       ))}
-//                     </Form.Select>
-//                     <Button variant="primary" size="sm" onClick={() => assignPatientToRoom(room._id)}>Assign</Button>
-
-                    
-//                   </td> */}
-//                   <td>
-//                     <Form.Select
-//                       onChange={(e) =>
-//                         setSelectedPatient({
-//                           ...selectedPatient,
-//                           [room._id]: e.target.value,
-//                         })
-//                       }
-//                       disabled={
-//                         room.status === "Under Maintenance" ||
-//                         room.status === "Occupied"
-//                       } // ✅ Disable if room is locked or full
-//                     >
-//                       <option value="">Select Patient</option>
-//                       {patients.map((p) => (
-//                         <option key={p._id} value={p._id}>
-//                           {p.name}
-//                         </option>
-//                       ))}
-//                     </Form.Select>
-//                     <Button
-//                       variant="primary"
-//                       size="sm"
-//                       className="mt-2"
-//                       onClick={() => assignPatientToRoom(room._id)}
-//                       disabled={
-//                         room.status === "Under Maintenance" ||
-//                         room.status === "Occupied"
-//                       } // ✅ Disable if room is locked or full
-//                     >
-//                       Assign
-//                     </Button>
-//                   </td>
-
-//                   <td>
-//                     <Button
-//                       variant="warning"
-//                       size="sm"
-//                       onClick={() =>
-//                         updateRoomStatus(room._id, "Under Maintenance")
-//                       }
-//                     >
-//                       Under Maintenance
-//                     </Button>
-//                     {/* <Button variant="success" size="sm" onClick={() => updateRoomStatus(room._id, "Available")}>Available</Button> */}
-//                     <Button
-//                       variant="success"
-//                       size="sm"
-//                       onClick={() => updateRoomStatus(room._id, "Available")}
-//                       disabled={room.residents.length >= room.capacity} // ✅ Disable if full
-//                     >
-//                       Available
-//                     </Button>
-//                     <Button
-//                       variant="danger"
-//                       size="sm"
-//                       onClick={() => deleteRoom(room._id)}
-//                       disabled={room.residents.length > 0}
-//                     >
-//                       Delete
-//                     </Button>
-//                   </td>
-//                 </tr>
-//               ))
-//             ) : (
-//               <tr>
-//                 <td colSpan="7">No rooms found.</td>
-//               </tr>
-//             )}
-//           </tbody>
-//         </Table>
-//       </Container>
-//       <Footer />
-//     </>
-//   );
-//};
-
-//export default RoomManagement;

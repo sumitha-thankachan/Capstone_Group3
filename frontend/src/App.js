@@ -25,6 +25,8 @@ import PatientProfile from "./Components/PatientProfile";
 import PatientFinancial from "./Components/PatientFinancial";
 import PatientPayment from "./Components/PatientPayment";
 import PatientDonation from "./Components/PatientDonation";
+import AssignCaregiver from "./Components/AssignCaregiver";
+
 
 function App() {
   const email = localStorage.getItem("email");  // Assuming email is stored as 'email' in localStorage
@@ -56,6 +58,7 @@ function App() {
         <Route path="/patient-financial" element={<PatientFinancial />} />
         <Route path="/patient-payment" element={<PatientPayment />} />
         <Route path="/patient-donation" element={<PatientDonation />} />
+        <Route path="/assign-caregiver/:patientId" element={<AssignCaregiver />} />
       </Routes>
     </div>
   );
