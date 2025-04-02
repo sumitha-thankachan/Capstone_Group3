@@ -77,50 +77,131 @@ const PatientRegistration = () => {
   const [isRegistered, setIsRegistered] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  // useEffect(() => {
+  //   const email = localStorage.getItem("email");
+  //   if (email) {
+  //     setFormData((prev) => ({ ...prev, email }));
+  //     fetch(`http://localhost:5000/api/patients/${email}`)
+  //       .then((res) => res.json())
+  //       .then((patient) => {
+  //         setFormData({
+  //           name: patient.name || "",
+  //           age: patient.age || "",
+  //           gender: patient.gender || "",
+  //           contact: patient.contact || "",
+  //           email: patient.email || email,
+  //           address: patient.address || "",
+  //           medicalHistory: patient.medicalHistory || "",
+  //           allergies: patient.allergies || "",
+  //           medicalPhoto: patient.medicalPhoto || "",
+  //           medicalReport: patient.medicalReport || "",
+  //         });
+  //         setIsRegistered(true);
+  //       })
+  //       .catch((error) =>
+  //         console.error("Error fetching patient details:", error)
+  //       );
+  //   }
+  // }, []);
+
   useEffect(() => {
     const email = localStorage.getItem("email");
     if (email) {
       setFormData((prev) => ({ ...prev, email }));
-      fetch(`http://localhost:5000/api/patients/${email}`)
-        .then((res) => res.json())
+      fetch(`http://localhost:5000/api/patients/profile/${email}`)
+        .then((res) => {
+          if (res.status === 404) {
+            // User not registered yet – allow form to be filled
+            setIsRegistered(false);
+            return null;
+          }
+          return res.json();
+        })
         .then((patient) => {
-          setFormData({
-            name: patient.name || "",
-            age: patient.age || "",
-            gender: patient.gender || "",
-            contact: patient.contact || "",
-            email: patient.email || email,
-            address: patient.address || "",
-            medicalHistory: patient.medicalHistory || "",
-            allergies: patient.allergies || "",
-            medicalPhoto: patient.medicalPhoto || "",
-            medicalReport: patient.medicalReport || "",
-          });
-          setIsRegistered(true);
+          if (patient) {
+            setFormData({
+              name: patient.name || "",
+              age: patient.age || "",
+              gender: patient.gender || "",
+              contact: patient.contact || "",
+              email: patient.email || email,
+              address: patient.address || "",
+              medicalHistory: patient.medicalHistory || "",
+              allergies: patient.allergies || "",
+              medicalPhoto: patient.medicalPhoto || "",
+              medicalReport: patient.medicalReport || "",
+            });
+            setIsRegistered(true);
+          }
         })
         .catch((error) =>
           console.error("Error fetching patient details:", error)
         );
     }
   }, []);
+  
+  
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!validateForm(formData, setErrors)) return;
+
+  //   const url = isRegistered
+  //     ? `http://localhost:5000/api/patients/update/${formData.email}`
+  //     : `http://localhost:5000/api/patients/register`;
+  //   const method = isRegistered ? "PUT" : "POST";
+
+
+  //   const payload = new FormData();
+  //   Object.entries(formData).forEach(([key, value]) => {
+  //     if (value && typeof value !== "object") payload.append(key, value);
+  //   });
+  //   if (formData.medicalPhoto)
+  //     payload.append("medicalPhoto", formData.medicalPhoto);
+  //   if (formData.medicalReport)
+  //     payload.append("medicalReport", formData.medicalReport);
+
+  //   try {
+  //     const res = await fetch(url, { method, body: payload });
+  //     if (res.ok) {
+  //       setSuccessMessage(
+  //         isRegistered ? "Updated successfully!" : "Registered successfully!"
+  //       );
+  //       setTimeout(() => navigate("/patient-dashboard"), 1500);
+  //     } else {
+  //       alert("Submission failed");
+  //     }
+  //   } catch (err) {
+  //     console.error("Submission error:", err);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm(formData, setErrors)) return;
-
+  
     const url = isRegistered
       ? `http://localhost:5000/api/patients/update/${formData.email}`
       : `http://localhost:5000/api/patients/register`;
     const method = isRegistered ? "PUT" : "POST";
+  
     const payload = new FormData();
+    
+    // Append basic fields
     Object.entries(formData).forEach(([key, value]) => {
-      if (value && typeof value !== "object") payload.append(key, value);
+      if (key !== 'medicalPhoto' && key !== 'medicalReport') {
+        payload.append(key, value);
+      }
     });
-    if (formData.medicalPhoto)
+  
+    // Only append new files if selected
+    if (formData.medicalPhoto instanceof File) {
       payload.append("medicalPhoto", formData.medicalPhoto);
-    if (formData.medicalReport)
+    }
+  
+    if (formData.medicalReport instanceof File) {
       payload.append("medicalReport", formData.medicalReport);
-
+    }
+  
     try {
       const res = await fetch(url, { method, body: payload });
       if (res.ok) {
@@ -129,12 +210,15 @@ const PatientRegistration = () => {
         );
         setTimeout(() => navigate("/patient-dashboard"), 1500);
       } else {
-        alert("Submission failed");
+        const err = await res.json();
+        alert("Submission failed: " + err.message);
       }
     } catch (err) {
       console.error("Submission error:", err);
+      alert("Submission error");
     }
   };
+  
 
   return (
     <>
@@ -313,7 +397,7 @@ const PatientRegistration = () => {
                         {errors.allergies}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    {/* <Form.Group className="mb-3">
                       <Form.Label>Medical Photo</Form.Label>
                       <Form.Control
                         type="file"
@@ -325,8 +409,34 @@ const PatientRegistration = () => {
                           })
                         }
                       />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
+                    </Form.Group> */}
+<Form.Group className="mb-3">
+  <Form.Label>Medical Photo</Form.Label>
+  <Form.Control
+    type="file"
+    accept=".jpeg,.jpg"
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        medicalPhoto: e.target.files[0],
+      })
+    }
+  />
+  {formData.medicalPhoto && typeof formData.medicalPhoto === "string" && (
+    <div className="mt-2">
+      <small>Existing: {formData.medicalPhoto}</small><br />
+      <img
+        src={`http://localhost:5000/uploads/${formData.medicalPhoto}`}
+        alt="Medical"
+        height="80"
+        style={{ borderRadius: "5px", border: "1px solid #ccc" }}
+      />
+    </div>
+  )}
+</Form.Group>
+
+
+                    {/* <Form.Group className="mb-3">
                       <Form.Label>Medical Report (PDF/JPG)</Form.Label>
                       <Form.Control
                         type="file"
@@ -338,7 +448,43 @@ const PatientRegistration = () => {
                           })
                         }
                       />
-                    </Form.Group>
+                    </Form.Group> */}
+<Form.Group className="mb-3">
+  <Form.Label>Medical Report (PDF/JPG)</Form.Label>
+  <Form.Control
+    type="file"
+    accept=".pdf,.jpeg,.jpg"
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        medicalReport: e.target.files[0],
+      })
+    }
+  />
+  {formData.medicalReport && typeof formData.medicalReport === "string" && (
+    <div className="mt-2">
+      <small>Existing: {formData.medicalReport}</small><br />
+      {formData.medicalReport.endsWith(".pdf") ? (
+        <a
+          href={`http://localhost:5000/uploads/${formData.medicalReport}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Uploaded PDF
+        </a>
+      ) : (
+        <img
+          src={`http://localhost:5000/uploads/${formData.medicalReport}`}
+          alt="Medical Report"
+          height="80"
+          style={{ borderRadius: "5px", border: "1px solid #ccc" }}
+        />
+      )}
+    </div>
+  )}
+</Form.Group>
+
+
                   </Card.Body>
                 </Card>
               </Col>

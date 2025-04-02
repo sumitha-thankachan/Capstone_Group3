@@ -220,4 +220,19 @@ router.put(
 );
 
 
+// Route to get caregiver profile (for sidebar use)
+router.get('/profile/:email', async (req, res) => {
+  try {
+    const caregiver = await Caregiver.findOne({ email: req.params.email });
+    if (!caregiver) return res.status(404).json({ message: 'Caregiver not found' });
+    res.json({
+      name: caregiver.name,
+      photo: caregiver.image || 'default-profile.png'
+    });
+  } catch (error) {
+    console.error("Error fetching caregiver profile:", error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
 module.exports = router;
