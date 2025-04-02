@@ -1,78 +1,190 @@
-/* import React from "react";
-import { useNavigate } from "react-router-dom";
+
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./footer";
-import { HiArrowSmLeft } from "react-icons/hi";
-import donationImage from "./Assets/donation.png";
-import "../App";
+import axios from "axios";
+import "./PatientPayment.css";
+import Sidebar from "./Sidebar";
 
-function AddDonations() {
+function PatientDonation() {
   const navigate = useNavigate();
-  return (
-    <div>
-      <Header />
-      <div className="donation-container">
-        <div className="image-wrapper">
-          <div className="goBack_Button" onClick={() => navigate("/financial")}>
-            <HiArrowSmLeft size={30} />
-            <h4>Previous Page</h4>
-          </div>
-          <img
-            src={donationImage}
-            alt="Donation image which shows an idea of donate now"
-            className="donation-image"
-          />
-        </div>
+  const location = useLocation();
+  const [formData, setFormData] = useState({
+    amount: "",
+    description: "",
+  });
+  const [error, setError] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState();
+  const [loading, setLoading] = useState(false);
 
-        <h2 className="donation-heading">Your Donation Will Provide...</h2>
-        <div className="donation-options">
-          <div className="donation-card">
-            $50 <p>Could provide meals for a senior resident for one week</p>
-          </div>
-          <div className="donation-card">
-            $150{" "}
-            <p>
-              Could cover medical expenses for one elderly resident for a month
-            </p>
-          </div>
-          <div className="donation-card">
-            $250{" "}
-            <p>
-              Would help with the cost of comfortable bedding and essentials for
-              a resident
-            </p>
-          </div>
-          <div className="donation-card">
-            $500{" "}
-            <p>
-              Would allow us to organize recreational activities and social
-              events for the elderly
-            </p>
-          </div>
-          <div className="donation-card">
-            $1000{" "}
-            <p>
-              Could support the renovation of common areas and improve living
-              conditions for all residents
-            </p>
-          </div>
-        </div>
+  useEffect(() => {
+    // Check for success parameter in URL
+    const params = new URLSearchParams(location.search);
+    if (params.get("success") === "true") {
+      // Store success state in sessionStorage
+      sessionStorage.setItem("paymentSuccess", "true");
+      // Redirect to patient financial page
+      navigate("/patient-financial");
+    }
+  }, [location, navigate]);
 
-        <h3 className="select-amount-heading">Select an Amount *</h3>
-        <div className="donation-buttons">
-          {["$100", "$150", "$250", "$500", "$1,000", "$5,000"].map(
-            (amount, index) => (
-              <button key={index} className="donation-btn">
-                {amount}
-              </button>
-            )
-          )}
+
+  const donationAmounts = [
+        { value: 10, label: '$10' },
+        { value: 25, label: '$25' },
+        { value: 50, label: '$50' },
+        { value: 100, label: '$100' },
+        { value: 500, label: '$500' }
+    ];
+
+    const handleAmountSelect = (amount) => {
+        setSelectedAmount(amount);
+        setFormData(prev => ({
+            ...prev,
+            amount: amount
+        }));
+    };
+
+    const handleChange = (e) => {
+        const value = e.target.name === 'amount' ? parseFloat(e.target.value) : e.target.value;
+        setFormData({
+            ...formData,
+            [e.target.name]: value
+        });
+        if (e.target.name === 'amount') {
+            setSelectedAmount(parseFloat(e.target.value));
+        }
+    };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const baseUrl = window.location.origin;
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("You must be logged in to make a payment");
+      }
+
+      // First create a payment record
+      await axios.post(
+        "http://localhost:5000/api/payments",
+        {
+          amount: parseFloat(formData.amount),
+          description: formData.description || "Payment",
+          type: "donation",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": token,
+          },
+        }
+      );
+
+      // Then create Stripe checkout session
+      const response = await axios.post(
+        "http://localhost:5000/api/stripe/create-checkout-session",
+        {
+          amount: parseFloat(formData.amount),
+          description: formData.description || "Payment",
+          type: "patient_payment",
+          successUrl: `${baseUrl}/patient-financial?success=true`,
+          cancelUrl: `${baseUrl}/patient-financial?canceled=true`,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": token,
+          },
+        }
+      );
+
+      window.location.href = response.data.url;
+    } catch (error) {
+      console.error("Payment error:", error);
+      setError(
+        error.response?.data?.message ||
+          error.message ||
+          "An error occurred while processing your payment"
+      );
+      setLoading(false);
+    }
+  };
+
+    return (
+        <div>
+            <Header />
+            <div className="container">
+                <div className="payment-form-container">
+                    <h2 className="payment-form-title">Make a Donation</h2>
+                    <div className="donation-amounts">
+                        {donationAmounts.map((amount) => (
+                            <button
+                                key={amount.value}
+                                type="button"
+                                className={`donation-amount-btn ${selectedAmount === amount.value ? 'selected' : ''}`}
+                                onClick={() => handleAmountSelect(amount.value)}
+                            >
+                                {amount.label}
+                            </button>
+                        ))}
+                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <div className="payment-form-group">
+                            <label className="payment-form-label">Custom Amount ($)</label>
+                            <div className="payment-input-group">
+                                <span className="payment-input-group-text">$</span>
+                                <input
+                                    type="number"
+                                    name="amount"
+                                    value={formData.amount}
+                                    onChange={handleChange}
+                                    required
+                                    className="payment-form-control"
+                                    placeholder="Enter donation amount"
+                                    min="0"
+                                    step="0.01"
+                                />
+                            </div>
+                        </div>
+                        <div className="payment-form-group">
+                            <label className="payment-form-label">Message (Optional)</label>
+                            <textarea
+                                className="payment-form-control payment-textarea"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                placeholder="Enter a message with your donation"
+                            ></textarea>
+                        </div>
+                        <div className="payment-button-group">
+                            <button
+                                type="button"
+                                className="payment-button payment-button-secondary"
+                                onClick={() => navigate('/patient-financial')}
+                                disabled={loading}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                className="payment-button payment-button-primary"
+                                disabled={loading || !formData.amount}
+                            >
+                                {loading ? 'Processing...' : 'Proceed to Donation'}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <Footer />
         </div>
-      </div>
-      <Footer />
-    </div>
-  );
+    );
 }
 
-export default AddDonations;
- */
+export default PatientDonation;
