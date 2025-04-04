@@ -44,16 +44,24 @@ function LoginSignup() {
       const url = action === "Sign Up" ? "http://localhost:5000/api/auth/signup" : "http://localhost:5000/api/auth/login";
       const { data } = await axios.post(url, formData);
   
+      // Log the entire response data for debugging
+    console.log("Response data:", data);
+
       if (!data || !data.user) {
         throw new Error("User data is missing in the response");
       }
-  
+      
+      // Log the user object to check its structure
+    console.log("User data from login:", data.user);
+
       alert(`${action} successful!`);
   
       if (action === "Sign Up") {
         // ✅ Redirect to login page after signup
         setAction("Login");
       } else {
+        // Log the token for debugging
+      console.log("Token from login:", data.token);
         // ✅ Store user data in localStorage only for login
         localStorage.setItem("token", data.token);
         localStorage.setItem("userType", data.user.userType);
