@@ -26,39 +26,55 @@ const Sidebar = () => {
           })
         )
         .catch((err) => console.error('Sidebar fetch error:', err));
-    } else {
-      // For Admin and Caregiver, fetching will be implemented later.
-      setUser(prev => ({ ...prev, userType: storedUserType }));
-    }
+    } 
+    else if (email && (storedUserType === 'Caregiver')){
 
-    // Uncomment below once your backend APIs for Admin and Caregiver are ready
-    /*
-    if (email && (storedUserType === 'Caregiver' || storedUserType === 'Admin')) {
-      let apiUrl = '';
-
-      if (storedUserType === 'Caregiver') {
-        apiUrl = `http://localhost:5000/api/caregivers/profile/${email}`;
-      } else if (storedUserType === 'Admin') {
-        apiUrl = `http://localhost:5000/api/admins/profile/${email}`;
-      }
+      const apiUrl = `http://localhost:5000/api/caregivers/profile/${email}`;
 
       fetch(apiUrl)
         .then((res) => res.json())
         .then((data) =>
           setUser({
-            name: data.name || storedUserType,
-            photo: '',
-            userType: storedUserType,
+            name: data.name || 'Caregiver',
+            photo: data.photo  || 'default-profile.png',
+            userType: 'Caregiver',
           })
         )
         .catch((err) => console.error('Sidebar fetch error:', err));
+    } 
+    else {
+      // For Admin and Caregiver, fetching will be implemented later.
+      setUser(prev => ({ ...prev, userType: storedUserType }));
     }
-    */
+
+    // Uncomment below once your backend APIs for Admin and Caregiver are ready
+    
+    // if (email && (storedUserType === 'Caregiver')){  //|| storedUserType === 'Admin')) {
+    //   let apiUrl = '';
+
+    //   if (storedUserType === 'Caregiver') {
+    //     apiUrl = `http://localhost:5000/api/caregivers/profile/${email}`;
+    //   } else if (storedUserType === 'Admin') {
+    //     apiUrl = `http://localhost:5000/api/admins/profile/${email}`;
+    //   }
+
+    //   fetch(apiUrl)
+    //     .then((res) => res.json())
+    //     .then((data) =>
+    //       setUser({
+    //         name: data.name || storedUserType,
+    //           photo: data.image || 'default-profile.png',
+    //         userType: storedUserType,
+    //       })
+    //     )
+    //     .catch((err) => console.error('Sidebar fetch error:', err));
+    // }
+    
   }, []);
 
   return (
     <aside className="dashboard-sidebar">
-      {user.userType === 'Patient' && (
+      {(user.userType === 'Patient' || user.userType === 'Caregiver')&& (
         <img
           src={`http://localhost:5000/uploads/${user.photo}`}
           alt="Profile"

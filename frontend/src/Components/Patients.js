@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Table, Container, Button, Alert } from "react-bootstrap";
 import AdminHeader from "./Header";
 
@@ -6,34 +7,17 @@ const Patients = () => {
   const [pendingPatients, setPendingPatients] = useState([]);
   const [approvedPatients, setApprovedPatients] = useState([]);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchPatients();
   }, []);
 
-//   const fetchPatients = async () => {
-//     try {
-//       const token = localStorage.getItem("token"); // ✅ Get admin token
 
-//       const response = await fetch("http://localhost:5000/api/admin/patients", {
-//         method: "GET",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${token}`, // ✅ Authenticate admin
-//         },
-//       });
-
-//       const data = await response.json();
-//       setPendingPatients(data.pending);
-//       setApprovedPatients(data.approved);
-//     } catch (error) {
-//       console.error("Error fetching patients:", error);
-//     }
-//   };
 
 const fetchPatients = async () => {
     try {
-      const token = localStorage.getItem("token"); // ✅ Get admin token
+      const token = localStorage.getItem("token"); //  Get admin token
 
       if (!token) {
         console.error("No auth token found.");
@@ -41,7 +25,7 @@ const fetchPatients = async () => {
         return;
       }
   
-      console.log("Using Token:", token); // ✅ Debugging token
+      console.log("Using Token:", token); //  Debugging token
   
       const response = await fetch("http://localhost:5000/api/admin/patients", {
         method: "GET",
@@ -51,9 +35,9 @@ const fetchPatients = async () => {
         },
       });
   
-      // ✅ Check if response is valid JSON
+      //  Check if response is valid JSON
       if (!response.ok) {
-        const errorText = await response.text(); // ✅ Read non-JSON response
+        const errorText = await response.text(); //  Read non-JSON response
         throw new Error(`API Error: ${errorText}`);
       }
   
@@ -105,6 +89,11 @@ const fetchPatients = async () => {
       console.error("Error rejecting patient:", error);
     }
   };
+
+  const handleAssignCaregiver = (patientId) => {
+    navigate(`/assign-caregiver/${patientId}`);
+  };
+
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
@@ -134,7 +123,7 @@ const fetchPatients = async () => {
 
         {message && <Alert variant="success">{message}</Alert>}
 
-        {/* ✅ Pending Patients Table */}
+        {/*  Pending Patients Table */}
         <h4 className="mt-4">Pending Approvals</h4>
         <Table striped bordered hover className="shadow-sm">
           <thead className="bg-warning text-dark">
@@ -147,6 +136,7 @@ const fetchPatients = async () => {
               <th>Address</th>
               <th>Medical History</th>
               <th>Allergies</th>
+
               <th>Actions</th>
             </tr>
           </thead>
@@ -182,7 +172,7 @@ const fetchPatients = async () => {
           </tbody>
         </Table>
 
-        {/* ✅ Approved Patients Table */}
+        {/*  Approved Patients Table */}
         <h4 className="mt-4">Approved Patients</h4>
         <Table striped bordered hover className="shadow-sm">
           <thead className="bg-success text-white">
@@ -195,6 +185,8 @@ const fetchPatients = async () => {
               <th>Address</th>
               <th>Medical History</th>
               <th>Allergies</th>
+              <th>Assigned Caregiver</th>
+              <th>Actions</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -210,6 +202,17 @@ const fetchPatients = async () => {
                   <td>{patient.address}</td>
                   <td>{patient.medicalHistory}</td>
                   <td>{patient.allergies}</td>
+                  <td>{patient.assignedCaregiver ? patient.assignedCaregiver.name : "Not assigned"}</td>
+
+                  <td>
+  <Button
+    variant="primary"
+    size="sm"
+    onClick={() => handleAssignCaregiver(patient._id)}
+  >
+    Assign
+  </Button>
+</td>
                   <td>
                     <Button
                       variant="danger"

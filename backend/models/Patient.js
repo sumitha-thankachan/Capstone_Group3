@@ -12,7 +12,12 @@ const patientSchema = new mongoose.Schema({
   isApproved: { type: Boolean, default: false }, // If approval is required
   dateAdded: { type: Date, default: Date.now },
   medicalPhoto: { type: String },  // store filename or path
-  medicalReport: { type: String }
+  medicalReport: { type: String },
+  assignedCaregiver: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Caregiver",
+    default: null
+  }
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

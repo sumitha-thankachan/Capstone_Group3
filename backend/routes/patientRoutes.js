@@ -25,15 +25,15 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-router.post('/register', async (req, res) => {
-  try {
-    const newPatient = new Patient(req.body);
-    await newPatient.save();
-    res.status(201).json({ message: 'Patient registered successfully' });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+// router.post('/register', async (req, res) => {
+//   try {
+//     const newPatient = new Patient(req.body);
+//     await newPatient.save();
+//     res.status(201).json({ message: 'Patient registered successfully' });
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// });
 // Route to get the total number of patients
 router.get("/count", async (req, res) => {
   try {
@@ -135,6 +135,18 @@ router.delete('/delete/:id', async (req, res) => {
   }
 });
 
+
+
+router.get('/profile/:email', async (req, res) => {
+  try {
+    const patient = await Patient.findOne({ email: req.params.email });
+    if (!patient) return res.status(404).json({ message: 'Patient not found' });
+    res.json(patient);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
 // Route to get patient details by email
 router.get('/:email', async (req, res) => {
   try {
@@ -152,17 +164,56 @@ router.get('/:email', async (req, res) => {
 });
 
 // Route to update patient details
+// router.put('/update/:email', upload.fields([
+//   { name: 'medicalPhoto', maxCount: 1 },
+//   { name: 'medicalReport', maxCount: 1 }
+// ]), async (req, res) => {
+//   try {
+//     const { email } = req.params;
+//     const updatedData = { ...req.body };
+
+
+//     // Convert string -> number for age
+//     if (updatedData.age) updatedData.age = Number(updatedData.age);
+
+//     if (req.files?.medicalPhoto?.[0]) {
+//       updatedData.medicalPhoto = req.files.medicalPhoto[0].filename;
+//     }
+
+//     if (req.files?.medicalReport?.[0]) {
+//       updatedData.medicalReport = req.files.medicalReport[0].filename;
+//     }
+
+   
+
+//     const updatedPatient = await Patient.findOneAndUpdate(
+//       { email },
+//       updatedData,
+//       { new: true }
+//     );
+
+//     if (!updatedPatient) {
+//       return res.status(404).json({ message: 'Patient not found.' });
+//     }
+
+//     res.status(200).json(updatedPatient);
+//   } catch (error) {
+//     console.error("🔥 Update error:", error);
+//     res.status(500).json({ message: 'Failed to update patient.', error: error.message });
+//   }
+// });
+
 router.put('/update/:email', upload.fields([
   { name: 'medicalPhoto', maxCount: 1 },
   { name: 'medicalReport', maxCount: 1 }
 ]), async (req, res) => {
   try {
     const { email } = req.params;
-    const updatedData = { ...req.body };
 
-
-    // Convert string -> number for age
-    if (updatedData.age) updatedData.age = Number(updatedData.age);
+    const updatedData = {
+      ...req.body,
+      age: req.body.age ? Number(req.body.age) : undefined
+    };
 
     if (req.files?.medicalPhoto?.[0]) {
       updatedData.medicalPhoto = req.files.medicalPhoto[0].filename;
@@ -171,8 +222,6 @@ router.put('/update/:email', upload.fields([
     if (req.files?.medicalReport?.[0]) {
       updatedData.medicalReport = req.files.medicalReport[0].filename;
     }
-
-   
 
     const updatedPatient = await Patient.findOneAndUpdate(
       { email },
@@ -192,17 +241,31 @@ router.put('/update/:email', upload.fields([
 });
 
 
-
-
 router.post('/register', upload.fields([
   { name: 'medicalPhoto', maxCount: 1 },
   { name: 'medicalReport', maxCount: 1 }
-]), (req, res) => {
-  const patientData = req.body;
-  console.log('Received patient registration:', patientData);
-  console.log('Uploaded files:', req.files);
-  res.json({ message: 'Patient registered successfully' });
+]), async (req, res) => {
+  try {
+    const newPatientData = {
+      ...req.body,
+      age: req.body.age ? Number(req.body.age) : undefined,
+      medicalPhoto: req.files?.medicalPhoto?.[0]?.filename || "",
+      medicalReport: req.files?.medicalReport?.[0]?.filename || ""
+    };
+
+    const existing = await Patient.findOne({ email: req.body.email });
+    if (existing) return res.status(409).json({ message: 'Patient already exists' });
+
+    const newPatient = new Patient(newPatientData);
+    await newPatient.save();
+
+    res.status(201).json({ message: 'Patient registered successfully', patient: newPatient });
+  } catch (err) {
+    console.error("Error registering patient:", err);
+    res.status(500).json({ message: 'Registration failed', error: err.message });
+  }
 });
+
 
 
 
