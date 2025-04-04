@@ -39,11 +39,16 @@ function Financial() {
     // Fetch payments from MongoDB
     const fetchPayments = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/payments/all");
-        console.log('Fetched payments:', response.data);
+        const response = await axios.get(
+          "http://localhost:5000/api/payments/all"
+        );
+        console.log("Fetched payments:", response.data);
         setPayments(response.data);
       } catch (error) {
-        console.error("Error fetching payments:", error.response?.data || error.message);
+        console.error(
+          "Error fetching payments:",
+          error.response?.data || error.message
+        );
       }
     };
 
@@ -58,18 +63,23 @@ function Financial() {
       // Refresh payments data after successful payment
       const fetchPayments = async () => {
         try {
-          const response = await axios.get("http://localhost:5000/api/payments/all");
+          const response = await axios.get(
+            "http://localhost:5000/api/payments/all"
+          );
           setPayments(response.data);
         } catch (error) {
-          console.error("Error fetching payments:", error.response?.data || error.message);
+          console.error(
+            "Error fetching payments:",
+            error.response?.data || error.message
+          );
         }
       };
       fetchPayments();
 
       // Store success state in sessionStorage
-      sessionStorage.setItem('paymentSuccess', 'true');
+      sessionStorage.setItem("paymentSuccess", "true");
       // Redirect to patient financial page
-      navigate('/patient-financial');
+      navigate("/patient-financial");
     }
   }, [location, navigate]);
 
@@ -230,7 +240,7 @@ function Financial() {
                           </td>
                           <td>
                             {editingExpenseId === expense._id ? (
-                              <>
+                              <div className="action-buttons">
                                 <button
                                   className="btn btn-success btn-sm me-2"
                                   onClick={() => handleUpdate(expense._id)}
@@ -243,9 +253,9 @@ function Financial() {
                                 >
                                   Cancel
                                 </button>
-                              </>
+                              </div>
                             ) : (
-                              <>
+                              <div className="action-buttons">
                                 <button
                                   className="btn btn-primary btn-sm me-2"
                                   onClick={() => handleEdit(expense)}
@@ -258,7 +268,7 @@ function Financial() {
                                 >
                                   Delete
                                 </button>
-                              </>
+                              </div>
                             )}
                           </td>
                         </tr>
@@ -283,12 +293,22 @@ function Financial() {
                       {payments.length > 0 ? (
                         payments.map((payment) => (
                           <tr key={payment._id}>
-                            <td>{new Date(payment.date).toLocaleDateString()}</td>
+                            <td>
+                              {new Date(payment.date).toLocaleDateString()}
+                            </td>
                             <td>{payment.description}</td>
                             <td>${payment.amount}</td>
                             <td>{payment.type}</td>
                             <td>
-                              <span className={`badge bg-${payment.status === 'completed' ? 'success' : payment.status === 'pending' ? 'warning' : 'danger'}`}>
+                              <span
+                                className={`badge bg-${
+                                  payment.status === "completed"
+                                    ? "success"
+                                    : payment.status === "pending"
+                                    ? "warning"
+                                    : "danger"
+                                }`}
+                              >
                                 {payment.status}
                               </span>
                             </td>
@@ -296,7 +316,9 @@ function Financial() {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan="5" className="text-center">No payments or donations found</td>
+                          <td colSpan="5" className="text-center">
+                            No payments or donations found
+                          </td>
                         </tr>
                       )}
                     </tbody>

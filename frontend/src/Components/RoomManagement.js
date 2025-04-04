@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 
 import {
-    Container,
-    Table,
-    Button,
-    Form,
-    Alert,
-    Row,
-    Col,
-    Card,
-  } from "react-bootstrap";
+  Container,
+  Table,
+  Button,
+  Form,
+  Alert,
+  Row,
+  Col,
+  Card,
+} from "react-bootstrap";
 import Header from "./Header";
 import Footer from "./footer";
 import "./room.css";
@@ -176,12 +176,20 @@ const RoomManagement = () => {
           <>
             <Row className="mb-4 text-center">
               <Col>
-                <Button variant="primary" size="lg" onClick={() => setView("addRoom")}>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={() => setView("addRoom")}
+                >
                   Add Room
                 </Button>
               </Col>
               <Col>
-                <Button variant="secondary" size="lg" onClick={() => setView("assignRoom")}>
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  onClick={() => setView("assignRoom")}
+                >
                   Assign Room
                 </Button>
               </Col>
@@ -194,7 +202,8 @@ const RoomManagement = () => {
                 <Col md={3} className="mb-3" key={room._id}>
                   <Card
                     style={{
-                      backgroundColor: room.status === "Available" ? "#c3fdb8" : "#ffb3b3",
+                      backgroundColor:
+                        room.status === "Available" ? "#c3fdb8" : "#ffb3b3",
                       textAlign: "center",
                       padding: "10px",
                     }}
@@ -215,7 +224,9 @@ const RoomManagement = () => {
         {/*  Add Room Section */}
         {view === "addRoom" && (
           <>
-            <Button variant="outline-dark" onClick={() => setView("home")}>Back</Button>
+            <Button variant="outline-dark" onClick={() => setView("home")}>
+              Back
+            </Button>
             <h4 className="text-center mt-4">Add New Room</h4>
             <Row className="mb-3">
               <Col md={3}>
@@ -223,11 +234,17 @@ const RoomManagement = () => {
                   type="text"
                   placeholder="Room Number"
                   value={newRoom.roomNumber}
-                  onChange={(e) => setNewRoom({ ...newRoom, roomNumber: e.target.value })}
+                  onChange={(e) =>
+                    setNewRoom({ ...newRoom, roomNumber: e.target.value })
+                  }
                 />
               </Col>
               <Col md={3}>
-                <Form.Select onChange={(e) => setNewRoom({ ...newRoom, type: e.target.value })}>
+                <Form.Select
+                  onChange={(e) =>
+                    setNewRoom({ ...newRoom, type: e.target.value })
+                  }
+                >
                   <option value="ICU">ICU</option>
                   <option value="General">General</option>
                   <option value="Private">Private</option>
@@ -238,7 +255,9 @@ const RoomManagement = () => {
                   type="number"
                   placeholder="Capacity"
                   value={newRoom.capacity}
-                  onChange={(e) => setNewRoom({ ...newRoom, capacity: e.target.value })}
+                  onChange={(e) =>
+                    setNewRoom({ ...newRoom, capacity: e.target.value })
+                  }
                 />
               </Col>
               <Col md={3}>
@@ -253,47 +272,53 @@ const RoomManagement = () => {
         {/*  Assign Room Section */}
         {view === "assignRoom" && (
           <>
-            <Button variant="outline-dark" onClick={() => setView("home")}>Back</Button>
+            <Button variant="outline-dark" onClick={() => setView("home")}>
+              Back
+            </Button>
             <h4 className="text-center mt-4">Assign Patient to Room</h4>
-           <Table striped bordered hover className="mt-3 text-center ">
-          <thead className="theadname">
-            <tr>
-              <th>Room Number</th>
-              <th>Type</th>
-              <th>Capacity</th>
-              <th>Status</th>
-              <th>Residents</th>
-              <th>Assign</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rooms.length > 0 ? (
-              rooms.map((room) => (
-                <tr key={room._id}>
-                  <td>{room.roomNumber}</td>
-                  <td>{room.type}</td>
-                  <td>{room.capacity}</td>
-                  <td>{room.status}</td>
-                  <td>
-                    {room.residents.length > 0
-                      ? room.residents.map((resident) => (
-                          <div key={resident._id}>
-                            {resident.name}{" "}
-                            <Button
-                              variant="danger"
-                              size="sm"
-                              onClick={() =>
-                                removePatientFromRoom(room._id, resident._id)
-                              }
-                            >
-                              Remove
-                            </Button>
-                          </div>
-                        ))
-                      : "Empty"}
-                  </td>
-                  {/* <td>
+            <div className="table-responsive">
+              <Table striped bordered hover className="mt-3 text-center ">
+                <thead className="theadname">
+                  <tr>
+                    <th>Room Number</th>
+                    <th>Type</th>
+                    <th>Capacity</th>
+                    <th>Status</th>
+                    <th>Residents</th>
+                    <th>Assign</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rooms.length > 0 ? (
+                    rooms.map((room) => (
+                      <tr key={room._id}>
+                        <td>{room.roomNumber}</td>
+                        <td>{room.type}</td>
+                        <td>{room.capacity}</td>
+                        <td>{room.status}</td>
+                        <td>
+                          {room.residents.length > 0
+                            ? room.residents.map((resident) => (
+                                <div key={resident._id}>
+                                  {resident.name}{" "}
+                                  <Button
+                                    variant="danger"
+                                    size="sm"
+                                    onClick={() =>
+                                      removePatientFromRoom(
+                                        room._id,
+                                        resident._id
+                                      )
+                                    }
+                                  >
+                                    Remove
+                                  </Button>
+                                </div>
+                              ))
+                            : "Empty"}
+                        </td>
+                        {/* <td>
                     <Form.Select onChange={(e) => setSelectedPatient({ ...selectedPatient, [room._id]: e.target.value })}>
                       <option value="">Select Patient</option>
                       {patients.map((p) => (
@@ -306,77 +331,82 @@ const RoomManagement = () => {
 
                     
                   </td> */}
-                  <td>
-                    <Form.Select
-                      onChange={(e) =>
-                        setSelectedPatient({
-                          ...selectedPatient,
-                          [room._id]: e.target.value,
-                        })
-                      }
-                      disabled={
-                        room.status === "Under Maintenance" ||
-                        room.status === "Occupied"
-                      } //  Disable if room is locked or full
-                    >
-                      <option value="">Select Patient</option>
-                      {patients.map((p) => (
-                        <option key={p._id} value={p._id}>
-                          {p.name}
-                        </option>
-                      ))}
-                    </Form.Select>
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      className="mt-2"
-                      onClick={() => assignPatientToRoom(room._id)}
-                      disabled={
-                        room.status === "Under Maintenance" ||
-                        room.status === "Occupied"
-                      } //  Disable if room is locked or full
-                    >
-                      Assign
-                    </Button>
-                  </td>
+                        <td>
+                          <Form.Select
+                            onChange={(e) =>
+                              setSelectedPatient({
+                                ...selectedPatient,
+                                [room._id]: e.target.value,
+                              })
+                            }
+                            disabled={
+                              room.status === "Under Maintenance" ||
+                              room.status === "Occupied"
+                            } //  Disable if room is locked or full
+                          >
+                            <option value="">Select Patient</option>
+                            {patients.map((p) => (
+                              <option key={p._id} value={p._id}>
+                                {p.name}
+                              </option>
+                            ))}
+                          </Form.Select>
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            className="mt-2"
+                            onClick={() => assignPatientToRoom(room._id)}
+                            disabled={
+                              room.status === "Under Maintenance" ||
+                              room.status === "Occupied"
+                            } //  Disable if room is locked or full
+                          >
+                            Assign
+                          </Button>
+                        </td>
 
-                  <td>
-                    <Button
-                      variant="warning"
-                      size="sm"
-                      onClick={() =>
-                        updateRoomStatus(room._id, "Under Maintenance")
-                      }
-                    >
-                      Under Maintenance
-                    </Button>
-                    {/* <Button variant="success" size="sm" onClick={() => updateRoomStatus(room._id, "Available")}>Available</Button> */}
-                    <Button
-                      variant="success"
-                      size="sm"
-                      onClick={() => updateRoomStatus(room._id, "Available")}
-                      disabled={room.residents.length >= room.capacity} //  Disable if full
-                    >
-                      Available
-                    </Button>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => deleteRoom(room._id)}
-                      disabled={room.residents.length > 0}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="7">No rooms found.</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+                        <td>
+                          <div className="button-style">
+                            <Button
+                              variant="warning"
+                              size="sm"
+                              onClick={() =>
+                                updateRoomStatus(room._id, "Under Maintenance")
+                              }
+                            >
+                              Under Maintenance
+                            </Button>
+                            {/* <Button variant="success" size="sm" onClick={() => updateRoomStatus(room._id, "Available")}>Available</Button> */}
+                            <Button
+                              variant="success"
+                              size="sm"
+                              onClick={() =>
+                                updateRoomStatus(room._id, "Available")
+                              }
+                              disabled={room.residents.length >= room.capacity} //  Disable if full
+                            >
+                              Available
+                            </Button>
+                            <Button
+                              variant="danger"
+                              size="sm"
+                              onClick={() => deleteRoom(room._id)}
+                              disabled={room.residents.length > 0}
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="7">No rooms found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </div>
           </>
         )}
       </Container>

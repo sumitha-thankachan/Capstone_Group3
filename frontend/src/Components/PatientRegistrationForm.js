@@ -224,6 +224,7 @@ const PatientRegistration = () => {
     <>
       <Header />
       <div className="d-flex">
+      <Sidebar />
         {/* <div
           className="sidebar bg-dark text-white p-4"
           style={{ minWidth: "250px", minHeight: "100vh" }}
@@ -259,7 +260,7 @@ const PatientRegistration = () => {
             Profile
           </NavLink>
         </div> */}
-<Sidebar />
+
         <Container fluid className="py-4">
           <h3 className="text-center mb-4">
             {isRegistered ? "Update Patient Details" : "Patient Registration"}

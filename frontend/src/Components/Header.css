@@ -38,6 +38,7 @@
 }
 
 .header-btn {
+  width: 100%;
   background-color: #ff914d !important;
   border: none;
   color: #fff;
@@ -47,7 +48,7 @@
 
 .header-btn:hover {
   background-color: #ff7a29;
-  transform: translateY(-2px);
+  /* transform: translateY(-2px); */
 }
 
 .navbar-toggler {
@@ -72,4 +73,5 @@
     width: 100%;
     margin-top: 10px;
   }
+  
 }

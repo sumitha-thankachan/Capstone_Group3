@@ -1,10 +1,10 @@
-import React from 'react';
-import Header from './Header';
-import Footer from './footer';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
-import heroImage from './Assets/homebg1_edit.png';
-import aboutImage from './Assets/about-us.jpg';
-import './home.css';
+import React from "react";
+import Header from "./Header";
+import Footer from "./footer";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import heroImage from "./Assets/homebg1_edit.png";
+import aboutImage from "./Assets/about-us.jpg";
+import "./home.css";
 
 const Home = () => {
   return (
@@ -15,7 +15,9 @@ const Home = () => {
       <section className="hero-section">
         <Container className="text-center text-white">
           <h1 className="hero-title">Welcome to Home</h1>
-          <p className="hero-subtitle">Simplify elderly home management and resident activities seamlessly.</p>
+          <p className="hero-subtitle">
+            Simplify elderly home management and resident activities seamlessly.
+          </p>
           {/* <div className="hero-buttons">
             <Button variant="primary" size="lg" className="me-2">Login</Button>
             <Button variant="outline-light" size="lg">Sign Up</Button>
@@ -28,17 +30,25 @@ const Home = () => {
         <Container>
           <Row className="align-items-center">
             <Col md={6}>
-              <img src={aboutImage} className="img-fluid rounded shadow-lg" alt="About Home"/>
+              <img
+                src={aboutImage}
+                className="img-fluid rounded shadow-lg"
+                alt="About Home"
+              />
             </Col>
             <Col md={6}>
               <h2 className="section-title">About Us</h2>
               <p className="section-text">
-                Wealth Home Health Services is a northern Virginia-based home care agency licensed by the Virginia Department of Health, Office of Licensure and Certification. Our mission is clear: to deliver compassionate care tailored specifically for your loved ones.
+                Wealth Home Health Services is a northern Virginia-based home
+                care agency licensed by the Virginia Department of Health,
+                Office of Licensure and Certification. Our mission is clear: to
+                deliver compassionate care tailored specifically for your loved
+                ones.
               </p>
               {/* <Button className="header-btn">Learn More</Button> */}
               <div className="text-center mt-4">
-          <Button className="header-btn">Learn More</Button>
-        </div>
+                <Button className="header-btn width">Learn More</Button>
+              </div>
             </Col>
           </Row>
         </Container>
@@ -61,7 +71,8 @@ const Home = () => {
                 <Card.Body>
                   <Card.Title>Home Management</Card.Title>
                   <Card.Text>
-                    Easily manage all aspects of home operations with user-friendly tools.
+                    Easily manage all aspects of home operations with
+                    user-friendly tools.
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -71,7 +82,8 @@ const Home = () => {
                 <Card.Body>
                   <Card.Title>Activity Tracking</Card.Title>
                   <Card.Text>
-                    Effortlessly track and monitor resident activities in real-time.
+                    Effortlessly track and monitor resident activities in
+                    real-time.
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -93,14 +105,20 @@ const Home = () => {
       {/* Call-to-Action Section */}
       <section className="cta-section text-center text-white py-5">
         <Container>
-          <h2 className="mb-3">We're here to help you get back on your feet quickly.</h2>
-          <Button variant="warning" size="lg" className="me-2">Call Us Today</Button>
-          <Button variant="outline-light" size="lg">Schedule Appointment</Button>
+          <h2 className="mb-3">
+            We're here to help you get back on your feet quickly.
+          </h2>
+          <Button variant="warning" size="lg" className="me-2">
+            Call Us Today
+          </Button>
+          <Button variant="outline-light" size="lg">
+            Schedule Appointment
+          </Button>
         </Container>
       </section>
 
-     {/* Enhanced Testimonials Section */}
-{/* <section className="testimonials-section py-5 bg-light">
+      {/* Enhanced Testimonials Section */}
+      {/* <section className="testimonials-section py-5 bg-light">
   <Container>
     <h2 className="text-center mb-5">What Our Clients Say</h2>
     <Row className="justify-content-center">
@@ -151,72 +169,92 @@ const Home = () => {
   </Container>
 </section> */}
 
-<section className="testimonials-section py-5 bg-light">
-  <Container>
-    <h2 className="text-center mb-5">What Our Clients Say</h2>
-    <Row className="justify-content-center">
-      
-      <Col md={3} className="d-flex justify-content-center mb-5">
-        <Card className="testimonial-card shadow text-center">
-          <Card.Body>
-            <div className="testimonial-img-container">
-              <img src="https://randomuser.me/api/portraits/women/44.jpg" className="testimonial-img" alt="Jane Doe"/>
-            </div>
-            <Card.Text className="mt-4">
-              "Wonderful services and compassionate care."
-            </Card.Text>
-            <Card.Footer className="text-muted bg-transparent border-0">— Jane Doe</Card.Footer>
-          </Card.Body>
-        </Card>
-      </Col>
+      <section className="testimonials-section py-5 bg-light">
+        <Container>
+          <h2 className="text-center mb-5">What Our Clients Say</h2>
+          <Row className="justify-content-center">
+            <Col md={3} className="d-flex justify-content-center mb-5">
+              <Card className="testimonial-card shadow text-center">
+                <Card.Body>
+                  <div className="testimonial-img-container">
+                    <img
+                      src="https://randomuser.me/api/portraits/women/44.jpg"
+                      className="testimonial-img"
+                      alt="Jane Doe"
+                    />
+                  </div>
+                  <Card.Text className="mt-4">
+                    "Wonderful services and compassionate care."
+                  </Card.Text>
+                  <Card.Footer className="text-muted bg-transparent border-0">
+                    — Jane Doe
+                  </Card.Footer>
+                </Card.Body>
+              </Card>
+            </Col>
 
-      <Col md={3} className="d-flex justify-content-center mb-5">
-        <Card className="testimonial-card shadow text-center">
-          <Card.Body>
-            <div className="testimonial-img-container">
-              <img src="https://randomuser.me/api/portraits/men/32.jpg" className="testimonial-img" alt="John Smith"/>
-            </div>
-            <Card.Text className="mt-4">
-              "The staff is always professional and caring."
-            </Card.Text>
-            <Card.Footer className="text-muted bg-transparent border-0">— John Smith</Card.Footer>
-          </Card.Body>
-        </Card>
-      </Col>
+            <Col md={3} className="d-flex justify-content-center mb-5">
+              <Card className="testimonial-card shadow text-center">
+                <Card.Body>
+                  <div className="testimonial-img-container">
+                    <img
+                      src="https://randomuser.me/api/portraits/men/32.jpg"
+                      className="testimonial-img"
+                      alt="John Smith"
+                    />
+                  </div>
+                  <Card.Text className="mt-4">
+                    "The staff is always professional and caring."
+                  </Card.Text>
+                  <Card.Footer className="text-muted bg-transparent border-0">
+                    — John Smith
+                  </Card.Footer>
+                </Card.Body>
+              </Card>
+            </Col>
 
-      <Col md={3} className="d-flex justify-content-center mb-5">
-        <Card className="testimonial-card shadow text-center">
-          <Card.Body>
-            <div className="testimonial-img-container">
-              <img src="https://randomuser.me/api/portraits/women/68.jpg" className="testimonial-img" alt="Emily White"/>
-            </div>
-            <Card.Text className="mt-4">
-              "I highly recommend their services."
-            </Card.Text>
-            <Card.Footer className="text-muted bg-transparent border-0">— Emily White</Card.Footer>
-          </Card.Body>
-        </Card>
-      </Col>
+            <Col md={3} className="d-flex justify-content-center mb-5">
+              <Card className="testimonial-card shadow text-center">
+                <Card.Body>
+                  <div className="testimonial-img-container">
+                    <img
+                      src="https://randomuser.me/api/portraits/women/68.jpg"
+                      className="testimonial-img"
+                      alt="Emily White"
+                    />
+                  </div>
+                  <Card.Text className="mt-4">
+                    "I highly recommend their services."
+                  </Card.Text>
+                  <Card.Footer className="text-muted bg-transparent border-0">
+                    — Emily White
+                  </Card.Footer>
+                </Card.Body>
+              </Card>
+            </Col>
 
-      <Col md={3} className="d-flex justify-content-center mb-5">
-        <Card className="testimonial-card shadow text-center">
-          <Card.Body>
-            <div className="testimonial-img-container">
-              <img src="https://randomuser.me/api/portraits/men/45.jpg" className="testimonial-img" alt="Michael Brown"/>
-            </div>
-            <Card.Text className="mt-4">
-              "Excellent care and great support!"
-            </Card.Text>
-            <Card.Footer className="text-muted bg-transparent border-0">— Michael Brown</Card.Footer>
-          </Card.Body>
-        </Card>
-      </Col>
-
-    </Row>
-  </Container>
-</section>
-
-
+            <Col md={3} className="d-flex justify-content-center mb-5">
+              <Card className="testimonial-card shadow text-center">
+                <Card.Body>
+                  <div className="testimonial-img-container">
+                    <img
+                      src="https://randomuser.me/api/portraits/men/45.jpg"
+                      className="testimonial-img"
+                      alt="Michael Brown"
+                    />
+                  </div>
+                  <Card.Text className="mt-4">
+                    "Excellent care and great support!"
+                  </Card.Text>
+                  <Card.Footer className="text-muted bg-transparent border-0">
+                    — Michael Brown
+                  </Card.Footer>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
       <Footer />
     </>

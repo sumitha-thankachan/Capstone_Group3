@@ -114,7 +114,7 @@ const ChangePassword = () => {
     <>
       <Header />
       <div className="d-flex">
-        {/* Sidebar */}
+      <Sidebar />
         {/* <div className="sidebar bg-dark text-white p-4" style={{ minWidth: '250px', minHeight: '100vh' }}>
           <div className="text-center mb-4">
             <img
@@ -133,7 +133,6 @@ const ChangePassword = () => {
             <Nav.Link href="/profile" className="text-white mb-2">Profile</Nav.Link>
           </Nav>
         </div> */}
-  <Sidebar />
         {/* Main content */}
         <Container className="mt-5 py-4">
           <h2 className="text-center">Change Password</h2>

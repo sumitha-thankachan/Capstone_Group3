@@ -15,10 +15,10 @@ html {
 .header-background {
   background: linear-gradient(90deg, #66b2a5, #d8a5d9);
 
-  border-bottom: none !important; 
-  box-shadow: none !important; 
-  margin-bottom: 0 !important; 
-  padding-bottom: 0 !important; 
+  border-bottom: none !important;
+  box-shadow: none !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .header_button {
@@ -456,3 +456,83 @@ tr:hover {
 .donation-btn:hover {
   background: #0056b3;
 }
+
+/* mediaquery for footer */
+@media screen and (max-width: 700px) {
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer_images {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+
+  .middlesection_footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .middlesection_footer p {
+    width: 100%;
+    text-align: center;
+  }
+
+  .middlesection_footer button {
+    margin-top: 0;
+  }
+
+  .lastsection_footer img {
+    display: none;
+  }
+
+  .lastsection_footer nav a {
+    padding-top: 0;
+  }
+
+  .maincontainer_backgroundimg {
+    display: none;
+  }
+}
+
+/* media query for admindashboard */
+@media (max-width: 700px) {
+  .admin-mainContainers {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items for a better look */
+  }
+
+  .admin-subcontainers {
+    flex-direction: column; /* Stacks child elements */
+    width: 100%; /* Ensures full width for each section */
+  }
+
+  .admin-containers {
+    width: 100%; /* Slight padding on the sides for better mobile design */
+    margin-bottom: 10px; /* Space between stacked elements */
+  }
+}
+
+/* financial media  */
+@media (max-width: 700px) {
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem; /* Adds spacing between buttons */
+    flex-wrap: nowrap; /* Keeps buttons on the same line */
+  }
+
+  .action-buttons button {
+    font-size: 0.8rem; /* Slightly smaller text for mobile */
+    padding: 0.25rem 0.5rem; /* Tighter padding for buttons */
+  }
+}
+

@@ -39,8 +39,9 @@ function PatientFinancial() {
     return (
         <div>
             <Header />
+           
       <div className="dashboard-layout">
-        <Sidebar />
+      <Sidebar />
 
         <div className="dashboard-content">
             {showSuccessMessage && (

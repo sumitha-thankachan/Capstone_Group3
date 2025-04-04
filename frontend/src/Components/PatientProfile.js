@@ -35,8 +35,9 @@ const PatientProfile = () => {
   return (
     <>
       <Header />
+      
       <div className="d-flex">
-        <Sidebar />
+      <Sidebar />
         <Container className="my-5">
           <Row className="justify-content-center">
             <Col md={10} lg={8}>
