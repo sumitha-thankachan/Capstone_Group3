@@ -5,37 +5,88 @@ import Footer from './footer';
 import Sidebar from './Sidebar';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import './PatientDashboard.css';
+import { ListGroup } from "react-bootstrap";
+import {jwtDecode} from "jwt-decode";
+
+
 
 function CaregiverDashboard() {
-  const [residentsCount, setResidentsCount] = useState(0);
+  const [assignedTasks, setAssignedTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [totalTasks, setTotalTasks] = useState(0);
+  const [approvedPatientsCount, setApprovedPatientsCount] = useState(0);
 
+  // Function to decode JWT
+  const decodeJWT = (token) => {
+    try {
+      // const base64Url = token.split('.')[1];
+      // const base64 = base64Url.replace('-', '+').replace('_', '/');
+      // const decodedData = JSON.parse(window.atob(base64));
+      const decodedData = jwtDecode(token);
+      return decodedData;
+    } catch (e) {
+      console.error('Error decoding token', e);
+      return null;
+    }
+  };
+
+
+
+  // Fetch approved patients count
   useEffect(() => {
-    const fetchResidentsCount = async () => {
+    const fetchApprovedPatientsCount = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/patients/count');
-        setResidentsCount(response.data.count);
+        const response = await axios.get("http://localhost:5000/api/patients/count/approved");
+        setApprovedPatientsCount(response.data.count);
       } catch (error) {
-        console.error('Error fetching residents count:', error);
+        console.error("Error fetching approved patients count:", error);
       }
     };
-
-    fetchResidentsCount();
+    fetchApprovedPatientsCount();
   }, []);
 
-  const [totalTasks, setTotalTasks] = useState(0); // State for total number of tasks
-  // Fetch total tasks count when the component mounts
+  // Fetch assigned tasks for the caregiver
+  /* useEffect(() => {
+    const fetchAssignedTasks = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const decodedToken = decodeJWT(token);
+        console.log(decodedToken)
+        const caregiverId = decodedToken?.id;
+        //const caregiverId = "67d11085cbbfd509d6a46052";
+        console.log(caregiverId);
+        if (!caregiverId) return;
+
+        const response = await axios.get(`http://localhost:5000/api/tasks/caregiver/${caregiverId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        setAssignedTasks(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching assigned tasks:', error);
+        setLoading(false);
+      }
+    };
+    fetchAssignedTasks();
+  }, []);
+ */
+  
+
+
+  // Fetch total tasks count
   useEffect(() => {
     const fetchTotalTasks = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/tasks/count'); // Adjust your endpoint
-        console.log("Task count fetched:", response.data); // Log the response to check data
-        setTotalTasks(response.data.count); // Set the total task count
+        const response = await axios.get('http://localhost:5000/api/tasks/count');
+        setTotalTasks(response.data.count);
       } catch (error) {
-        console.error('Error fetching total tasks count:', error.response ? error.response.data : error.message);
+        console.error('Error fetching total tasks count:', error);
       }
     };
-  
-    fetchTotalTasks(); // Call function on mount
+    fetchTotalTasks();
   }, []);
 
   return (
@@ -48,13 +99,14 @@ function CaregiverDashboard() {
           <h2 className="fw-bold">Caregiver Dashboard</h2>
           <Container fluid>
             <Row className="g-4">
+              
               <Col md={6}>
                 <Card className="dashboard-card">
                   <div className="combo">
                     <h4>Number of Residents</h4>
                     <i className="bi bi-people-fill icon"></i>
                   </div>
-                  <h3>{residentsCount}</h3>
+                  <h3>{approvedPatientsCount}</h3>
                 </Card>
               </Col>
 
@@ -64,7 +116,7 @@ function CaregiverDashboard() {
                     <h4>Total Tasks</h4>
                     <i className="bi bi-list-check icon"></i>
                   </div>
-                  <h3>{totalTasks}</h3> {/* Replace with API data later if needed */}
+                  <h3>{totalTasks}</h3>
                 </Card>
               </Col>
             </Row>

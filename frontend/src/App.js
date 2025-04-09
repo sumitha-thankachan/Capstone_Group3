@@ -47,8 +47,8 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/financial" element={<Financial />} />
         <Route path="/AddExpenses" element={<AddExpenses />} />
-        <Route path="/AddDonations" element={<AddDonations />} />
-        <Route path="/AddPayment" element={<AddPayment />} />
+        {/* <Route path="/AddDonations" element={<AddDonations />} />
+        <Route path="/AddPayment" element={<AddPayment />} /> */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/change-password" element={<ChangePassword />} />

@@ -19,6 +19,7 @@ const TaskManagement = () => {
     task: '',
     resident: '',
     status: 'Pending',
+    caregiver: '',
   });
   const [approvedPatients, setApprovedPatients] = useState([]); // New state
 
@@ -77,29 +78,73 @@ const TaskManagement = () => {
     const matchesStatus = searchStatus ? task.status.toLowerCase() === searchStatus.toLowerCase() : true;
     return matchesTask && matchesStatus;
   });
+  const [caregivers, setCaregivers] = useState([]); // New state for caregivers
+
+  useEffect(() => {
+    const fetchCaregivers = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/caregivers/list');
+        console.log('Fetched caregivers:', response.data); // Check the structure
+        setCaregivers(response.data);
+      } catch (error) {
+        console.error('Error fetching caregivers:', error);
+      }
+    };
+    
+    fetchCaregivers();
+  }, []);
 
   // Function to handle adding a new task
   const handleAddTask = async (e) => {
     e.preventDefault();
-    // Check for profanity
     if (filter.isProfane(newTask.task)) {
       alert("Please remove inappropriate words from the task description.");
       return;
     }
     try {
-      const response = await axios.post('http://localhost:5000/api/tasks', newTask);
-      setTasks([...tasks, response.data]);
+      // Find the caregiver by name to get their ID
+      const selectedCaregiver = caregivers.find(c => c._id === newTask.caregiver);
+      if (!selectedCaregiver) {
+        alert('Selected caregiver not found');
+        return;
+      }
+  
+      // Find the patient by name to get their ID
+      const selectedPatient = approvedPatients.find(p => p.name === newTask.resident);
+      if (!selectedPatient) {
+        alert('Selected patient not found');
+        return;
+      }
+  
+      const taskToAdd = {
+        ...newTask,
+        caregiver: selectedCaregiver._id, // Send caregiver ID
+        resident: selectedPatient._id,    // Send patient ID
+      };
+  
+      const response = await axios.post('http://localhost:5000/api/tasks', taskToAdd);
+      console.log('Task added successfully:', response.data);
+      setTasks([...tasks, response.data]); // Update the state with the new task
+     
       setNewTask({
         name: '',
         task: '',
         resident: '',
         status: 'Pending',
+        caregiver: '',
       });
     } catch (error) {
       console.error('Error adding task:', error);
+      if (error.response) {
+        console.error('Server responded with status:', error.response.status);
+        console.error('Response data:', error.response.data);
+        alert(`Error: ${error.response.data.message || 'Failed to add task'}`);
+      } else {
+        console.error('Error:', error.message);
+        alert('Network error or request failed');
+      }
     }
   };
-
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -107,6 +152,7 @@ const TaskManagement = () => {
       ...newTask,
       [name]: value,
     });
+    console.log(newTask);
   };
 
   const handleEdit = (task) => {
@@ -121,22 +167,27 @@ const TaskManagement = () => {
 
   const handleUpdateTask = async (e) => {
     e.preventDefault();
-    // Check for profanity
     if (filter.isProfane(newTask.task)) {
       alert("Please remove inappropriate words from the task description.");
       return;
     }
-
+  
     try {
       const response = await axios.put(`http://localhost:5000/api/tasks/${editTask._id}`, newTask);
       setTasks(tasks.map((task) => (task._id === editTask._id ? response.data : task)));
       setEditTask(null);
-      setNewTask({ name: '', task: '', resident: '', status: 'Pending' });
+      setNewTask({
+        name: '',
+        task: '',
+        resident: '',
+        status: 'Pending',
+        caregiver: '',  // Reset caregiver field
+      });
     } catch (error) {
       console.error('Error updating task:', error);
     }
   };
-
+  
   // Function to handle deleting a task
   const handleDeleteTask = async (id) => {
     try {
@@ -205,6 +256,7 @@ const TaskManagement = () => {
                     <th>Name</th>
                     <th>Task</th>
                     <th>Resident</th>
+                    <th>Caregiver</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -214,7 +266,9 @@ const TaskManagement = () => {
                     <tr key={index}>
                       <td>{task.name}</td>
                       <td>{task.task}</td>
-                      <td>{task.resident}</td>
+                      <td>{task.resident ? task.resident.name : "Unknown"}</td>
+                      <td>{task.caregiver ? task.caregiver.name : "Unknown"}</td>
+
                       <td>
                         <span className={`badge ${task.status === 'Pending' ? 'bg-pending' : task.status === 'In Progress' ? 'bg-in-progress' : 'bg-completed'}`}>
                           {task.status}
@@ -297,7 +351,26 @@ const TaskManagement = () => {
                     required
                     className="form-control"
                   />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                <Form.Label>Caregiver</Form.Label>
+                <Form.Select
+  name="caregiver"
+  value={newTask.caregiver}
+  onChange={handleInputChange}
+  required
+  className="form-control"
+>
+  <option value="">Select a caregiver</option>
+  {caregivers.map((caregiver) => (
+    <option key={caregiver._id} value={caregiver._id}>
+      {caregiver.name}
+    </option>
+  ))}
+</Form.Select>
                 </Form.Group>
+
+                
                 <Form.Group className="mb-3">
                   <Form.Label>Status</Form.Label>
                   <Form.Select
