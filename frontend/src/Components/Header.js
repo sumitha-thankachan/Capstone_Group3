@@ -57,7 +57,7 @@ function Header() {
                 <Nav.Link as={NavLink} to="/patient-registration">Register</Nav.Link>
                 <Nav.Link as={NavLink} to="/change-password">Change Password</Nav.Link>
                 <Nav.Link as={NavLink} to="/profile">Profile</Nav.Link>
-              </>
+                <Nav.Link as={NavLink} to="/patient-financial">Financial</Nav.Link>              </>
             )}
 
             {!userType && (
