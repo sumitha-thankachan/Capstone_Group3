@@ -141,6 +141,18 @@ router.delete('/delete/:id', async (req, res) => {
   }
 });
 
+
+// for task management
+// Route to get only approved caregivers
+router.get('/approved', async (req, res) => {
+  try {
+    const caregivers = await Caregiver.find({ isApproved: true });
+    res.json(caregivers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Route to get caregiver details by email
 router.get('/:email', async (req, res) => {
   try {

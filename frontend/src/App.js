@@ -26,6 +26,7 @@ import PatientFinancial from "./Components/PatientFinancial";
 import PatientPayment from "./Components/PatientPayment";
 import PatientDonation from "./Components/PatientDonation";
 import AssignCaregiver from "./Components/AssignCaregiver";
+import MyTasks from "./Components/MyTasks";
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
         <Route path="/patient-payment" element={<PatientPayment />} />
         <Route path="/patient-donation" element={<PatientDonation />} />
         <Route path="/assign-caregiver/:patientId" element={<AssignCaregiver />} />
+        <Route path="/my-tasks" element={<MyTasks />} /> 
       </Routes>
     </div>
   );

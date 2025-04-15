@@ -48,6 +48,7 @@ function Header() {
                 <Nav.Link as={NavLink} to="/caregiver-dashboard">Dashboard</Nav.Link>
                 <Nav.Link as={NavLink} to="/Registration">Registration</Nav.Link>
                 <Nav.Link as={NavLink} to="/change-password">Change Password</Nav.Link>
+                <Nav.Link as={NavLink} to="/my-tasks"> My Tasks</Nav.Link>
               </>
             )}
 

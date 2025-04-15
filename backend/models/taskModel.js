@@ -10,21 +10,20 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  resident: {  // Add this field
+  resident: {
+    type: String, // You can link this to a Resident model if necessary
+    required: true
+  },
+  caregiver: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Patient', // Reference to Patient model
+    ref: 'Caregiver',
     required: true
   },
   status: {
     type: String,
     enum: ['Pending', 'In Progress', 'Completed'],
     default: 'Pending'
-  },
-  caregiver: {  // Link caregiver to Caregiver model
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Caregiver', // Reference to Caregiver model
-    required: true
-  },
+  }
 }, { timestamps: true });
 
 // Create the Task model based on the schema
