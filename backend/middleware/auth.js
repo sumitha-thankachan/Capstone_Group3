@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
-  const token = req.header("x-auth-token");
+  const token = req.header("Authorization")?.split(" ")[1];  // Expecting 'Bearer <token>'
 
-  if (!token) return res.status(401).json({ message: "Access Denied" });
-
+  if (!token) {
+    return res.status(401).json({ message: "Access Denied" });
+  }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
@@ -13,8 +14,6 @@ const auth = (req, res, next) => {
     res.status(400).json({ message: "Invalid token" });
   }
 };
-
-
 
 //  Middleware to authenticate Admins
 const authenticateAdmin = (req, res, next) => {
@@ -44,7 +43,7 @@ const authenticateAdmin = (req, res, next) => {
 
 //  Middleware to authenticate Patients & Caregivers
 const authenticateUser = (req, res, next) => {
-  const token = req.header("Authorization")?.split(" ")[1];
+  const token = req.header("Authorization")?.split(" ")[1];  // Consistent use of Authorization header
 
   if (!token) return res.status(401).json({ message: "Access Denied" });
 
@@ -52,7 +51,7 @@ const authenticateUser = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log("Decoded Token:", decoded); //  Debugging token output
 
-    // Fix: Check `userType` instead of `role`
+    // Check userType for "Patient" and "Caregiver"
     if (decoded.userType !== "Patient" && decoded.userType !== "Caregiver") {
       return res.status(403).json({ message: "Access forbidden: Patients & Caregivers only" });
     }

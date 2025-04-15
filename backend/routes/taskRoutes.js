@@ -3,6 +3,7 @@ const router = express.Router();
 const Task = require('../models/taskModel');
 const Caregiver = require("../models/Caregiver");
 const Patient = require("../models/Patient");
+const { authenticateUser } = require("../middleware/auth");
 
 
 
@@ -120,7 +121,34 @@ router.get('/caregiver/:caregiverId', async (req, res) => {
     res.status(500).json({ message: 'Error fetching tasks for caregiver', error: err.message });
   }
 }); */
+// Task route to fetch tasks assigned to the logged-in caregiver
+router.get("/caregiver/me", authenticateUser, async (req, res) => {
+  console.log("Reached /caregiver/me route"); // Debugging log
+  console.log("User ID from token:", req.user.id); // Log the user ID
+  try {
+    const caregiverId = req.user.id; // Assuming the token includes user information
+    console.log("Caregiver ID from token:", caregiverId);
+    console.log("Fetching tasks for caregiver:", caregiverId);
 
+    // Check if caregiverId exists
+    if (!caregiverId) {
+      return res.status(400).json({ message: "Caregiver ID is missing from the token" });
+    }
+
+    // Fetch tasks assigned to the logged-in caregiver
+    const tasks = await Task.find({ caregiver: caregiverId });
+    console.log("Tasks for caregiver:", tasks); // Log tasks
+
+    if (tasks.length === 0) {
+      return res.status(404).json({ message: "No tasks assigned to this caregiver" });
+    }
+
+    res.json(tasks); // Return the tasks to the frontend
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+});
 
 
 
