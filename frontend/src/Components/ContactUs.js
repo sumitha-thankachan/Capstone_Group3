@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-import "../login.css";
-import '../App';
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Header from './Header';
 import Footer from './footer';
 import { Filter } from 'bad-words';
@@ -9,8 +7,7 @@ import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
 function ContactUs() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     phone: '',
     message: '',
@@ -24,119 +21,109 @@ function ContactUs() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (filter.isProfane(formData.message)) {
-      alert("Your message contains inappropriate language. Please revise it.");
+      alert("Your message contains inappropriate language.");
     } else {
-      alert("Message submitted successfully!");
-      // Clear or send form data here
+      alert("Message sent successfully!");
+      // Handle backend logic here
     }
   };
 
   return (
-    <div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: "#f9f9f9" }}>
       <Header />
       <Container className="py-5">
-        {/* Contact Us Section */}
-        <div className="contact-us">
-          <h2 className="text-center mb-4">Contact Us</h2>
+        <h2 className="text-center fw-bold mb-2">Get in Touch</h2>
+        <p className="text-center text-muted mb-4">
+          We’d love to hear from you! Reach out to us with any questions or suggestions.
+        </p>
 
-          <Row className="justify-content-center">
-            <Col md={8}>
-              <Card className="p-4 shadow-sm">
-                <Card.Body>
-                  <h4 className="mb-3">Get in Touch</h4>
-                  <Form onSubmit={handleSubmit}>
-                    <Row>
-                      <Col md={6}>
-                        <Form.Group controlId="formFirstName" className="mb-3">
-                          <Form.Label>First Name</Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter first name"
-                            name="firstName"
-                            value={formData.firstName}
-                            onChange={handleChange}
-                            required
-                            className="input-field"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col md={6}>
-                        <Form.Group controlId="formLastName" className="mb-3">
-                          <Form.Label>Last Name</Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter last name"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleChange}
-                            required
-                            className="input-field"
-                          />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Form.Group controlId="formEmail" className="mb-3">
-                      <Form.Label>Email Address</Form.Label>
-                      <Form.Control
-                        type="email"
-                        placeholder="Enter email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="input-field"
-                      />
-                    </Form.Group>
-                    <Form.Group controlId="formPhone" className="mb-3">
-                      <Form.Label>Phone (Optional)</Form.Label>
-                      <Form.Control
-                        type="tel"
-                        placeholder="Enter phone number"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="input-field"
-                      />
-                    </Form.Group>
-                    <Form.Group controlId="formMessage" className="mb-4">
-                      <Form.Label>Message</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={5}
-                        placeholder="Enter your message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                        className="input-field"
-                      />
-                    </Form.Group>
-                    <Button variant="primary" type="submit" className="w-100 btn-custom">
-                      Submit
-                    </Button>
-                  </Form>
-                </Card.Body>
-              </Card>
+        <div className="bg-white p-4 rounded-4 shadow" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <Row>
+            {/* Form */}
+            <Col md={6}>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Your Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    placeholder="Enter your name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Your Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Your Phone Number</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="number"
+                    placeholder="Enter your phone number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Message</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={4}
+                    name="message"
+                    placeholder="Type your message here..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+                <Button
+                  variant="success"
+                  type="submit"
+                  className="px-4"
+                  style={{ backgroundColor: "#1abc9c", border: "none" }}
+                >
+                  SEND MESSAGE
+                </Button>
+              </Form>
+            </Col>
+
+            {/* Contact Info */}
+            <Col md={6} className="ps-md-5 mt-4 mt-md-0">
+              <h5 className="fw-bold">Contact Information</h5>
+              <p><FaMapMarkerAlt className="me-2 " />123 Union, Waterloo, Canada</p>
+              <p><FaPhoneAlt className="me-2 " />+1 (123) 456-7890</p>
+              <p><FaEnvelope className="me-2 " />support@home.com</p>
+
+           
+              {/* Map */}
+              <div className="ratio ratio-4x3 mt-3 rounded-2 overflow-hidden">
+                
+              <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.530896694389!2d-75.7000023!3d45.4215325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cce04fca74d053b%3A0xd3a4370cdcf5f3b4!2sParliament%20Hill!5e0!3m2!1sen!2sca!4v164556789"
+  width="100%"
+  height="250"
+  style={{ border: 0 }}
+  allowFullScreen=""
+  loading="lazy"
+  title="Google Map"
+/>
+
+              </div>
             </Col>
           </Row>
         </div>
-
-        {/* Direct Contact Information */}
-        <Row className="justify-content-center mt-5">
-          <Col md={8}>
-            <Card className="p-4 border-0 shadow-sm bg-light rounded-3 direct-contact">
-              <Card.Body>
-                <h4 className="mb-3">Direct Contact</h4>
-                <p><FaMapMarkerAlt /> <strong>Address:</strong> 123 Elderly Home Road, Kitchener, Canada, N2C 1G9</p>
-                <p><FaPhoneAlt /> <strong>Phone:</strong> +1 (123) 456-7890</p>
-                <p><FaEnvelope /> <strong>Email:</strong> support@elderlyhome.com</p>
-                <p><strong>Working Hours:</strong> Monday to Friday, 9 AM - 5 PM</p>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
       </Container>
       <Footer />
     </div>

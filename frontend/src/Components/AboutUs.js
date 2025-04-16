@@ -9,7 +9,7 @@ import visionImg from './Assets/homebg1_edit.png';
 import missionImg from './Assets/homebg1_edit.png';
 import asif from "./Assets/asif1.jpg";
 import karthik from "./Assets/karthik.png";
-import sumitha from "./Assets/tithi_patel.jpg";
+import sumitha from "./Assets/sumitha.jpg";
 import tithi from "./Assets/tithi_patel.jpg";
 
 function AboutUs() {
