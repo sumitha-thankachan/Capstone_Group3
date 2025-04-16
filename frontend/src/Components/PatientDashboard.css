@@ -9,7 +9,9 @@
 .dashboard-sidebar {
   width: 250px;
   /* background: linear-gradient(90deg, #66b2a5, #d8a5d9); */
-  background: linear-gradient(90deg, #2a2c2b, #3e3e3e);
+  /* background: linear-gradient(90deg, #2a2c2b, #3e3e3e); */
+  background: linear-gradient(to right, #20a8ad, #1FA2A7);
+  border-top: 2px solid #fff;
   color: white;
   padding: 30px 20px;
   display: flex;
@@ -17,11 +19,22 @@
   align-items: center;
 }
 
+.image-side {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  margin-bottom: 15px;
+  border: 3px solid #fff;
+}
+
 .dashboard-sidebar img {
   width: 90px;
   height: 90px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: top;
   margin-bottom: 15px;
   border: 3px solid #fff;
 }

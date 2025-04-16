@@ -78,7 +78,7 @@ const Sidebar = () => {
         <img
           src={`http://localhost:5000/uploads/${user.photo}`}
           alt="Profile"
-          className="rounded-circle mb-3"
+          className="rounded-circle mb-3 image-side"
           width="100"
           height="100"
         />

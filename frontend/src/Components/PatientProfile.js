@@ -49,7 +49,7 @@ const PatientProfile = () => {
                         src={patient.medicalPhoto ? `http://localhost:5000/uploads/${patient.medicalPhoto}` : 'http://localhost:5000/uploads/default-profile.png'}
                         onError={(e) => e.target.src = '/default-profile.png'}
                         alt="Patient"
-                        className="rounded-circle shadow"
+                        className="rounded-circle shadow prof-img"
                         width="160"
                         height="160"
                       />

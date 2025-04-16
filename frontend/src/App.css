@@ -80,7 +80,8 @@ h2 {
 .footer {
   margin-top: 50px;
   padding: 30px;
-  background: linear-gradient(90deg, #66b2a5, #d8a5d9);
+  /* background: linear-gradient(90deg, #66b2a5, #d8a5d9); */
+  background: linear-gradient(to right, #20a8ad, #1FA2A7);
   display: flex;
   gap: 50px;
   color: #fff;

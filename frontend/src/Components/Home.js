@@ -47,7 +47,9 @@ const Home = () => {
               </p>
               {/* <Button className="header-btn">Learn More</Button> */}
               <div className="text-center mt-4">
-                <Button className="header-btn width">Learn More</Button>
+                <a href="/about-us">
+                  <Button className="header-btn width">Learn More</Button>
+                </a>
               </div>
             </Col>
           </Row>
@@ -108,12 +110,16 @@ const Home = () => {
           <h2 className="mb-3">
             We're here to help you get back on your feet quickly.
           </h2>
-          <Button variant="warning" size="lg" className="me-2">
-            Call Us Today
-          </Button>
-          <Button variant="outline-light" size="lg">
-            Schedule Appointment
-          </Button>
+          <a href="/contact-us">
+            <Button variant="warning" size="lg" className="me-2">
+              Call Us Today
+            </Button>
+          </a>
+          <a href="/contact-us">
+            <Button variant="outline-light" size="lg">
+              Schedule Appointment
+            </Button>
+          </a>
         </Container>
       </section>
 
