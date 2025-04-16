@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import Header from "./Header";
 import Footer from "./footer";
-import Sidebar from "./Sidebar"; // 👈 Include Sidebar
+import Sidebar from "./Sidebar"; //  Include Sidebar
 import { useNavigate } from "react-router-dom";
 
 const CaregiverRegistration = () => {
@@ -112,7 +112,8 @@ const CaregiverRegistration = () => {
       <Header />
       <Container fluid className="mt-4 mb-5">
         <Row>
-          <Col md={3}>
+          <Col md={3} >
+          
             <Sidebar />
           </Col>
           <Col md={9}>

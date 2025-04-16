@@ -1,0 +1,11 @@
+/* MyTasks.css */
+.my-tasks-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .my-tasks-content {
+    flex: 1;
+  }
+  

@@ -47,28 +47,7 @@ const Sidebar = () => {
       setUser(prev => ({ ...prev, userType: storedUserType }));
     }
 
-    // Uncomment below once your backend APIs for Admin and Caregiver are ready
-    
-    // if (email && (storedUserType === 'Caregiver')){  //|| storedUserType === 'Admin')) {
-    //   let apiUrl = '';
-
-    //   if (storedUserType === 'Caregiver') {
-    //     apiUrl = `http://localhost:5000/api/caregivers/profile/${email}`;
-    //   } else if (storedUserType === 'Admin') {
-    //     apiUrl = `http://localhost:5000/api/admins/profile/${email}`;
-    //   }
-
-    //   fetch(apiUrl)
-    //     .then((res) => res.json())
-    //     .then((data) =>
-    //       setUser({
-    //         name: data.name || storedUserType,
-    //           photo: data.image || 'default-profile.png',
-    //         userType: storedUserType,
-    //       })
-    //     )
-    //     .catch((err) => console.error('Sidebar fetch error:', err));
-    // }
+  
     
   }, []);
 

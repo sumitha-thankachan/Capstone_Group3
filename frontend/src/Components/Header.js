@@ -30,7 +30,7 @@ function Header() {
 
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
-          <Nav className="mx-auto nav-links">
+          <Nav className="mx-auto nav-links ">
             {userType === "Admin" && (
               <>
                 <Nav.Link as={NavLink} to="/home">Home</Nav.Link>
