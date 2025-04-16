@@ -5,7 +5,6 @@ import Footer from './footer';
 import './about.css';
 
 // Replace with actual paths to your images
-import bannerImg from './Assets/homebg1_edit.png';
 import visionImg from './Assets/homebg1_edit.png';
 import missionImg from './Assets/homebg1_edit.png';
 import asif from "./Assets/asif1.jpg";
@@ -100,22 +99,23 @@ function AboutUs() {
         <section className="section-box shadow-sm p-4 mb-5">
           <h3 className="section-header text-center mb-4">Meet Our Team</h3>
           <Row className="text-center">
-            {[
-              { img: asif, name: "Asif Mujeeb" },
-              { img: karthik, name: "Karthik Janardhanan" },
-              { img: sumitha, name: "Sumitha Thankachan" },
-              { img: tithi, name: "Tithi Patel" }
+          {[
+              { img: asif, name: "Asif Mujeeb", github: "https://github.com/asifmujeeb" },
+              { img: karthik, name: "Karthik Janardhanan", github: "https://github.com/karthikjanardhanan" },
+              { img: sumitha, name: "Sumitha Thankachan", github: "https://github.com/sumitha-thankachan" },
+              { img: tithi, name: "Tithi Patel", github: "https://github.com/Tithi306" }
             ].map(member => (
               <Col md={3} key={member.name}>
-                <img src={member.img} alt={member.name} className="team-img" />
-                <h5 className="mt-3">{member.name}</h5>
+              <img src={member.img} alt={member.name} className="team-img" />
+              <h5 className="mt-3">{member.name}</h5>
+              <a href={member.github} target="_blank" rel="noopener noreferrer">
+              {member.github}
+              </a>
               </Col>
-            ))}
+              ))}
           </Row>
         </section>
-
       </Container>
-
       <Footer />
     </>
   );

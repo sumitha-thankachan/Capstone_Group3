@@ -417,6 +417,10 @@ const TaskManagement = () => {
                       <strong>Resident:</strong> {selectedTask.resident}
                     </p>
                     <p className="mb-1">
+                      <strong>Caregiver:</strong> 
+                          {selectedTask.caregiver?.name || selectedTask.caregiver || "N/A"}
+                    </p>
+                    <p className="mb-1">
                       <strong>Status:</strong>
                       <span
                         className={`badge ${

@@ -260,72 +260,91 @@ color:#676767;
   font-style: normal;
 }
 
-/* Contact Us Page */
-.contact-container {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.contact-container h2 {
-  font-size: 2em;
-  color: var(--color-teal);
-  margin-bottom: 20px;
-}
-
-.contact-container h3 {
-  font-size: 1.5em;
-  color: var(--color-pink);
-  margin-top: 20px;
-}
-
-.contact-container p {
-  font-size: 1.2em;
-  color: var(--color-teal);
-  margin-bottom: 20px;
-}
-
-.contact-container form {
-  max-width: 600px;
-  margin: auto;
-}
-
-.contact-container .form-group {
-  margin-bottom: 15px;
-}
-
-.contact-container .form-control {
-  width: 100%;
-  padding: 10px;
-  font-size: 1em;
-  border: 1px solid var(--color-teal);
-  border-radius: 5px;
-}
-
-.contact-container .btn-primary {
-  background: linear-gradient(135deg, var(--color-pink), var(--color-teal)); 
+/* Contact Us Section */
+.contact-us {
+  background-color: white;
   color: var(--color-white);
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  margin-top: 10px;
-  cursor: pointer;
+  padding: 20px;
+  border-radius: 8px;
 }
 
-.contact-container .btn-primary:hover {
-  background: var(--color-teal); 
+.contact-us h2 {
+  color: var(--color-teal);
+  font-size: 1.8rem;
 }
 
-/* Direct Contact Information */
+.contact-us p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Get in Touch Section */
+.get-in-touch {
+  background-color: var(--color-white);
+  color: var(--color-teal);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.get-in-touch h4 {
+  color: var(--color-teal);
+  font-size: 1.8rem;
+}
+
+.get-in-touch p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Direct Contact Section */
 .direct-contact {
-  margin-top: 40px;
+  background-color: var(--color-pink);
+  color: var(--color-white);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.direct-contact h4 {
+  color: var(--color-teal);
+  font-size: 1.8rem;
 }
 
 .direct-contact p {
-  font-size: 1.2em;
-  color: var(--color-teal);
-  margin-bottom: 10px;
+  font-size: 1rem;
+  line-height: 1.6;
 }
+
+/* Input Field Styling */
+.input-field {
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 1.1em;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Submit Button */
+.btn-custom {
+  background: linear-gradient(135deg, var(--color-pink), var(--color-teal));
+  color: var(--color-white);
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+  background: var(--color-teal);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 
 /* About Us Page */
 .about-container {

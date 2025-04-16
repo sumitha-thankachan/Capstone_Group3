@@ -5,7 +5,7 @@ import Header from "./Header";
 import Footer from "./footer";
 import axios from "axios";
 import "./PatientPayment.css";
-import Sidebar from "./Sidebar";
+
 
 function PatientDonation() {
   const navigate = useNavigate();

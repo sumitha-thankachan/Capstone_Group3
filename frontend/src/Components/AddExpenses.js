@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./footer";
 import { HiArrowSmLeft } from "react-icons/hi";
+import { Filter } from "bad-words"; // Import the bad-words filter
 import "../App";
+
+// Initialize the filter
+const filter = new Filter();
 
 function AddExpenses() {
   const navigate = useNavigate();
@@ -18,24 +22,41 @@ function AddExpenses() {
   });
 
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   // Function to handle input change
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    
+    // Check for bad words in the description field
+    if (name === "description") {
+      if (filter.isProfane(value)) {
+        setError("Your description contains inappropriate language.");
+      } else {
+        setError("");
+      }
+    }
+    
+    setFormData({ ...formData, [name]: value });
   };
 
   // Function to save data to MongoDB
   const handleSave = async () => {
+    if (error) {
+      setMessage("Please fix the error before saving.");
+      setTimeout(() => setMessage(""), 5000);
+      return;
+    }
 
     const expenseData = {
       ...formData,
-      amount: Number(formData.amount),  
+      amount: Number(formData.amount),
     };
-  
+
     console.log("Sending data to backend:", expenseData);
 
     try {
-      const response = await fetch("http://localhost:5000/api/expenses/save", {  
+      const response = await fetch("http://localhost:5000/api/expenses/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +65,7 @@ function AddExpenses() {
       });
 
       const data = await response.json();
-      console.log("Response received from backend:", data); 
+      console.log("Response received from backend:", data);
 
       if (response.ok) {
         setMessage("Expense saved successfully!");
@@ -60,11 +81,16 @@ function AddExpenses() {
 
   // Function to submit data and redirect to Financial.js
   const handleSubmit = async () => {
-    // function to check whther the fields are correctly filled before submitting.
+    // function to check whether the fields are correctly filled before submitting.
     if (!formData.amount || !formData.date || !formData.description.trim()) {
       setMessage(
         "You cannot submit if you don't fill the form. Click on the previous button to go back."
       );
+      setTimeout(() => setMessage(""), 5000);
+      return;
+    }
+    if (error) {
+      setMessage("Please fix the error before submitting.");
       setTimeout(() => setMessage(""), 5000);
       return;
     }
@@ -75,7 +101,7 @@ function AddExpenses() {
     <div>
       <Header />
       <div className="expenses_mainSection">
-        <h4> Expenses</h4>
+        <h4>Expenses</h4>
         <div className="expenses_firstSection">
           <div className="child_firstSection-1">
             <HiArrowSmLeft
@@ -100,6 +126,7 @@ function AddExpenses() {
           </div>
         </div>
         {message && <p className="message text-success fw-bold">{message}</p>}
+        {error && <p className="message text-danger fw-bold">{error}</p>}
       </div>
       <div className="expenses_subDivision">
         <div className="expenses_subDivision-left">

@@ -4,7 +4,7 @@ import Header from "./Header";
 import Footer from "./footer";
 import axios from "axios";
 import "./PatientPayment.css";
-import Sidebar from "./Sidebar";
+import { Filter } from 'bad-words'; // Import the bad-words filter
 
 function PatientDonation() {
   const navigate = useNavigate();
@@ -16,6 +16,9 @@ function PatientDonation() {
   const [error, setError] = useState("");
   const [selectedAmount, setSelectedAmount] = useState();
   const [loading, setLoading] = useState(false);
+
+  // Initialize the filter
+  const filter = new Filter();
 
   useEffect(() => {
     // Check for success parameter in URL
@@ -45,14 +48,21 @@ function PatientDonation() {
   };
 
   const handleChange = (e) => {
-    const value =
-      e.target.name === "amount" ? parseFloat(e.target.value) : e.target.value;
+    const { name, value } = e.target;
+
+    // Check if the field is description and filter bad words
+    if (name === "description" && filter.isProfane(value)) {
+      alert("Your message contains inappropriate language. Please revise it.");
+      return;  // Prevent updating the form data if bad words are found
+    }
+
+    // Update the form data normally
     setFormData({
       ...formData,
-      [e.target.name]: value,
+      [name]: value,
     });
-    if (e.target.name === "amount") {
-      setSelectedAmount(parseFloat(e.target.value));
+    if (name === "amount") {
+      setSelectedAmount(parseFloat(value));
     }
   };
 
@@ -66,7 +76,7 @@ function PatientDonation() {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        throw new Error("You must be logged in to make a payment");
+        throw new Error("You must be logged in to make a donation");
       }
 
       // First create a payment record
@@ -74,7 +84,7 @@ function PatientDonation() {
         "http://localhost:5000/api/payments",
         {
           amount: parseFloat(formData.amount),
-          description: formData.description || "Payment",
+          description: formData.description || "Donation",
           type: "donation",
         },
         {
@@ -90,7 +100,7 @@ function PatientDonation() {
         "http://localhost:5000/api/stripe/create-checkout-session",
         {
           amount: parseFloat(formData.amount),
-          description: formData.description || "Payment",
+          description: formData.description || "Donation",
           type: "patient_payment",
           successUrl: `${baseUrl}/patient-financial?success=true`,
           cancelUrl: `${baseUrl}/patient-financial?canceled=true`,
@@ -109,7 +119,7 @@ function PatientDonation() {
       setError(
         error.response?.data?.message ||
           error.message ||
-          "An error occurred while processing your payment"
+          "An error occurred while processing your donation"
       );
       setLoading(false);
     }

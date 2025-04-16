@@ -5,6 +5,7 @@ import Footer from "./footer";
 import axios from "axios";
 import "./PatientPayment.css";
 import Sidebar from "./Sidebar";
+import { Filter } from 'bad-words'; // Import the bad-words filter
 
 function PatientPayment() {
   const navigate = useNavigate();
@@ -15,6 +16,9 @@ function PatientPayment() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Initialize the filter
+  const filter = new Filter();
 
   useEffect(() => {
     // Check for success parameter in URL
@@ -28,9 +32,18 @@ function PatientPayment() {
   }, [location, navigate]);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Check if the field is description and filter bad words
+    if (name === "description" && filter.isProfane(value)) {
+      alert("Your description contains inappropriate language. Please revise it.");
+      return;  // Prevent updating the form data if bad words are found
+    }
+
+    // Update the form data normally
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
